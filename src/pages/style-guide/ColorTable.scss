@@ -1,0 +1,37 @@
+$size: 80px;
+
+.swatch {
+  width: $size;
+  height: $size;
+  display: block;
+
+  @each $shade, $colors in $colorMap {
+    @each $color, $hex in $colors {
+      &__#{$color}--#{$shade} {
+        background-color: $hex;
+      }
+    }
+  }
+}
+
+.color-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.color-table {
+  display: flex;
+  flex-direction: column;
+
+  &__column-caption {
+    width: $size;
+    display: inline-block;
+  }
+
+  &__row-caption {
+    position: absolute;
+    transform: rotate(-90deg) translateX(-$size) translateY(-2em);
+    transform-origin: top left;
+  }
+}

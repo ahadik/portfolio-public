@@ -1,0 +1,14 @@
+.divider {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: color(light, gray);
+  
+  &--heavy {
+    height: 4px;
+  }
+
+  &--light {
+    height: 1px;
+  }
+}

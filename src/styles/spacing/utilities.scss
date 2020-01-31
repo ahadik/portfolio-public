@@ -1,0 +1,31 @@
+$mobile-max: 768px;
+$desktop-min: $mobile-max + 1;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-max}) {
+    @content;
+  }
+}
+
+
+$spacing-01: pxToEm(2px);
+$spacing-02: pxToEm(4px);
+$spacing-03: pxToEm(8px);
+$spacing-04: pxToEm(12px);
+$spacing-05: pxToEm(16px);
+$spacing-06: pxToEm(24px);
+$spacing-07: pxToEm(32px);
+$spacing-08: pxToEm(40px);
+$spacing-09: pxToEm(48px);
+
+$spacingVars: (
+  1: $spacing-01,
+  2: $spacing-02,
+  3: $spacing-03,
+  4: $spacing-04,
+  5: $spacing-05,
+  6: $spacing-06,
+  7: $spacing-07,
+  8: $spacing-08,
+  9: $spacing-09
+);

@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i,900,900i&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap');
+
+@font-face {
+  font-family: "SFMono-Regular";
+  src: url("/fonts/sf-mono/SFMono-Regular.woff") format("woff"),
+  url("/fonts/sf-mono/SFMono-Regular.woff2") format("woff2");
+}
+
+body {
+  font-family: $sansSerifFamilies; 
+  font-weight: $normalWeight;
+}
+
+.bold, b {
+  font-weight: $boldWeight;
+}
+
+.strong, strong {
+  font-weight: $strongWeight;
+}
+
+.monospace {
+  font-family: $monospaceFamilies;
+}
+
+.serif {
+  font-family: $serifFamilies;
+}
+
+
+
+@include typography(desktop);
+
+@include mobile {
+  @include typography(mobile);
+}
+
+.mobile {
+  @include typography(mobile);
+}

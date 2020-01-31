@@ -1,0 +1,108 @@
+$base-font: 16px;
+
+$monospaceFamilies: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+$sansSerifFamilies: "Montserrat", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$serifFamilies: "Merriweather", "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", Times, serif;
+
+@function pxToEm($px) {
+  @return ($px / $base-font) * 1em;
+}
+
+$fontMultiplier: 1.125;
+
+$normalWeight: 400;
+$boldWeight: 700;
+$strongWeight: 900;
+
+$fontScale: (
+  desktop: (
+    headline: #{pow($fontMultiplier, 12)}em,
+    h1: #{pow($fontMultiplier, 10)}em,
+    h2: #{pow($fontMultiplier, 9)}em,
+    h3: #{pow($fontMultiplier, 8)}em,
+    h4: #{pow($fontMultiplier, 7)}em,
+    h5: #{pow($fontMultiplier, 6)}em,
+    h6: #{pow($fontMultiplier, 5)}em,
+    paragraph: #{pow($fontMultiplier, 2)}em,
+    base: 1em,
+    caption: #{pow($fontMultiplier, -2)}em
+  ),
+  mobile: (
+    headline: #{pow($fontMultiplier, 8)}em,
+    h1: #{pow($fontMultiplier, 6)}em,
+    h2: #{pow($fontMultiplier, 5)}em,
+    h3: #{pow($fontMultiplier, 4)}em,
+    h4: #{pow($fontMultiplier, 3)}em,
+    h5: #{pow($fontMultiplier, 2)}em,
+    h6: #{$fontMultiplier}em,
+    paragraph: 1em,
+    base: 1em,
+    caption: #{pow($fontMultiplier, -2)}em
+  )
+);
+
+@function typeSize($style, $format) {
+  @return map-get(map-get($fontScale, $format), $style);
+}
+
+@mixin typography($format) {
+  .headline {
+    font-size: typeSize(headline, $format);
+    font-weight: $normalWeight;
+  }
+
+  h1 {
+    font-size: typeSize(h1, $format);
+    font-weight: $normalWeight;
+  }
+
+  h2 {
+    font-size: typeSize(h2, $format);
+    font-weight: $normalWeight;
+  }
+
+  h3 {
+    font-size: typeSize(h3, $format);
+    font-weight: $normalWeight;
+  }
+
+  h4 {
+    font-size: typeSize(h4, $format);
+    font-weight: $normalWeight;
+  }
+
+  h5 {
+    font-size: typeSize(h5, $format);
+    font-weight: $normalWeight;
+  }
+
+  h6 {
+    font-size: typeSize(h6, $format);
+    font-weight: $normalWeight;
+  }
+
+  p {
+    font-size: typeSize(paragraph, $format);
+    font-weight: $normalWeight;
+    max-width: 80ch;
+  }
+
+  span, .base {
+    font-size: typeSize(base, $format);
+    font-weight: $normalWeight;
+  }
+
+  .caption {
+    font-size: typeSize(caption, $format);
+    font-weight: $normalWeight;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: $monospaceFamilies;
+    font-size: typeSize(base, $format);
+    font-weight: $normalWeight;
+  }
+}

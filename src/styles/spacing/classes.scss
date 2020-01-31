@@ -1,0 +1,29 @@
+@each $increment, $value in $spacingVars {
+  .stack__children--#{$increment} {
+    & > * + * {
+      margin-top: $value;
+    }
+  }
+
+  .stack__item--#{$increment} {
+    margin-bottom: $value;
+  }
+
+  .inline__children--#{$increment} {
+    & > * + * {
+      margin-left: $value;
+    }
+  }
+
+  .inset__even--#{increment} {
+    padding: $value;
+  }
+
+  .inset__squish--#{increment} {
+    @if $increment == 1 {
+      padding: 0 $value;
+    } @else {
+      padding: #{map-get($spacingVars, $increment - 1)} $value;
+    }
+  }
+}
