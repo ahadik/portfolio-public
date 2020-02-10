@@ -1,0 +1,20 @@
+$mobile-max: 768px;
+$desktop-min: $mobile-max + 1;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-max}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-min}) {
+    @content;
+  }
+}
+
+$max-width: 1440px;
+
+$header-title-size: 2em;
+$header-vertical-padding: 1em;
+$header-height: $header-title-size + ($header-vertical-padding * 2);

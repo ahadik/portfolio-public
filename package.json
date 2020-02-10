@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "alex-hadik-portfolio",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "The portfolio of Alex Hadik",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Alex Hadik <alex@alexhadik.com>",
   "dependencies": {
     "classnames": "^2.2.6",
     "gatsby": "^2.19.7",
@@ -22,6 +22,16 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "babel-plugin-jsx-control-statements": "^4.0.0",
+    "babel-preset-gatsby": "^0.2.28",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-jsx-control-statements": "^2.2.1",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -39,9 +49,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/ahadik/portfolio"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/ahadik/portfolio/issues"
   }
 }

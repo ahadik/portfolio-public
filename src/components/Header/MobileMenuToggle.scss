@@ -1,0 +1,48 @@
+$height: pxToEm(16px);
+$width: pxToEm(21px);
+
+.mobile-menu-toggle {
+  width: $width;
+  height: $height;
+  position: relative;
+  cursor: pointer;
+
+  &__bar {
+    position: absolute;
+    height: 2px;
+    background-color: $black;
+    right: 0;
+    transition: transform 0.2s;
+
+    &:first-child {
+      top: 0;
+      width: 100%;
+    }
+
+    &:nth-child(2) {
+      bottom: 50%;
+      transform: translateY(50%) translateX(2px);
+      width: 80%;
+      transition: width 0.2s;
+    }
+
+    &:nth-child(3) {
+      bottom: 0;
+      width: 100%;
+    }
+  }
+
+  &--close &__bar {
+    &:first-child {
+      transform: rotate(45deg) translateY(calc(#{$height / 2} + #{pxToEm(-0.5px)})) translateX(#{pxToEm(2.5px)});
+    }
+
+    &:nth-child(2) {
+      width: 0;
+    }
+
+    &:nth-child(3) {
+      transform: rotate(-45deg)  translateY(calc(#{-$height / 2})) translateX(#{pxToEm(2.5px)});
+    }
+  }
+}

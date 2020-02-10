@@ -1,5 +1,6 @@
 $colorMap: (
   dark: (
+    black: #333,
     gray: #7B9EA6,
     blue: #014958,
     green: #027273,
@@ -7,6 +8,7 @@ $colorMap: (
     pink: #F2B999
   ),
   medium: (
+    black: #F6F6F6,
     gray: #A8BFC5,
     blue: #588791,
     green: #58A2A3,
@@ -14,6 +16,7 @@ $colorMap: (
     pink: #F7D1BC
   ),
   light: (
+    black: #FAFAFA,
     gray: #D4DFE2,
     blue: #ABC3C8,
     green: #ACD1D1,
@@ -25,3 +28,6 @@ $colorMap: (
 @function color($shade, $color) {
   @return map-get(map-get($colorMap, $shade), $color);
 }
+
+$black: #{color(dark, black)};
+$white: #FFFFFF;

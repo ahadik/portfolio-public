@@ -2,6 +2,7 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  font-size: $base-font;
 }
 body {
   margin: 0;
@@ -42,6 +43,7 @@ template {
 a {
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
+  text-decoration: none;
 }
 a:active,
 a:hover {
@@ -134,7 +136,6 @@ fieldset {
 }
 legend {
   box-sizing: border-box;
-  color: inherit;
   display: table;
   max-width: 100%;
   padding: 0;
@@ -161,7 +162,6 @@ textarea {
   -webkit-appearance: none;
 }
 ::-webkit-input-placeholder {
-  color: inherit;
   opacity: 0.54;
 }
 ::-webkit-file-upload-button {
@@ -211,7 +211,6 @@ h1 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
   text-rendering: optimizeLegibility;
   line-height: 1.1;
 }
@@ -224,7 +223,6 @@ h2 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
   text-rendering: optimizeLegibility;
   line-height: 1.1;
 }
@@ -237,7 +235,6 @@ h3 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
   text-rendering: optimizeLegibility;
   line-height: 1.1;
 }
@@ -250,7 +247,6 @@ h4 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
   text-rendering: optimizeLegibility;
   line-height: 1.1;
 }
@@ -263,7 +259,6 @@ h5 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
   text-rendering: optimizeLegibility;
   line-height: 1.1;
 }
@@ -276,7 +271,6 @@ h6 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
   text-rendering: optimizeLegibility;
   line-height: 1.1;
 }
@@ -533,8 +527,6 @@ tt,
 code {
   background-color: hsla(0, 0%, 0%, 0.04);
   border-radius: 3px;
-  font-family: "SFMono-Regular", Consolas, "Roboto Mono", "Droid Sans Mono",
-    "Liberation Mono", Menlo, Courier, monospace;
   padding: 0;
   padding-top: 0.2em;
   padding-bottom: 0.2em;

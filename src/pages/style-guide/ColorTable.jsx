@@ -11,6 +11,7 @@ const Swatch = ({ shade, color }) => {
 const ColorRow = ({ shade }) => {
   return (
     <div className="color-row">
+      <Swatch shade={shade} color="black" />
       <Swatch shade={shade} color="gray" />
       <Swatch shade={shade} color="blue" />
       <Swatch shade={shade} color="green" />
@@ -24,6 +25,7 @@ const ColorTable = () => {
   return (
     <div className="color-table">
       <div>
+        <span className="color-table__column-caption monospace caption">Black</span>
         <span className="color-table__column-caption monospace caption">Gray</span>
         <span className="color-table__column-caption monospace caption">Blue</span>
         <span className="color-table__column-caption monospace caption">Green</span>

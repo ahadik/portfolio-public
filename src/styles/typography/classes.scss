@@ -10,6 +10,8 @@
 body {
   font-family: $sansSerifFamilies; 
   font-weight: $normalWeight;
+  font-size: $base-font;
+  color: $black;
 }
 
 .bold, b {
@@ -21,13 +23,16 @@ body {
 }
 
 .monospace {
-  font-family: $monospaceFamilies;
+  @include monospace;
 }
 
 .serif {
-  font-family: $serifFamilies;
+  @include serif;
 }
 
+.secondary {
+  color: color(dark, gray);
+}
 
 
 @include typography(desktop);

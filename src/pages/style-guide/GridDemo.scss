@@ -1,0 +1,38 @@
+$row-spacing: $spacing-06;
+$num-rows: 16;
+
+.grid-demo {
+  width: 100%;
+  position: relative;
+
+  &__overlay { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  &__row {
+    $height: 100px;
+    height: $height;
+    margin-bottom: $row-spacing;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--background {
+      height: calc(#{$height * $num-rows} + #{$row-spacing * ($num-rows - 1)});
+    }
+  }
+  
+  &__column {
+    background-color: transparentize($color: color(medium, pink), $amount: 0.5);
+    display: block;
+    height: 100%;
+  }
+
+  &__overlay &__column {
+    background-color: transparentize($color: color(medium, green), $amount: 0.5);
+  }
+}

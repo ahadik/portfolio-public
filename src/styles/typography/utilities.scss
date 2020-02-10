@@ -5,7 +5,11 @@ $sansSerifFamilies: "Montserrat", "HelveticaNeue-Light", "Helvetica Neue Light",
 $serifFamilies: "Merriweather", "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", Times, serif;
 
 @function pxToEm($px) {
-  @return ($px / $base-font) * 1em;
+  @return ($px / $base-font * 1em);
+}
+
+@function emToPx($em) {
+  @return (strip-unit($em) * $base-font);
 }
 
 $fontMultiplier: 1.125;
@@ -16,33 +20,97 @@ $strongWeight: 900;
 
 $fontScale: (
   desktop: (
-    headline: #{pow($fontMultiplier, 12)}em,
-    h1: #{pow($fontMultiplier, 10)}em,
-    h2: #{pow($fontMultiplier, 9)}em,
-    h3: #{pow($fontMultiplier, 8)}em,
-    h4: #{pow($fontMultiplier, 7)}em,
-    h5: #{pow($fontMultiplier, 6)}em,
-    h6: #{pow($fontMultiplier, 5)}em,
-    paragraph: #{pow($fontMultiplier, 2)}em,
-    base: 1em,
-    caption: #{pow($fontMultiplier, -2)}em
+    headline: (
+      text: #{pow($fontMultiplier, 12)}em,
+      line: 1.26
+    ),
+    h1: (
+      text: #{pow($fontMultiplier, 10)}em,
+      line: 1.26
+    ),
+    h2: (
+      text: #{pow($fontMultiplier, 9)}em,
+      line: 1.26
+    ),
+    h3: (
+      text: #{pow($fontMultiplier, 8)}em,
+      line: 1.26
+    ),
+    h4: (
+      text: #{pow($fontMultiplier, 7)}em,
+      line: 1.26
+    ),
+    h5: (
+      text: #{pow($fontMultiplier, 6)}em,
+      line: 1.58
+    ),
+    h6: (
+      text: #{pow($fontMultiplier, 5)}em,
+      line: 1.26
+    ),
+    paragraph: (
+      text: #{pow($fontMultiplier, 2)}em,
+      line: 1.58
+    ),
+    base: (
+      text: 1em,
+      line: 1.26
+    ),
+    caption: (
+      text: #{pow($fontMultiplier, -2)}em,
+      line: 1.26
+    )
   ),
   mobile: (
-    headline: #{pow($fontMultiplier, 8)}em,
-    h1: #{pow($fontMultiplier, 6)}em,
-    h2: #{pow($fontMultiplier, 5)}em,
-    h3: #{pow($fontMultiplier, 4)}em,
-    h4: #{pow($fontMultiplier, 3)}em,
-    h5: #{pow($fontMultiplier, 2)}em,
-    h6: #{$fontMultiplier}em,
-    paragraph: 1em,
-    base: 1em,
-    caption: #{pow($fontMultiplier, -2)}em
+    headline: (
+      text: #{pow($fontMultiplier, 8)}em,
+      line: 1.26
+    ),
+    h1: (
+      text: #{pow($fontMultiplier, 6)}em,
+      line: 1.26
+    ),
+    h2: (
+      text: #{pow($fontMultiplier, 5)}em,
+      line: 1.26
+    ),
+    h3: (
+      text: #{pow($fontMultiplier, 4)}em,
+      line: 1.26
+    ),
+    h4: (
+      text: #{pow($fontMultiplier, 3)}em,
+      line: 1.58
+    ),
+    h5: (
+      text: #{pow($fontMultiplier, 2)}em,
+      line: 1.26
+    ),
+    h6: (
+      text: #{$fontMultiplier}em,
+      line: 1.26
+    ),
+    paragraph: (
+      text: 1em,
+      line: 2.25
+    ),
+    base: (
+      text: 1em,
+      line: 1.26
+    ),
+    caption: (
+      text: #{pow($fontMultiplier, -2)}em,
+      line: 1.26
+    )
   )
 );
 
 @function typeSize($style, $format) {
-  @return map-get(map-get($fontScale, $format), $style);
+  @return map-get(map-get(map-get($fontScale, $format), $style), text);
+}
+
+@function lineHeight($style, $format) {
+  @return map-get(map-get(map-get($fontScale, $format), $style), line);
 }
 
 @mixin typography($format) {
@@ -53,47 +121,68 @@ $fontScale: (
 
   h1 {
     font-size: typeSize(h1, $format);
+    line-height: lineHeight(h1, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   h2 {
     font-size: typeSize(h2, $format);
+    line-height: lineHeight(h2, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   h3 {
     font-size: typeSize(h3, $format);
+    line-height: lineHeight(h3, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   h4 {
     font-size: typeSize(h4, $format);
+    line-height: lineHeight(h4, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   h5 {
     font-size: typeSize(h5, $format);
+    line-height: lineHeight(h5, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   h6 {
     font-size: typeSize(h6, $format);
+    line-height: lineHeight(h6, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   p {
     font-size: typeSize(paragraph, $format);
+    line-height: lineHeight(paragraph, $format);
     font-weight: $normalWeight;
     max-width: 80ch;
+    color: $black;
+  }
+
+  a {
+    color: $black;
   }
 
   span, .base {
     font-size: typeSize(base, $format);
+    line-height: lineHeight(base, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
 
   .caption {
     font-size: typeSize(caption, $format);
+    line-height: lineHeight(caption, $format);
     font-weight: $normalWeight;
   }
 
@@ -103,6 +192,16 @@ $fontScale: (
   samp {
     font-family: $monospaceFamilies;
     font-size: typeSize(base, $format);
+    line-height: lineHeight(base, $format);
     font-weight: $normalWeight;
+    color: $black;
   }
+}
+
+@mixin monospace {
+  font-family: $monospaceFamilies;
+}
+
+@mixin serif {
+  font-family: $serifFamilies;
 }
