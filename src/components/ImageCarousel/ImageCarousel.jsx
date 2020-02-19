@@ -14,7 +14,11 @@ class ImageCarousel extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(this.advanceSlide, this.props.duration);
+    this.advanceTimeout = setTimeout(this.advanceSlide, this.props.duration);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.advanceTimeout);
   }
 
   advanceSlide() {
@@ -28,7 +32,7 @@ class ImageCarousel extends React.Component {
         this.props.didAdvance(this.state.slide);
       }
 
-      setTimeout(this.advanceSlide, this.props.duration);
+      this.advanceTimeout = setTimeout(this.advanceSlide, this.props.duration);
     });
   }
 

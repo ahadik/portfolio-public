@@ -1,0 +1,103 @@
+$padding: $spacing-03;
+
+.filter {
+  z-index: 100;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__checkbox-input {
+    position: absolute;
+    left: -1000000px;
+  }
+
+  &__checkbox-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+
+    &:before {
+      content: '\f0c8';
+      // height: .7em;
+      // width: .7em;
+      // border: 1px solid color(dark, gray);
+      display: block;
+      margin-right: $spacing-04;
+      font-family: 'Font Awesome 5 Pro';
+      font-size: 1em;
+      color: color(medium, green);
+    }
+  }
+
+  &__checkbox-input:checked + &__checkbox-label:before {
+    content: '\f14a';
+    font-weight: 800;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    background-color: $white;
+    padding: $padding;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: color(light, gray);
+    }
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    padding: $spacing-03 $padding;
+    cursor: pointer;
+
+    &:hover {
+      background-color: color(light, pink);
+    }
+  }
+
+  &__option-icon {
+    font-size: 0.85em;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    transform: translateY(-#{$spacing-01});
+    opacity: 0;
+    left: -$spacing-05;
+    border: 1px solid color(medium, gray);
+    visibility: hidden;
+    background-color: $white;
+    transition: opacity 0.3s, visibility 0s, transform 0.3s;
+    transition-timing-function: cubic-bezier();
+    user-select: none;
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(#{$spacing-03});
+    }
+  }
+
+  &__backsplash {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    left: 0;
+    top: 0;
+    z-index: 90;
+  }
+}

@@ -1,11 +1,11 @@
 .mobile {
   @include desktop {
-    display: none;
+    display: none !important;
   }
 }
 
 .desktop {
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }

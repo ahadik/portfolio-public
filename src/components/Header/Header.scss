@@ -12,7 +12,7 @@
 
   &__content {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
     margin: 0 auto;
     max-width: $max-width;
@@ -23,8 +23,8 @@
 
   &__title {
     font-weight: $normalWeight;
-    font-size: 2em;
     margin: 0;
+    line-height: 1;
 
     @include mobile {
       font-size: 1.5em;
@@ -33,7 +33,6 @@
 
   &__right-content {
     display: flex;
-    height: 2em;
     flex-direction: column;
     justify-content: center;
     
@@ -80,8 +79,8 @@
     flex-direction: row;
   }
 
-  &__nav-list-item {
-    display: inline-block;
+  &__item {
     margin-bottom: 0;
+    line-height: 1;
   }
 }

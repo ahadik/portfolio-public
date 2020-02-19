@@ -1,0 +1,27 @@
+{
+  "categories": {
+    "type": "work",
+    "entries": [
+      {
+        "name": "UI/UX",
+        "id": "ui-ux",
+        "icon": "fal fa-pen-nib"
+      },
+      {
+        "name": "Code",
+        "id": "code",
+        "icon": "fal fa-code"
+      },
+      {
+        "name": "Carpentry",
+        "id": "carpentry",
+        "icon": "fal fa-hammer"
+      },
+      {
+        "name": "Marketing",
+        "id": "marketing",
+        "icon": "fal fa-camera-retro"
+      }
+    ]
+  }
+}

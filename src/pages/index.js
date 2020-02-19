@@ -48,7 +48,7 @@ class HomePage extends React.Component {
       {
         verb: 'cook',
         subject: 'people',
-        title: 'a Food Enthusiast',
+        title: 'hungry and',
         purpose: 'eat far more than I should'
       }
     ];
@@ -56,10 +56,39 @@ class HomePage extends React.Component {
     this.SLIDE_DURATION = 10000;
 
     this.currentWords = this.currentWords.bind(this);
+    this.maxLength = this.maxLength.bind(this);
+    this.renderTextSnippet = this.renderTextSnippet.bind(this);
   }
 
   currentWords() {
     return this.wordCatalog[this.state.slide];
+  }
+
+  maxLength(type) {
+    return this.wordCatalog.reduce((acc, entry) => {
+      if (entry[type].length > acc) {
+        return entry[type].length;
+      }
+      return acc;
+    }, 0);
+  }
+
+  renderTextSnippet(type, alignment = 'left', underline = false) {
+    return (
+      <span
+        className="bold"
+        style={
+          {
+            display: 'inline-block',
+            width: `${this.maxLength(type)}ch`,
+            textAlign: alignment,
+            borderBottomColor: '#333',
+            borderBottomStyle: 'solid',
+            borderBottomWidth: underline ? '1px' : '0px'
+          }
+        }
+      >{this.currentWords()[type]}</span>
+    );
   }
 
   render() {
@@ -74,8 +103,10 @@ class HomePage extends React.Component {
         </div>
         <div className="row">
           <div className="col-4 mobile-col-12 stack__children--8">
-            <h4 className="serif">I like to {this.currentWords().verb} things for {this.currentWords().subject}.</h4>
-            <p className="serif">I'm {this.currentWords().title} living in San Francisco – where I {this.currentWords().purpose}.</p>
+            <h4 className="serif">
+              I like to {this.renderTextSnippet('verb')}<br /> things for {this.currentWords().subject}.
+            </h4>
+            <p className="serif">I'm {this.renderTextSnippet('title', 'center', true)} living in San Francisco – where I {this.currentWords().purpose}.</p>
           </div>
           <div className="col-8 mobile-col-12">
             <If condition={this.props.data}>

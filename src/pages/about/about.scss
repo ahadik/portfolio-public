@@ -1,0 +1,7 @@
+.about-page {
+  &__header-title {
+    @include mobile {
+      margin-top: $spacing-04;
+    }
+  }
+}

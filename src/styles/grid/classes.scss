@@ -7,33 +7,52 @@
   margin-right: #{-$gridPadding / 2};
 }
 
+.row + .row {
+  margin-top: $spacing-04;
+}
+
+.row + .row.row--large-spacing {
+  margin-top: $spacing-08;
+}
+
 $numGutters: $numCols - 1;
 // The total horizontal amount allotted to columns, after subtracting off gutters
 $totalWidth: calc(100% - #{($gridPadding * $numGutters)});
+
+@function colWidth($i) {
+  @return calc(#{$i / $numCols * 100%} - #{$gridPadding});
+}
+
 @for $i from 1 through $numCols {
-  // The width of this column size
-  $colWidth: calc(#{$i / $numCols * 100%} - #{$gridPadding});
   .col-#{$i} {
-    width: $colWidth;
+    width: colWidth($i);
     margin-left: #{$gridPadding / 2};
     margin-right: #{$gridPadding / 2};
   }
+}
 
+@for $i from 1 through $numCols {
   .col-offset-#{$i} {
-    margin-left: calc(#{$colWidth} + #{$gridPadding * 1.5}) !important;
+    margin-left: calc(#{colWidth($i)} + #{$gridPadding * 1.5});
+  }
+}
+
+@include mobile{
+  .mobile-col-offset-0 {
+    margin-left: 0;
   }
 
-  .mobile-col-#{$i} {
-    @include mobile{
-      width: $colWidth;
+  @for $i from 1 through $numCols {
+    .mobile-col-#{$i} {
+      width: colWidth($i);
       margin-left: #{$gridPadding / 2};
       margin-right: #{$gridPadding / 2};
     }
   }
 
-  .mobile-col-offset-#{$i} {
-    @include mobile {
-      margin-left: calc(#{$colWidth} + #{$gridPadding * 1.5}) !important;
+  @for $i from 1 through $numCols {
+    .mobile-col-offset-#{$i} {
+      margin-left: calc(#{colWidth($i)} + #{$gridPadding * 1.5});
     }
   }
 }

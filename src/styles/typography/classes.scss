@@ -3,9 +3,14 @@
 
 @font-face {
   font-family: "SFMono-Regular";
-  src: url("/fonts/sf-mono/SFMono-Regular.woff") format("woff"),
-  url("/fonts/sf-mono/SFMono-Regular.woff2") format("woff2");
+  src: url("../fonts/sf-mono/SFMono-Regular.woff") format("woff"),
+  url("../fonts/sf-mono/SFMono-Regular.woff2") format("woff2");
 }
+
+@import './fontawesome/fontawesome';
+@import './fontawesome/light';
+@import './fontawesome/regular';
+@import './fontawesome/solid';
 
 body {
   font-family: $sansSerifFamilies; 
@@ -34,6 +39,17 @@ body {
   color: color(dark, gray);
 }
 
+.invert {
+  color: $white;
+}
+
+.invert-secondary {
+  color: color(light, gray);
+}
+
+blockquote {
+  font-style: italic;
+}
 
 @include typography(desktop);
 

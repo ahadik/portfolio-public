@@ -1,0 +1,20 @@
+.tag {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  padding: $spacing-03;
+  background-color: color(light, pink);
+  align-items: center;
+
+  &__icon {
+    font-size: 0.85em;
+  }
+
+  &__times-icon {
+    font-size: 0.9em;
+    margin-left: $spacing-04;
+    margin-bottom: -$spacing-01;
+    cursor: pointer;
+  }
+}

@@ -53,11 +53,11 @@ class Header extends React.Component {
       <header className="header">
         <div className="header__content">
           <div className="header__left-content">
-            <h1 className="header__title serif">
+            <h6 className="header__title serif">
               <Link to="/">
                 {this.props.siteTitle}
               </Link>
-            </h1>
+            </h6>
           </div>
           <div className="header__right-content">
             <div className="header__desktop-nav desktop">

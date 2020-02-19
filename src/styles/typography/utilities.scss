@@ -1,8 +1,12 @@
 $base-font: 16px;
+$fa-font-path: '../fonts/fontawesome';
 
 $monospaceFamilies: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 $sansSerifFamilies: "Montserrat", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serifFamilies: "Merriweather", "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", Times, serif;
+
+@import './fontawesome/variables';
+@import './fontawesome/mixins';
 
 @function pxToEm($px) {
   @return ($px / $base-font * 1em);
@@ -46,7 +50,7 @@ $fontScale: (
     ),
     h6: (
       text: #{pow($fontMultiplier, 5)}em,
-      line: 1.26
+      line: 1.58
     ),
     paragraph: (
       text: #{pow($fontMultiplier, 2)}em,
@@ -88,7 +92,7 @@ $fontScale: (
     ),
     h6: (
       text: #{$fontMultiplier}em,
-      line: 1.26
+      line: 1.58
     ),
     paragraph: (
       text: 1em,
@@ -167,6 +171,10 @@ $fontScale: (
     font-weight: $normalWeight;
     max-width: 80ch;
     color: $black;
+
+    &.full-width {
+      max-width: 100%;
+    }
   }
 
   a {

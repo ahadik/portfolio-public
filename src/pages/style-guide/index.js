@@ -5,9 +5,9 @@ import Page from "../../components/Page/Page"
 import SEO from "../../components/seo"
 import Divider from '../../components/Divider';
 
-import TextTable from './TextTable';
-import ColorTable from './ColorTable';
-import GridDemo from './GridDemo';
+import TextTable from './components/TextTable';
+import ColorTable from './components/ColorTable';
+import GridDemo from './components/GridDemo';
 
 const StyleGuide = () => (
   <Page>

@@ -1,0 +1,71 @@
+---
+date: "2019-03-21"
+title: "Scientific Datasets"
+featuredImage: "cover_image.png"
+featuredImgCaption: "A raw PCR dataset. The common standard for viewing and interpreting data in the life sciences is
+still Excel – creating a fragmented and brittle workflow."
+excerpt: "One of the most common tasks for a Transcriptic user is viewing a dataset generated as part of an experiment
+they submitted to the platform. The data viewing and interpretation tools available to life scientists today are
+surprisingly limited, and a key offering of Transcriptic is enabling users to immediately explore and understand their
+data."
+categories: [ui-ux]
+images:
+  - as-is.png
+  - affinity-mapping.png
+  - sketch1.png
+  - sketch2.png
+---
+
+import Image from '../../../../components/MdxImage';
+import Gallery from '../../../../components/Gallery';
+
+### Problem Statement
+One of Transcriptic's core capabilities is transparency into the data generated on the platform. When we execute an
+experiment for a user, we present the data collected in that experiment as soon as it's available. This immediacy is a
+huge value-add for Transcriptic.
+
+However, before this project, the UI architecture for presenting datasets was crumbling. Users love having specific
+visualizations for different types of datasets, but maintaining these many views was time-consuming and prone to
+bugs. Datasets views often broke, and adding new views required extensive custom coding.
+
+Furthermore, our approach to generating datasets had fundamental flaws. When a user requested to download a dataset, it
+was generated on the fly using the current state of the system. This caused inconsistencies between downloads and
+prevented proper auditing – a huge liability.
+
+Finally, the existing interface lacked clean aesthetics and was hard to quickly scan and make sense of.
+
+<Image imgs={props.images} name="as-is" caption="The as-is experience for viewing datasets prior to this project was prone to bugs and visually messy." />
+
+Transcriptic's Head of Product and I developed this *Job To Be Done* to guide this project.
+
+> As a biologist using Transcriptic, I want to view and access the data generated in an experiment in a single location, so that I can quickly understand if an experiment was successful, and know how I should proceed with my work.
+
+### Goals
+My task was to provide a re-designed user experience for navigating and accessing datasets. The core requirements were:
+
+1. **Extensible:** The proposed solution must work in a variety of contexts, and be easily adaptable to future needs as new dataset types are added.
+2. **Audit-able:** It should be clear when a dataset was generated and apparent that the data contained within a dataset is static and represents a past state of the system.
+3. **Compose-able:** Datasets are made up of Data Objects, and this solution should visually mirror that architecture.
+4. **Useable:** Biologists have well defined approaches to data. Our solution should not dictate a preferred approach but instead meet Biologists where they stand.
+
+### Research and Exploration
+#### User Research
+<Image imgs={props.images} name="affinity-mapping" caption="Synthesis artifacts following user research." />
+
+A size-able corpus of data from extensive 1:1 user interviews was the basis of data for this effort. From the basic synthesis of these interviews I identified following core user needs:
+
+1. Biologists need to access data as soon as it’s available so that they can monitor the status of the experiment and make adjustments.
+2. Biologists need to understand if a dataset has passed automatic validation so that they can determine if a dataset is worth analyzing further.
+3. Biologists need to be able to sort, search and filter their data on the fly so that they can build a deeper understanding of the results.
+
+#### Initial Sketches
+<Gallery caption="Rough sketches of the known dataset types.">
+  <Image  imgs={props.images} name="sketch1" />
+  <Image  imgs={props.images} name="sketch2" />
+</Gallery>
+
+My initial sketches focused on the core components needed to appropriately display data objects, with some basic attention paid to layout. These sketches were foundational to the final architecture proposed.
+
+#### Architecture Brainstorming
+From my visual exploration, I saw the beginnings of a hierarchical system. I suspected that I could develop a logical
+system from which a multitude of consistent layouts could be composed.

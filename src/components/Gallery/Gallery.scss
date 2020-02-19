@@ -1,0 +1,26 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  &__item + &__item {
+    margin-left: $spacing-04;
+  }
+
+  &__caption {
+    flex-basis: 100%;
+    margin-top: $spacing-02;
+  }
+
+  @include mobile {
+    &__item {
+      flex-basis: 100%;
+      margin-left: 0 !important;
+      flex-grow: 1 !important;
+
+      & + #{&} {
+        margin-top: $spacing-04;
+      }
+    }
+  }
+}
