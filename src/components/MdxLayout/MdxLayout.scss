@@ -1,0 +1,12 @@
+.mdx-layout {
+  &--border-top {
+    padding-top: 1rem;
+    border-top: 1px solid color(light, gray);
+  }
+
+  &--border-bottom {
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid color(light, gray);
+  }
+}

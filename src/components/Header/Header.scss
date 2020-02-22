@@ -1,14 +1,20 @@
 .header {
   background-color: $white;
   position: fixed;
-  top: 0;
+  top: -$header-height;
   left: 0;
   right: 0;
   height: $header-height;
   display: flex;
   align-items: center;
   border-bottom: 1px solid color(light, grey);
+  transform: translateY(0);
+  transition: transform 0.2s;
   z-index: 100;
+
+  &--visible {
+    transform: translateY($header-height)
+  }
 
   &__content {
     display: flex;
@@ -47,7 +53,8 @@
     right: 0;
     left: 0;
     top: $header-height;
-    bottom: 0;
+    height: calc(100vh - #{$header-height});
+    box-sizing: border-box;
     padding: $spacing-08;
     background-color: transparentize(color(medium, black), 0.1);
     border-left: 1px solid color(light, gray);
@@ -65,6 +72,7 @@
   display: flex;
   list-style: none;
   margin: 0;
+  font-size: 0.8rem;
 
   &--vertical {
     @include stack(children, 6);

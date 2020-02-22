@@ -13,8 +13,8 @@ $desktop-min: $mobile-max + 1;
   }
 }
 
-$max-width: 1440px;
+$max-width: 1300px;
 
-$header-title-size: 2em;
-$header-vertical-padding: 1em;
+$header-title-size: 2rem;
+$header-vertical-padding: 1rem;
 $header-height: $header-title-size + ($header-vertical-padding * 2);

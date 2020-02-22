@@ -1,5 +1,5 @@
-$height: pxToEm(16px);
-$width: pxToEm(21px);
+$height: pxToRem(16px);
+$width: pxToRem(21px);
 
 .mobile-menu-toggle {
   width: $width;
@@ -34,7 +34,7 @@ $width: pxToEm(21px);
 
   &--close &__bar {
     &:first-child {
-      transform: rotate(45deg) translateY(calc(#{$height / 2} + #{pxToEm(-0.5px)})) translateX(#{pxToEm(2.5px)});
+      transform: rotate(45deg) translateY(calc(#{$height / 2} + #{pxToRem(-0.5px)})) translateX(#{pxToRem(2.5px)});
     }
 
     &:nth-child(2) {
@@ -42,7 +42,7 @@ $width: pxToEm(21px);
     }
 
     &:nth-child(3) {
-      transform: rotate(-45deg)  translateY(calc(#{-$height / 2})) translateX(#{pxToEm(2.5px)});
+      transform: rotate(-45deg)  translateY(calc(#{-$height / 2})) translateX(#{pxToRem(2.5px)});
     }
   }
 }

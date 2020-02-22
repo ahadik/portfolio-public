@@ -37,6 +37,15 @@ $totalWidth: calc(100% - #{($gridPadding * $numGutters)});
   }
 }
 
+@include desktop {
+  .grid-break-8-to-12 {
+    $offsetVal: calc((#{colWidth(2)} * -1.5) - #{$gridPadding * 2.25});
+    margin-left: $offsetVal;
+    margin-right: $offsetVal;
+    width: calc(100% + (-2 * #{$offsetVal}));
+  }
+}
+
 @include mobile{
   .mobile-col-offset-0 {
     margin-left: 0;

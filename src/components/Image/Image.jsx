@@ -1,5 +1,8 @@
 import React from "react";
+import { Link } from 'gatsby';
 import Img from "gatsby-image";
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import './Image.scss';
 
@@ -37,11 +40,17 @@ class Image extends React.Component {
   constructor(props) {
     super(props);
 
+    this.openPreview = this.openPreview.bind(this);
+    this.closePreview = this.closePreview.bind(this);
+
     this.state = {
+      isPreview: false,
       imageStack: [
         {
           image: this.props.image,
           caption: this.props.caption,
+          to: this.props.to,
+          href: this.props.href,
           imgId: getImgIdFromProps(this.props)
         }
       ]
@@ -52,46 +61,85 @@ class Image extends React.Component {
     clearTimeout(this.newImgTimeout);
   }
 
+  openPreview() {
+    this.setState({ isPreview: true });
+  }
+
+  closePreview() {
+    this.setState({ isPreview: false });
+  }
+
   render() {
+
+    const { swapDelay, proportion, image, hasShadow, maxHeight, caption, to, href, allowPreview, ...props } = this.props;
+
     // if there's more than one image in the stack, and the first image has a different id, then remove it in a few seconds.
     if ((this.state.imageStack.length > 1) && (this.state.imageStack[0].imgId !== getImgIdFromProps(this.props))) {
       this.newImgTimeout = setTimeout(() => {
         this.setState((state) => { return { imageStack: state.imageStack.slice(1) }});
-      }, this.props.swapDelay)
+      }, swapDelay)
     }
 
-    const proportion = this.props.proportion || (1/this.props.image.aspectRatio);
+    const ratio = proportion || (1/image.aspectRatio);
 
     return (
       <div className="image stack__children--2">
         <div
-          className="image__viewport"
+          className={classnames('image__viewport', { 'image__viewport--shadow': hasShadow })}
           style={{
-            paddingBottom: `${proportion * 100}%`,
-            maxHeight: this.props.maxHeight
+            paddingBottom: `${ratio * 100}%`,
+            maxHeight: maxHeight
           }}
         >
+          <If condition={this.state.isPreview}>
+            <div className="image__preview">
+              <Img fluid={image} {...props} />
+            </div>
+          </If>
           {
             this.state.imageStack.map((img) => {
               return (
-                <div className="image__wrapper" key={img.imgId} style={{ animationDuration: `${this.props.swapDelay}ms` }}>
-                  <Img fluid={img.image} />
+                <div className="image__wrapper" key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={allowPreview && this.openPreview}>
+                  <If condition={to || href}>
+                    <Choose>
+                      <When condition={to}>
+                        <Link to={to} className="image__link"><span className="image__link-span" /></Link>
+                      </When>
+                      <When condition={href}>
+                        <a href={href} target="_blank" rel="noopener noreferrer" className="image__link" ><span className="image__link-span" /></a>
+                      </When>
+                    </Choose>
+                  </If>
+                  <Img fluid={img.image} {...props} />
                 </div>
               );
             })
           }
         </div>
         
-        <If condition={this.props.caption}>
-          <p className="caption monospace full-width">{this.props.caption}</p>
+        <If condition={caption}>
+          <p className="caption monospace full-width">{caption}</p>
         </If>
       </div>
     );
   }
 }
 
+Image.propTypes = {
+  image: PropTypes.instanceOf(Object).isRequired,
+  caption: PropTypes.string,
+  to: PropTypes.string,
+  href: PropTypes.string,
+  swapDelay: PropTypes.number,
+  proportion: PropTypes.number,
+  hasShadow: PropTypes.bool,
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  allowPreview: PropTypes.bool
+}
+
 Image.defaultProps = {
-  swapDelay: 800
+  swapDelay: 800,
+  allowPreview: true
 }
 
 export default Image;

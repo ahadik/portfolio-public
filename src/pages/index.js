@@ -5,6 +5,8 @@ import Page from "../components/Page/Page";
 import SEO from "../components/seo";
 import ImageCarousel from '../components/ImageCarousel';
 
+import './index.scss';
+
 class HomePage extends React.Component {
 
   constructor(props) {
@@ -53,7 +55,7 @@ class HomePage extends React.Component {
       }
     ];
 
-    this.SLIDE_DURATION = 10000;
+    this.SLIDE_DURATION = 8000;
 
     this.currentWords = this.currentWords.bind(this);
     this.maxLength = this.maxLength.bind(this);
@@ -84,7 +86,8 @@ class HomePage extends React.Component {
             textAlign: alignment,
             borderBottomColor: '#333',
             borderBottomStyle: 'solid',
-            borderBottomWidth: underline ? '1px' : '0px'
+            borderBottomWidth: underline ? '1px' : '0px',
+            height: `1.75rem`
           }
         }
       >{this.currentWords()[type]}</span>
@@ -95,17 +98,17 @@ class HomePage extends React.Component {
     return (
       <Page>
         <SEO title="Home" />
-        <div className="row">
+        <div className="row landing-page__introduction">
           <div className="col-4 mobile-col-12">
             <p className="monospace">Hello, my name is</p>
-            <h1 className="headline serif">Alex Hadik.</h1>
+            <h1 className="headline serif landing-page__name">Alex Hadik.</h1>
           </div>
         </div>
         <div className="row">
           <div className="col-4 mobile-col-12 stack__children--8">
-            <h4 className="serif">
+            <h5 className="serif">
               I like to {this.renderTextSnippet('verb')}<br /> things for {this.currentWords().subject}.
-            </h4>
+            </h5>
             <p className="serif">I'm {this.renderTextSnippet('title', 'center', true)} living in San Francisco – where I {this.currentWords().purpose}.</p>
           </div>
           <div className="col-8 mobile-col-12">

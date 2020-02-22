@@ -7,3 +7,5 @@
 // You can delete this file if you're not using it
 
 import './src/styles/global-classes.scss';
+require("prism-solarized-dark/prism-solarizeddark.css");
+require("prismjs/plugins/line-numbers/prism-line-numbers.css");

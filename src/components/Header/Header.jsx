@@ -50,14 +50,14 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="header">
+      <header className={classnames('header', {'header--visible': this.props.visible})}>
         <div className="header__content">
           <div className="header__left-content">
-            <h6 className="header__title serif">
+            <h4 className="header__title serif">
               <Link to="/">
                 {this.props.siteTitle}
               </Link>
-            </h6>
+            </h4>
           </div>
           <div className="header__right-content">
             <div className="header__desktop-nav desktop">

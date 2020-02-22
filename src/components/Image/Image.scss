@@ -1,14 +1,48 @@
 .image {
+
+  &__preview {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparentize($color: color(medium, black), $amount: 0.5);
+    z-index: 100;
+    left: 0;
+    top: 0;
+  }
+
   &__viewport {
     width: 100%;
     height: 0;
     position: relative;
     overflow: hidden;
+
+    &--shadow {
+      box-shadow: 0 0 4px color(light, gray);
+    }
   }
 
   &__wrapper {
     animation-name: imageFadeIn;
     animation-timing-function: ease;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__link {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  &__link-span {
+    display: block;
     position: absolute;
     width: 100%;
     height: 100%;

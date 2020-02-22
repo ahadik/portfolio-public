@@ -1,12 +1,12 @@
-$spacing-01: pxToEm(2px);
-$spacing-02: pxToEm(4px);
-$spacing-03: pxToEm(8px);
-$spacing-04: pxToEm(12px);
-$spacing-05: pxToEm(16px);
-$spacing-06: pxToEm(24px);
-$spacing-07: pxToEm(32px);
-$spacing-08: pxToEm(40px);
-$spacing-09: pxToEm(48px);
+$spacing-01: pxToRem(2px);
+$spacing-02: pxToRem(4px);
+$spacing-03: pxToRem(8px);
+$spacing-04: pxToRem(12px);
+$spacing-05: pxToRem(16px);
+$spacing-06: pxToRem(24px);
+$spacing-07: pxToRem(32px);
+$spacing-08: pxToRem(40px);
+$spacing-09: pxToRem(48px);
 
 $spacingVars: (
   1: $spacing-01,

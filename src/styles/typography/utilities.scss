@@ -8,102 +8,110 @@ $serifFamilies: "Merriweather", "Palatino Linotype", "Book Antiqua", Palatino, "
 @import './fontawesome/variables';
 @import './fontawesome/mixins';
 
-@function pxToEm($px) {
-  @return ($px / $base-font * 1em);
+@function pxToRem($px) {
+  @return ($px / $base-font * 1rem);
 }
 
-@function emToPx($em) {
-  @return (strip-unit($em) * $base-font);
+@function remToPx($rem) {
+  @return (strip-unit($rem) * $base-font);
 }
 
 $fontMultiplier: 1.125;
 
 $normalWeight: 400;
-$boldWeight: 700;
+$boldWeight: 600;
 $strongWeight: 900;
 
 $fontScale: (
   desktop: (
     headline: (
-      text: #{pow($fontMultiplier, 12)}em,
+      text: #{pow($fontMultiplier, 12)}rem,
       line: 1.26
     ),
     h1: (
-      text: #{pow($fontMultiplier, 10)}em,
+      text: #{pow($fontMultiplier, 10)}rem,
       line: 1.26
     ),
     h2: (
-      text: #{pow($fontMultiplier, 9)}em,
+      text: #{pow($fontMultiplier, 9)}rem,
       line: 1.26
     ),
     h3: (
-      text: #{pow($fontMultiplier, 8)}em,
+      text: #{pow($fontMultiplier, 8)}rem,
       line: 1.26
     ),
     h4: (
-      text: #{pow($fontMultiplier, 7)}em,
-      line: 1.26
+      text: #{pow($fontMultiplier, 6)}rem,
+      line: 1.58
     ),
     h5: (
-      text: #{pow($fontMultiplier, 6)}em,
+      text: #{pow($fontMultiplier, 4)}rem,
       line: 1.58
     ),
     h6: (
-      text: #{pow($fontMultiplier, 5)}em,
+      text: #{$fontMultiplier}rem,
       line: 1.58
     ),
     paragraph: (
-      text: #{pow($fontMultiplier, 2)}em,
-      line: 1.58
+      text: 1rem,
+      line: 1.875
+    ),
+    list: (
+      text: 1rem,
+      line: 1.875
     ),
     base: (
-      text: 1em,
+      text: 1rem,
       line: 1.26
     ),
     caption: (
-      text: #{pow($fontMultiplier, -2)}em,
-      line: 1.26
+      text: #{pow($fontMultiplier, -3)}rem,
+      line: 1.58
     )
   ),
   mobile: (
     headline: (
-      text: #{pow($fontMultiplier, 8)}em,
+      text: #{pow($fontMultiplier, 8)}rem,
       line: 1.26
     ),
     h1: (
-      text: #{pow($fontMultiplier, 6)}em,
+      text: #{pow($fontMultiplier, 6)}rem,
       line: 1.26
     ),
     h2: (
-      text: #{pow($fontMultiplier, 5)}em,
+      text: #{pow($fontMultiplier, 5)}rem,
       line: 1.26
     ),
     h3: (
-      text: #{pow($fontMultiplier, 4)}em,
+      text: #{pow($fontMultiplier, 4)}rem,
       line: 1.26
     ),
     h4: (
-      text: #{pow($fontMultiplier, 3)}em,
+      text: #{pow($fontMultiplier, 3)}rem,
       line: 1.58
     ),
     h5: (
-      text: #{pow($fontMultiplier, 2)}em,
+      text: #{$fontMultiplier}rem,
       line: 1.26
     ),
     h6: (
-      text: #{$fontMultiplier}em,
+      text: 1rem,
       line: 1.58
     ),
     paragraph: (
-      text: 1em,
+      text: 1rem,
+      line: 2.25
+    ),
+    list: (
+      text: 1rem,
       line: 2.25
     ),
     base: (
-      text: 1em,
+      text: 1rem,
       line: 1.26
     ),
     caption: (
-      text: #{pow($fontMultiplier, -2)}em,
+      text: #{pow($fontMultiplier, -2)}rem,
       line: 1.26
     )
   )
@@ -128,6 +136,7 @@ $fontScale: (
     line-height: lineHeight(h1, $format);
     font-weight: $normalWeight;
     color: $black;
+    margin-bottom: 0;
   }
 
   h2 {
@@ -135,6 +144,7 @@ $fontScale: (
     line-height: lineHeight(h2, $format);
     font-weight: $normalWeight;
     color: $black;
+    margin-bottom: 0;
   }
 
   h3 {
@@ -142,6 +152,7 @@ $fontScale: (
     line-height: lineHeight(h3, $format);
     font-weight: $normalWeight;
     color: $black;
+    margin-bottom: 0;
   }
 
   h4 {
@@ -149,6 +160,7 @@ $fontScale: (
     line-height: lineHeight(h4, $format);
     font-weight: $normalWeight;
     color: $black;
+    margin-bottom: 0;
   }
 
   h5 {
@@ -156,6 +168,7 @@ $fontScale: (
     line-height: lineHeight(h5, $format);
     font-weight: $normalWeight;
     color: $black;
+    margin-bottom: 0;
   }
 
   h6 {
@@ -163,6 +176,7 @@ $fontScale: (
     line-height: lineHeight(h6, $format);
     font-weight: $normalWeight;
     color: $black;
+    margin-bottom: 0;
   }
 
   p {
@@ -171,17 +185,24 @@ $fontScale: (
     font-weight: $normalWeight;
     max-width: 80ch;
     color: $black;
+    margin-bottom: 0;
 
     &.full-width {
       max-width: 100%;
     }
+  }
+  
+  ol, ul {
+    font-size: typeSize(list, $format);
+    line-height: lineHeight(list, $format);
+    margin-left: #{pow($fontMultiplier, 4)}rem;
   }
 
   a {
     color: $black;
   }
 
-  span, .base {
+  .base {
     font-size: typeSize(base, $format);
     line-height: lineHeight(base, $format);
     font-weight: $normalWeight;
@@ -212,4 +233,8 @@ $fontScale: (
 
 @mixin serif {
   font-family: $serifFamilies;
+}
+
+@mixin sans-serif {
+  font-family: $sansSerifFamilies;
 }

@@ -1,0 +1,48 @@
+$variants: (black, blue, green);
+
+.button {
+  @include sans-serif;
+
+  font-weight: $normalWeight;
+  padding: $spacing-03;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  transition: background-color 0.2s;
+  display: inline-block;
+
+  &--animate:hover &__icon-right {
+    transform: translateX(10px);
+  }
+
+  &__icon-right {
+    transform: translateX(0);
+    transition: transform 0.2s;
+  }
+
+  @each $variant in $variants {
+
+    &--#{$variant} {
+      color: color(dark, $variant);
+      border-color: color(dark, $variant);
+      border-width: 1px;
+      border-style: none;
+    }
+
+    &--#{$variant}#{&}--label {
+      background-color: transparentize(color(light, $variant), 1);
+    }
+
+    &--#{$variant}#{&}--fill {
+      background-color: color(light, $variant);
+    }
+
+    &--#{$variant}#{&}--bordered {
+      border-style: solid;
+  
+      &:hover {
+        background-color: color(dark, $variant);
+        color: color(light, black);
+      }
+    }
+  }
+}

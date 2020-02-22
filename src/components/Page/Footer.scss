@@ -1,0 +1,14 @@
+.footer {
+  padding: .5rem 1rem;
+  border-top: 1px solid color(light, gray);
+  margin-top: 1rem;
+
+  &__content {
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

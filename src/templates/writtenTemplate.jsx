@@ -2,6 +2,8 @@ import React from "react";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
+import './writtenTemplate.scss';
+
 import Image from '../components/Image';
 import Page from "../components/Page/Page";
 import Categories from '../components/Categories';
@@ -15,7 +17,7 @@ export default ({ data }) => {
 
   if (images) {
     images.forEach((img) => {
-      if (img.childImageSharp) {
+      if (img && img.childImageSharp) {
         postImages[img.name] = img.childImageSharp.fluid
       }
     })
@@ -23,11 +25,11 @@ export default ({ data }) => {
 
   return (
     <Page>
-      <div className="row">
-        <div className="col-8 col-offset-2 mobil-col-12">
-          <h1 className="serif">{title}</h1>
-          <p className="monospace secondary caption">{date}</p>
-          <div className="stack__children--6">
+      <div className="row written-content">
+        <div className="written-content__header col-8 col-offset-2 mobile-col-12">
+          <h1 className="serif written-content__title">{title}</h1>
+          <p className="monospace secondary caption written-content__date">{date}</p>
+          <div className="stack__children--6 written-content__categories">
             <Categories categoryIds={categories} categories={allCategories} />
             <If condition={excerpt}>
               <p>{excerpt}</p>
@@ -35,14 +37,14 @@ export default ({ data }) => {
           </div>
         </div>
         <If condition={featuredImgFluid}>
-          <div className="col-12">
-            <Image image={featuredImgFluid} imgId="featured_image" proportion={.4} caption={featuredImgCaption} />
+          <div className="written-content__featured-image col-12">
+            <Image image={featuredImgFluid} imgId="featured_image" caption={featuredImgCaption} />
           </div>
         </If>
-        <div className="serif col-8 col-offset-2 mobil-col-12">
+        <div className="written-content__body serif col-8 col-offset-2 mobile-col-12">
           <Choose>
             <When condition={post}>
-              <MDXRenderer test={{hello: 'world'}} images={postImages}>{post.body}</MDXRenderer>
+              <MDXRenderer images={postImages}>{post.body}</MDXRenderer>
             </When>
             <Otherwise>
               <div dangerouslySetInnerHTML={{  __html: post.html }} />
@@ -77,7 +79,7 @@ export const query = graphql`
         featuredImgCaption
         featuredImage {
           childImageSharp {
-            fluid(maxWidth: 1440) {
+            fluid(maxWidth: 1200) {
               ...GatsbyImageSharpFluid
             }
           }
@@ -85,7 +87,7 @@ export const query = graphql`
         images {
           name
           childImageSharp {
-            fluid(maxWidth: 1440) {
+            fluid(maxWidth: 1200) {
               ...GatsbyImageSharpFluid
             }
           }

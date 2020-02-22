@@ -57,10 +57,21 @@ module.exports = {
         path: `${__dirname}/src/data/`
       },
     },
-    `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-mdx`,
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              showLineNumbers: true
+            }
+          }
+        ]
+      }
+    },
     {
       resolve: 'gatsby-plugin-sass',
       options: {

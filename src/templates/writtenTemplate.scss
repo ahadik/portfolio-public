@@ -1,0 +1,23 @@
+.written-content {
+  h1, h2, h3, h4, h5, h6 {
+    @include sans-serif;
+
+    font-weight: $boldWeight;
+  }
+
+  &__header {
+    margin-bottom: 1rem;
+  }
+
+  &__date {
+    margin-top: 1rem
+  }
+
+  &__categories {
+    margin-top: 1rem;
+  }
+
+  &__featured-image {
+    margin-bottom: 2rem;
+  }
+}

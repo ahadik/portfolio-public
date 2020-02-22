@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i,900,900i&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,900&display=swap');
 
 @font-face {
   font-family: "SFMono-Regular";
@@ -7,11 +7,61 @@
   url("../fonts/sf-mono/SFMono-Regular.woff2") format("woff2");
 }
 
+// Font Awesome font file imports
 @import './fontawesome/fontawesome';
 @import './fontawesome/light';
 @import './fontawesome/regular';
 @import './fontawesome/solid';
+@import './fontawesome/brands';
 
+// Prism CSS shims
+.gatsby-highlight {
+  background-color: #002b36;
+  border-radius: 0.3em;
+  margin: 0;
+  padding: 1rem;
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
+
+.gatsby-highlight pre[class*="language-"] {
+  -webkit-overflow-scrolling: touch;
+}
+.gatsby-highlight pre[class*="language-"]::before {
+  background: black;
+  border-radius: 0 0 0.25rem 0.25rem;
+  color: white;
+  font-size: 12px;
+  letter-spacing: 0.025rem;
+  padding: 0.1rem 0.5rem;
+  position: absolute;
+  right: 1rem;
+  text-align: right;
+  text-transform: uppercase;
+  top: -1.5rem;
+  display: block;
+}
+
+@mixin language-tags($languages) {
+  @each $language in $languages {
+    .gatsby-highlight pre.language-#{$language}::before {
+        content: "#{$language}";
+        background: color(medium, gold);
+        color: black;
+      }
+  }
+}
+
+@include language-tags(jsx scss javascript html css);
+
+// Site styling
 body {
   font-family: $sansSerifFamilies; 
   font-weight: $normalWeight;
@@ -47,8 +97,143 @@ body {
   color: color(light, gray);
 }
 
+.center-text {
+  text-align: center;
+}
+
 blockquote {
   font-style: italic;
+  display: inline-block;
+  border-left: 3px solid color(light,gray);
+}
+
+ol, ul {
+  display: inline-block;
+}
+
+h1 + h2,
+h1 + p,
+h1 + .mdx-layout,
+h1 + .gallery,
+h1 + .image,
+h1 + ol,
+h1 + ul {
+  margin-top: #{$fontMultiplier}rem
+}
+
+h2 + h3,
+h2 + p,
+h2 + .mdx-layout,
+h2 + .gallery,
+h2 + .image,
+h2 + ol,
+h2 + ul {
+  margin-top: #{pow($fontMultiplier, -2)}rem
+}
+
+h3 + h4,
+h3 + p,
+h3 + .mdx-layout,
+h3 + .gallery,
+h3 + .image,
+h3 + ol,
+h3 + ul {
+  margin-top: #{pow($fontMultiplier, -3)}rem
+}
+
+h4 + h5,
+h4 + p,
+h4 + .mdx-layout,
+h4 + .gallery,
+h4 + .image,
+h4 + ol,
+h4 + ul {
+  margin-top: #{pow($fontMultiplier, -4)}rem
+}
+
+h5 + h6,
+h5 + p,
+h5 + .mdx-layout,
+h5 + .gallery,
+h5 + .image,
+h5 + ol,
+h5 + ul {
+  margin-top: #{pow($fontMultiplier, -5)}rem
+}
+
+h6 + p,
+h6 + .mdx-layout,
+h6 + .gallery,
+h6 + .image,
+h6 + ol,
+h6 + ul {
+  margin-top: #{pow($fontMultiplier, -6)}rem
+}
+
+p + h1 {
+  margin-top: #{pow($fontMultiplier, 3)}rem
+}
+
+p + h2 {
+  margin-top: #{pow($fontMultiplier, 2)}rem
+}
+
+ul + h3,
+ol + h3,
+p + h3,
+ul + h4,
+ol + h4,
+p + h4 {
+  margin-top: #{$fontMultiplier}rem
+}
+
+p + p,
+p + ol,
+p + ul,
+ol + p,
+ul + p,
+p + h6,
+p + h5,
+p + .mdx-layout,
+p + .gallery,
+p + .image {
+  margin-top: 1rem;
+}
+
+.gallery + h4,
+.gallery + h5,
+.gallery + h6,
+.gallery + p,
+.mdx-layout + h4,
+.mdx-layout + h5,
+.mdx-layout + h6,
+.mdx-layout + p,
+.image + h4,
+.image + h5,
+.image + h6,
+.image + p {
+  margin-top: 1rem;
+}
+
+blockquote + h1,
+.gallery + h1,
+.mdx-layout + h1,
+.image + h1 {
+  margin-top: #{pow($fontMultiplier, 6)}rem;
+}
+
+blockquote + h2,
+.gallery + h2,
+.mdx-layout + h2,
+.image + h2 {
+  margin-top: #{pow($fontMultiplier, 5)}rem;
+}
+
+blockquote + h3,
+.gallery + h3,
+.mdx-layout + h3,
+.image + h3 {
+  margin-top: #{pow($fontMultiplier, 4)}rem;
 }
 
 @include typography(desktop);

@@ -6,6 +6,17 @@
 const path = require('path');
 const { createFilePath } = require('gatsby-source-filesystem');
 
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        "~components": path.resolve(__dirname, "src/components")
+      }
+    }
+  });
+};
+
+
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
 
@@ -41,7 +52,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allMdx.edges.forEach(({ node }) => {
     createPage({
       path: node.fields.slug,
-      component: path.resolve('./src/templates/workTemplate.jsx'),
+      component: path.resolve('./src/templates/writtenTemplate.jsx'),
       context: {
         slug: node.fields.slug
       }
