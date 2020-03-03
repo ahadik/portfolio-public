@@ -28,10 +28,24 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       node,
       name: 'slug',
-      value: `/${instanceType}${slug}`
+      value: (instanceType === 'pages') ? slug : `/${instanceType}${slug}`
     });
+
+    
   }
 }
+
+const templateByInstanceName = (node) => {
+  switch (node.parent.sourceInstanceName) {
+    case 'work':
+      return './src/templates/written/template.jsx';
+    case 'writing':
+      return './src/templates/written/template.jsx';
+    case 'pages':
+      return './src/templates/page/template.jsx';
+  }
+}
+
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
@@ -40,6 +54,11 @@ exports.createPages = async ({ graphql, actions }) => {
       allMdx {
         edges {
           node {
+            parent {
+              ... on File {
+                sourceInstanceName
+              }
+            }
             fields {
               slug
             }
@@ -52,7 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allMdx.edges.forEach(({ node }) => {
     createPage({
       path: node.fields.slug,
-      component: path.resolve('./src/templates/writtenTemplate.jsx'),
+      component: path.resolve(templateByInstanceName(node)),
       context: {
         slug: node.fields.slug
       }

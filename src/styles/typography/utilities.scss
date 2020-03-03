@@ -49,7 +49,7 @@ $fontScale: (
       line: 1.58
     ),
     h6: (
-      text: #{$fontMultiplier}rem,
+      text: #{pow($fontMultiplier, -1)}rem,
       line: 1.58
     ),
     paragraph: (
@@ -128,55 +128,37 @@ $fontScale: (
 @mixin typography($format) {
   .headline {
     font-size: typeSize(headline, $format);
-    font-weight: $normalWeight;
+    font-weight: $boldWeight;
   }
 
   h1 {
     font-size: typeSize(h1, $format);
     line-height: lineHeight(h1, $format);
-    font-weight: $normalWeight;
-    color: $black;
-    margin-bottom: 0;
   }
 
   h2 {
     font-size: typeSize(h2, $format);
     line-height: lineHeight(h2, $format);
-    font-weight: $normalWeight;
-    color: $black;
-    margin-bottom: 0;
   }
 
   h3 {
     font-size: typeSize(h3, $format);
     line-height: lineHeight(h3, $format);
-    font-weight: $normalWeight;
-    color: $black;
-    margin-bottom: 0;
   }
 
   h4 {
     font-size: typeSize(h4, $format);
     line-height: lineHeight(h4, $format);
-    font-weight: $normalWeight;
-    color: $black;
-    margin-bottom: 0;
   }
 
   h5 {
     font-size: typeSize(h5, $format);
     line-height: lineHeight(h5, $format);
-    font-weight: $normalWeight;
-    color: $black;
-    margin-bottom: 0;
   }
 
   h6 {
     font-size: typeSize(h6, $format);
     line-height: lineHeight(h6, $format);
-    font-weight: $normalWeight;
-    color: $black;
-    margin-bottom: 0;
   }
 
   p {

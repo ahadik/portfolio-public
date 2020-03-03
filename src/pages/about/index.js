@@ -47,6 +47,7 @@ query AboutQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }

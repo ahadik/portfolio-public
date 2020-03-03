@@ -1,25 +1,83 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Img from "gatsby-image";
+import classnames from 'classnames';
+
+import Lightbox from '~components/Lightbox';
 
 import './Gallery.scss';
 
 // Renders only Image children, and sets up an auto-layout such that all children are in a row on desktop, and stacked on mobile.
-const Gallery = ({children, caption}) => {
+class Gallery extends React.Component {
+  
+  constructor(props) {
+    super(props);
 
-  return (
-    <div className="gallery">
-      {React.Children.map(children, (child) => {
-        if((child.props.mdxType === 'Image') && (child.props.imgs && child.props.name)) {
-          const image = child.props.imgs[child.props.name]
-          return (<div className="gallery__item" style={{ flexGrow: image.aspectRatio }}>{child}</div>);
-        }
-      })}
-      <If condition={caption}>
-        <div className="gallery__caption">
-          <p className="monospace caption">{caption}</p>
+    this.state = {
+      activePreview: undefined
+    }
+
+    this.flipPreview = this.flipPreview.bind(this);
+    this.closePreview = this.closePreview.bind(this);
+  }
+
+  flipPreview(image) {
+    this.setState({ activePreview: image });
+  }
+
+  closePreview() {
+    this.setState({ activePreview: undefined });
+  }
+
+  render() {
+    const { children, caption, allowWrap } = this.props;
+    return (
+      <div className={classnames('gallery', { 'gallery--wrapping': allowWrap })}>
+        <If condition={this.state.activePreview}>
+          <Lightbox onClose={this.closePreview}>
+            <div className="gallery__preview-content">
+              <div className="gallery__preview-image-container">
+                <div className="gallery__preview-image" style={{ maxWidth: this.state.activePreview.presentationWidth || '70%' }}>
+                  <Img fluid={this.state.activePreview} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
+                </div>
+                <If condition={caption}>
+                  <p className="caption monospace full-width gallery__preview-caption">{caption}</p>
+                </If>
+              </div>
+              <div className="gallery__preview-strip">
+                {React.Children.map(children, (child) => {
+                  if((child.props.mdxType === 'Image') && (child.props.imgs && child.props.name)) {
+                    const image = child.props.imgs[child.props.name];
+                    return (
+                      <div className="gallery__preview-thumbnail" onClick={() => this.flipPreview(image)}>
+                        <Img fluid={image} imgStyle={{ objectFit: 'contain' }} style={{width: `calc(${image.aspectRatio} * 7rem)` }} />
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+          </Lightbox>
+        </If>
+        <div className="gallery__body">
+          {React.Children.map(children, (child) => {
+            if((child.props.mdxType === 'Image') && (child.props.imgs && child.props.name)) {
+              const image = child.props.imgs[child.props.name];
+              return (<div className="gallery__item"  onClick={() => this.flipPreview(image)} style={{ flexGrow: image.aspectRatio }}>{React.cloneElement(child, { allowPreview: false })}</div>);
+            }
+          })}
         </div>
-      </If>
+        <If condition={caption}>
+          <p className="monospace caption gallery__caption">{caption}</p>
+        </If>
       </div>
-  );
+    );
+  }
+}
+
+Gallery.propTypes = {
+  caption: PropTypes.string,
+  allowWrap: PropTypes.bool
 }
 
 export default Gallery;

@@ -65,8 +65,8 @@ Button.defaultProps = {
 Button.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node.isRequired,
-    PropTypes.arrayOf(PropTypes.node).isRequired
-  ]),
+    PropTypes.arrayOf(PropTypes.node)
+  ]).isRequired,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
   variant: PropTypes.oneOf(['black', 'blue', 'green']),

@@ -1,15 +1,104 @@
-.gallery {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+$strip-height: 6rem;
 
-  &__item + &__item {
-    margin-left: $spacing-04;
+.gallery {
+  margin-left: -$spacing-02;
+  margin-right: -$spacing-02;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  &__body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  &--wrapping &__body {
+    flex-wrap: wrap;
   }
 
   &__caption {
     flex-basis: 100%;
     margin-top: $spacing-02;
+    max-width: 100%;
+  }
+
+  &__preview-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__preview-image-container {
+    flex-grow: 1;
+    max-height: calc(100% - #{$strip-height});
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  &__preview-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-grow: 1;
+  }
+
+  &__preview-caption {
+    color: color(light, black);
+    text-align: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+  }
+
+  &__preview-strip {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: calc(100% + #{$spacing-08 * 2});
+    height: #{$strip-height + $spacing-08};
+    padding: $spacing-04 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    z-index: 10;
+    margin-left: -$spacing-08;
+    margin-right: -$spacing-08;
+    margin-bottom: -$spacing-08;
+    margin-top: $spacing-04;
+    position: relative;
+    border-top: 1px solid transparentize(color(medium, gray), 0.5);
+  }
+
+  &__preview-thumbnail {
+    cursor: pointer;
+    margin-left: 1rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__preview-tile {
+    position: relative;
+  }
+
+  &__item {
+    cursor: pointer;
+    margin: $spacing-02;
+  }
+
+  &--wrapping &__item {
+    min-width: 30%;
   }
 
   @include mobile {

@@ -1,0 +1,130 @@
+---
+title: "Transcriptic and Strateos"
+subtitle: "Company History and Overview"
+date: "2020-03-01"
+featuredImage: "transcriptic-strateos.png"
+excerpt: "Transcriptic was founded in 2012 to transform the life sciences from a field of manual labor into one of
+automation. Over seven years, until 2019, Transcriptic made dramatic progress in this regard. However, in February
+of 2019, a strategic opportunity to expand the potential of Transcriptic's technology presented itself: a merger with
+3Scan – a 3D tissue imaging startup. Over the course of 2019 Transcriptic and 3Scan combined and re-branded to Strateos.
+Together, as a single entity, Strateos is positioned to push its technology further than ever before."
+images:
+  - ginkgo-dashboard.jpg
+  - ipad-webapp.png
+  - scientist-dashboard.jpg
+  - robotic-dashboard.jpg
+  - workcell.jpg
+  - lilly-lab.jpg
+  - lilly-arm.jpg
+  - lilly-chemspeed.jpg
+---
+
+import Image from '~components/MdxImage';
+import Gallery from '~components/Gallery';
+import YouTube from '~components/YouTube';
+import Button from '~components/Button';
+import MdxLayout from '~components/MdxLayout';
+import TextTip from '~components/TextTip';
+
+> At Strateos, our mission is to turn the life sciences into an information technology, driven by data, computation, and
+  high-throughput robotics with the goal of substantially advancing drug discovery. Our team brings together deep
+  expertise in biology, automation, and software engineering to set new standards for the way scientific research is done.
+
+#### Product Overview
+Starting in 2012, Transcriptic developed the first robotic cloud laboratory for on-demand life science research. This
+platform consisted of state-of-the-art life-science devices mechanically integrated by robotics. The Transcriptic Common Lab
+Environment (TCLE) – a cloud-based software suite – enabled scientists to submit and manage scientific experiments on
+the robotic platform all through a single web-based user interface. Top pharmaceutical and biotech companies used the
+Transcriptic robotic cloud lab in their own labs as well as externally through Transcriptic’s Cloud Bioassay Services.
+
+<Image imgs={props.images} name="ginkgo-dashboard" caption="A scientist at Ginkgo Bioworks uses the Transcriptic dashboard in one of their on-premise biology foundries." />
+
+Today, Transcriptic's products have been re-branded under the Strateos identity. Strateos supports Transcriptic's
+original users – while simultaneously expanding the platform's capabilities to cloud-based biology
+and <TextTip content="The branch of chemistry concerned with the creation of new pharmaceuticals.">medicinal chemistry</TextTip> experimentation.
+Researchers can remotely submit their experiments, and sit back while our robots do the work. Along the way, they can
+track the progress of their expirment in real time, allowing them to focus on accelerating discoveries instead of
+labor-intensive bench work.
+
+###### Advantages
+- Scientists can focus on generating hypotheses and designing and analyzing experiments instead of doing tedious lab
+  work.
+- Reproducibility is improved with reduced chance of human error, saving time and money while accelerating drug
+  development timelines.
+- Capital expenditures are reduced on expensive equipment that’s used for a fraction of the time.
+
+<YouTube src="https://www.youtube.com/embed/wD_MSomDlVA" />
+
+<div style={{ marginLeft: 'auto', marginRight: 'auto', marginBottom: '1rem', width: 'fit-content', marginTop: '2rem' }}>
+  <Button to="/" animateRight hasBorder iconRight="fal fa-long-arrow-right">Learn About My Role</Button>
+</div>
+
+#### Strateos Products
+Strateos's software addresses three separate categories of user needs. Several independent web applications provide
+interfaces for these needs.
+
+###### Cloud-Based Science
+Strateos customers use our web app to perform biological assays and medicinal chemistry synthesis remotely, using our
+robotic cloud infrastructure. This is our only customer facing application and demands the most design input.
+
+<div class="row" style={{ marginBottom: '1rem' }}>
+  <div className="col-10 col-offset-1 mobile-col-12 mobile-col-offset-0">
+    <Image imgs={props.images} name="ipad-webapp" caption="Screenshot of a qPCR dataset as seen on the Strateos web application." />
+  </div>
+</div>
+
+###### Internal Lab Management
+Strateos lab operators use an Admin Application to manage Strateos's lab inventory, keep tabs on the inventory of
+clients, and launch and manage experiments that have been submitted by customers. The tasks that operators must complete
+while following prompts from this application are extremely complex and crucial to execute correctly. A single misstep
+could damage the entire supply of a customer’s sample.
+
+<Image imgs={props.images} name="scientist-dashboard" caption="A Strateos Scientist launching a customer's experiment using the TCLE Dashboard." />
+
+###### Robotic Operation
+Strateos operates robotic modules for executing biology experiments remotely. Lab operators manage these modules using a
+scheduling dashboard. This app displays the current activity of the robotics, as well as tasks the operator needs to
+complete for the module, such as handing off new materials, or receiving processed materials. It also exposes actions
+the operator can take directly, such as emergency procedures or direct debugging commands.
+
+<Image imgs={props.images} name="robotic-dashboard" caption="The Operator workstation attached to a Strateos robotic workcell." />
+
+#### Strateos Robotic Lab Facilities
+The software described above is backed by robotic facilities, capable of carrying out experiments with little to no
+human intervention. They're akin to data-centers, but the unit of operation being manipulation of measurement of
+physical samples, instead of computation. Presently, Strateos operates two robotic labs.
+
+###### Menlo Park
+Our Menlo Park laboratory is Strateos's original facility, built by the Transcriptic team. It houses
+four <TextTip content={<span><b>Workcell:</b> A collection of automated devices, each with capabilities useful to scientific experimentation, that are physically integrated by robotic arms. The arms move experimental samples between devices.</span>}>workcells</TextTip> that
+each have different scientific capabilities.
+
+<Image imgs={props.images} name="workcell" caption="One of the robotic workcells in operation in the Menlo Park robotic lab facility." />
+
+We do most of our testing and development at this facility – before rolling out software and hardware improvements to
+our other labs.
+
+###### San Diego
+After learning substantial lessons building and operating our Menlo Park facility, Strateos was ready to expand our
+capabilities beyond biology alone. We partnered with Eli Lilly to bring online an 11,000 square foot robotic lab
+in San Diego.
+
+<MdxLayout fullWidth>
+  <Gallery caption="The Strateos San Diego Cloud Lab houses 11,000 square feet of biological and chemical automation.">
+    <Image imgs={props.images} name="lilly-lab" />
+    <Image imgs={props.images} name="lilly-arm" />
+    <Image imgs={props.images} name="lilly-chemspeed" />
+  </Gallery>
+</MdxLayout>
+
+The facility is capable automating of both biology experiments as well as medicinal chemistry synthesis. Together, this
+allows us to offer the tools for automated closed loop drug discovery – a first-of-its-kind capability.
+
+#### A Design-Forward Product
+Over the course of my 3+ years at Transcriptic and Strateos, I've focused on creating a culture of design across the
+company. The life sciences so often ignore user-centered product development in favor of scientific exploration, and
+I've made it my charge to ensure that our products are built with a design-centered methodology.
+
+<div style={{ marginLeft: 'auto', marginRight: 'auto', marginBottom: '1rem', width: 'fit-content', marginTop: '2rem' }}>
+  <Button to="/" animateRight hasBorder iconRight="fal fa-long-arrow-right">Learn About My Role</Button>
+</div>

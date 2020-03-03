@@ -164,6 +164,7 @@ query IndexQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }
@@ -171,6 +172,7 @@ query IndexQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }
@@ -178,6 +180,7 @@ query IndexQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }
@@ -185,6 +188,7 @@ query IndexQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }
@@ -192,6 +196,7 @@ query IndexQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }
@@ -199,6 +204,7 @@ query IndexQuery {
     childImageSharp {
       fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
+        presentationWidth
       }
     }
   }

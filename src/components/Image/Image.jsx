@@ -4,6 +4,8 @@ import Img from "gatsby-image";
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+import Lightbox from '~components/Lightbox';
+
 import './Image.scss';
 
 /*
@@ -57,7 +59,12 @@ class Image extends React.Component {
     }
   }
 
+  componentDidMount() {
+    document.addEventListener('keydown', this._handleKeyDown);
+  }
+
   componentWillUnmount() {
+    document.removeEventListener('keydown', this._handleKeyDown);
     clearTimeout(this.newImgTimeout);
   }
 
@@ -92,14 +99,21 @@ class Image extends React.Component {
           }}
         >
           <If condition={this.state.isPreview}>
-            <div className="image__preview">
-              <Img fluid={image} {...props} />
-            </div>
+            <Lightbox onClose={this.closePreview}>
+              <div className="image__preview-container">
+                <div className="image__preview" style={{ maxWidth: image.presentationWidth || '70%' }}>
+                  <Img fluid={image} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
+                </div>
+                <If condition={caption}>
+                  <p className="caption monospace full-width image__preview-caption">{caption}</p>
+                </If>
+              </div>
+            </Lightbox>
           </If>
           {
             this.state.imageStack.map((img) => {
               return (
-                <div className="image__wrapper" key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={allowPreview && this.openPreview}>
+                <div className={classnames('image__wrapper', { 'image__wrapper--no-preview': !allowPreview })} key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={allowPreview ? this.openPreview : undefined}>
                   <If condition={to || href}>
                     <Choose>
                       <When condition={to}>
@@ -118,7 +132,7 @@ class Image extends React.Component {
         </div>
         
         <If condition={caption}>
-          <p className="caption monospace full-width">{caption}</p>
+          <p className="caption monospace full-width image__caption">{caption}</p>
         </If>
       </div>
     );

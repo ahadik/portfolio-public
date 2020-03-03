@@ -10,7 +10,7 @@ const StorybookLink = ({ href }) => {
       iconLeft="fab fa-react"
       iconRight="fal fa-long-arrow-right"
       animateRight
-    >See in Storybook</Button>
+    >See Live in Storybook</Button>
   );
 }
 

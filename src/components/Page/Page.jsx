@@ -19,14 +19,19 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      prevScrollPos: window.pageYOffset,
-      visible: true
-    }
+    let prevScrollPos;
 
     this.handleScroll = _.throttle(this.handleScroll.bind(this), 250);
 
-    window.addEventListener('scroll', this.handleScroll);
+    if (typeof window !== `undefined`) {
+      window.addEventListener('scroll', this.handleScroll);
+      prevScrollPos = window.pageYOffset;
+    }
+
+    this.state = {
+      prevScrollPos,
+      visible: true
+    }
   }
 
   componentWillUnmount() {

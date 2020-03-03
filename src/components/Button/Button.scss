@@ -4,11 +4,14 @@ $variants: (black, blue, green);
   @include sans-serif;
 
   font-weight: $normalWeight;
-  padding: $spacing-03;
   font-size: 1rem;
   margin: 0.5rem 0;
   transition: background-color 0.2s;
   display: inline-block;
+
+  &--animate#{&}--bordered {
+    padding: $spacing-03 $spacing-05;
+  }
 
   &--animate:hover &__icon-right {
     transform: translateX(10px);
@@ -38,6 +41,7 @@ $variants: (black, blue, green);
 
     &--#{$variant}#{&}--bordered {
       border-style: solid;
+      padding: $spacing-03;
   
       &:hover {
         background-color: color(dark, $variant);
