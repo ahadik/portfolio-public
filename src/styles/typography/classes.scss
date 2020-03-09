@@ -212,7 +212,8 @@ p + h5,
 p + h6,
 p + .mdx-layout,
 p + .gallery,
-p + .image {
+p + .image,
+p + .button {
   margin-top: 1rem;
 }
 
@@ -220,14 +221,20 @@ p + .image {
 .gallery + h5,
 .gallery + h6,
 .gallery + p,
+.gallery + ol,
+.gallery + ul,
 .mdx-layout + h4,
 .mdx-layout + h5,
 .mdx-layout + h6,
 .mdx-layout + p,
+.mdx-layout + ol,
+.mdx-layout + ul,
 .image + h4,
 .image + h5,
 .image + h6,
-.image + p {
+.image + p,
+.image + ol,
+.image + ul {
   margin-top: 1rem;
 }
 
@@ -250,6 +257,32 @@ blockquote + h3,
 .mdx-layout + h3,
 .image + h3 {
   margin-top: #{pow($fontMultiplier, 4)}rem;
+}
+
+ol {
+  margin-left: #{pow($fontMultiplier, 4)}rem;
+}
+
+ul {
+  list-style: none;
+  margin-left: #{pow($fontMultiplier, 6)}rem;
+
+  li {
+    position: relative;
+
+    &::before {
+      font-family: 'Font Awesome 5 Pro';
+      font-weight: 400;
+      content: '\f178';
+      color: color(dark, green);
+      position: absolute;
+      transform: translateX(calc(-100% - #{$spacing-03}));
+    }
+  }
+}
+
+.clear-list-style {
+  @include clear-list-style;
 }
 
 @include typography(desktop);

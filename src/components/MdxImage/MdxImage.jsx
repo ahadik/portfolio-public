@@ -6,7 +6,11 @@ import ImagePrime from '../Image';
 const Image = ({imgs, name, ...props}) => {
 
   if (imgs && imgs[name]) {
-    return <ImagePrime image={imgs[name]} {...props} />;
+    if (imgs[name].fluid) {
+      return <ImagePrime image={imgs[name].fluid} {...props} />;
+    } else if (imgs[name].publicURL) {
+      return <img src={imgs[name].publicURL} {...props} />;
+    }
   }
   return null;
 }

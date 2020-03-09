@@ -13,6 +13,11 @@
         "icon": "fal fa-code"
       },
       {
+        "name": "Design Ops",
+        "id": "design-ops",
+        "icon": "fal fa-cogs"
+      },
+      {
         "name": "Carpentry",
         "id": "carpentry",
         "icon": "fal fa-hammer"
@@ -21,6 +26,21 @@
         "name": "Marketing",
         "id": "marketing",
         "icon": "fal fa-camera-retro"
+      },
+      {
+        "name": "Transcriptic",
+        "id": "transcriptic",
+        "icon": "fal fa-microscope"
+      },
+      {
+        "name": "Personal Project",
+        "id": "personal",
+        "icon": "fal fa-user-astronaut"
+      },
+      {
+        "name": "School Project",
+        "id": "school",
+        "icon": "fal fa-university"
       }
     ]
   }

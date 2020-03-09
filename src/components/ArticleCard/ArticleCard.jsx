@@ -12,11 +12,13 @@ const ArticleCard = (props) => {
         <h5 className="serif invert article-card__title">{props.title}</h5>
         <div className="stack__children--3">
           <p className="caption monospace invert-secondary article-card__date"><b>{props.date}</b></p>
-          <p className="caption monospace invert-secondary article-card__date">{props.categories.join(', ')}</p>
+          <p className="caption monospace invert-secondary article-card__date">{props.categories.sort().join(', ')}</p>
         </div>
       </div>
       <div className="article-card__background">
-        <Img fluid={props.image.childImageSharp.fluid} style={{ paddingBottom: '100%', height: 0 }} />
+        <If condition={props.image}>
+          <Img fluid={props.image.childImageSharp.fluid} style={{ paddingBottom: '100%', height: 0 }} />
+        </If>
       </div>
     </div>
   );

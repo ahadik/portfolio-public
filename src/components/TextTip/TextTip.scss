@@ -1,7 +1,18 @@
+$underline-color: color(light, green);
+
 .text-tip {
   &__spawner {
-    text-decoration: underline;
     cursor: pointer;
+    background-image: linear-gradient(to right, $underline-color 100%, $underline-color 100%);
+    background-position: 0 1.05em;
+    background-repeat: repeat-x;
+    background-size: 100% 3px;
+    transition: background-size 0.2s, background-position 0.2s;
+  
+    &:hover {
+      background-size: 100% 100%;
+      background-position: 0 0em;
+    }
   }
 
   &__tip {

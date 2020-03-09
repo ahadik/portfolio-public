@@ -11,7 +11,7 @@ export default ({ data }) => {
   if (data) {
     const post = data.mdx;
     const featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
-    const { title, subtitle, excerpt, featuredImgCaption, images } = post.frontmatter;
+    const { title, subtitle, excerpt, images } = post.frontmatter;
     const postImages = {};
 
     if (images) {
@@ -38,7 +38,7 @@ export default ({ data }) => {
           </div>
           <If condition={featuredImgFluid}>
             <div className="page-content__featured-image col-12">
-              <Image image={featuredImgFluid} imgId="featured_image" caption={featuredImgCaption} />
+              <Image image={featuredImgFluid} imgId="featured_image" />
             </div>
           </If>
           <div className="page-content__body serif col-8 col-offset-2 mobile-col-12">

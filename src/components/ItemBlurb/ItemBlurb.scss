@@ -1,0 +1,12 @@
+.item-blurb {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+  }
+}

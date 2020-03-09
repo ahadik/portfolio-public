@@ -68,6 +68,7 @@
 
 .header-menu {
   @include monospace;
+  @include clear-list-style;
 
   display: flex;
   list-style: none;

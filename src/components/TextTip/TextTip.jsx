@@ -1,5 +1,6 @@
 import React from 'react';
 import Tooltip from 'rc-tooltip';
+import PropTypes from 'prop-types';
 
 import './TextTip.scss';
 
@@ -9,6 +10,17 @@ const TextTip = ({ content, children }) => {
       <span className="text-tip__spawner">{children}</span>
     </Tooltip>
   );
+}
+
+TextTip.propTypes = {
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node)
+  ]).isRequired
 }
 
 export default TextTip;

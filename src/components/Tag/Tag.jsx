@@ -11,7 +11,7 @@ const Tag = ({ icon, name, onClose }) => {
       </If>
       <span className="monospace caption">{name}</span>
       <If condition={onClose}>
-      <i className="option-tagtag__times-icon fal fa-times" onClick={onClose} />
+      <i className="option-tag__times-icon fal fa-times" onClick={onClose} />
       </If>
     </div>
   );

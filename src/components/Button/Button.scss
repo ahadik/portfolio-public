@@ -1,13 +1,25 @@
-$variants: (black, blue, green);
+$variants: (black, blue, green, white);
 
 .button {
   @include sans-serif;
 
   font-weight: $normalWeight;
   font-size: 1rem;
-  margin: 0.5rem 0;
+  margin: 0;
   transition: background-color 0.2s;
   display: inline-block;
+  cursor: pointer;
+  height: min-content;
+  white-space: nowrap;
+
+  &--small {
+    font-size: 0.79rem;
+  }
+
+  &--bordered {
+    border-width: 1px;
+    padding: $spacing-03;
+  }
 
   &--animate#{&}--bordered {
     padding: $spacing-03 $spacing-05;
@@ -27,7 +39,6 @@ $variants: (black, blue, green);
     &--#{$variant} {
       color: color(dark, $variant);
       border-color: color(dark, $variant);
-      border-width: 1px;
       border-style: none;
     }
 
@@ -41,11 +52,13 @@ $variants: (black, blue, green);
 
     &--#{$variant}#{&}--bordered {
       border-style: solid;
-      padding: $spacing-03;
-  
       &:hover {
         background-color: color(dark, $variant);
-        color: color(light, black);
+        @if ($variant == white) {
+          color: $black;
+        } @else {
+          color: color(light, black);
+        }
       }
     }
   }

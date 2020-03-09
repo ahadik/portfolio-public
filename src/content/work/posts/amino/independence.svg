@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#24597C;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;stroke-dasharray:28.7586,27.6083;}
+	.st4{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;stroke-dasharray:28.8934,27.7377;}
+</style>
+<circle class="st0" cx="150" cy="150" r="150"/>
+<g>
+	<circle class="st1" cx="149.7" cy="53.4" r="25"/>
+	<circle class="st1" cx="67" cy="196.6" r="25"/>
+	<ellipse transform="matrix(0.1602 -0.9871 0.9871 0.1602 1.6033 395.1445)" class="st1" cx="233" cy="196.6" rx="25" ry="25"/>
+	<path class="st2" d="M143.2,64.3l6.3-10.8l6.3,10.8"/>
+	<path class="st3" d="M169.6,88.2l49.7,85.6"/>
+	<path class="st2" d="M226.2,185.7l6.3,10.8H220"/>
+	<path class="st4" d="M192.3,196.5H92.9"/>
+	<path class="st2" d="M79,196.5H66.5l6.3-10.8"/>
+	<path class="st3" d="M86.6,161.8l49.7-85.6"/>
+</g>
+</svg>

@@ -38,7 +38,14 @@ class Gallery extends React.Component {
             <div className="gallery__preview-content">
               <div className="gallery__preview-image-container">
                 <div className="gallery__preview-image" style={{ maxWidth: this.state.activePreview.presentationWidth || '70%' }}>
-                  <Img fluid={this.state.activePreview} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
+                  <Choose>
+                    <When condition={this.state.activePreview.fluid}>
+                      <Img fluid={this.state.activePreview.fluid} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
+                    </When>
+                    <When condition={this.state.activePreview.publicURL}>
+                      <img src={this.state.activePreview.publicURL} style={{ position: 'absolute', height: '100%', width: '100%', objectFit: 'contain' }} />
+                    </When>
+                  </Choose>
                 </div>
                 <If condition={caption}>
                   <p className="caption monospace full-width gallery__preview-caption">{caption}</p>
@@ -50,7 +57,14 @@ class Gallery extends React.Component {
                     const image = child.props.imgs[child.props.name];
                     return (
                       <div className="gallery__preview-thumbnail" onClick={() => this.flipPreview(image)}>
-                        <Img fluid={image} imgStyle={{ objectFit: 'contain' }} style={{width: `calc(${image.aspectRatio} * 7rem)` }} />
+                        <Choose>
+                          <When condition={image.fluid}>
+                            <Img fluid={image.fluid} imgStyle={{ objectFit: 'contain' }} style={{width: `calc(${image.fluid.aspectRatio} * 7rem)` }} />
+                          </When>
+                          <When condition={image.publicURL}>
+                            <img src={image.publicURL} />
+                          </When>
+                        </Choose>
                       </div>
                     );
                   }
@@ -63,7 +77,11 @@ class Gallery extends React.Component {
           {React.Children.map(children, (child) => {
             if((child.props.mdxType === 'Image') && (child.props.imgs && child.props.name)) {
               const image = child.props.imgs[child.props.name];
-              return (<div className="gallery__item"  onClick={() => this.flipPreview(image)} style={{ flexGrow: image.aspectRatio }}>{React.cloneElement(child, { allowPreview: false })}</div>);
+              return (
+                <div className="gallery__item" onClick={() => this.flipPreview(image)} style={{ flexGrow: image.aspectRatio || 1 }}>
+                  {React.cloneElement(child, { allowPreview: false })}
+                </div>
+              );
             }
           })}
         </div>

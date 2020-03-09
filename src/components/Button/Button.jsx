@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import './Button.scss';
 
-const Button = ({ children, iconLeft, iconRight, variant, style, hasBorder, onClick, to, href, animateRight }) => {
+const Button = ({ children, iconLeft, iconRight, variant, style, hasBorder, onClick, to, href, animateRight, small }) => {
 
   function buttonClasses(...additionalClasses) {
     return classnames(
@@ -16,7 +16,8 @@ const Button = ({ children, iconLeft, iconRight, variant, style, hasBorder, onCl
       ...additionalClasses,
       {
         'button--bordered': hasBorder,
-        'button--animate': animateRight
+        'button--animate': animateRight,
+        'button--small': small
       }
     );
   }
@@ -69,13 +70,14 @@ Button.propTypes = {
   ]).isRequired,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
-  variant: PropTypes.oneOf(['black', 'blue', 'green']),
+  variant: PropTypes.oneOf(['black', 'blue', 'green', 'white']),
   style: PropTypes.oneOf(['label', 'fill']),
   hasBorder: PropTypes.bool,
   onClick: PropTypes.func,
   to: PropTypes.string,
   href: PropTypes.string,
-  animateRight: PropTypes.bool
+  animateRight: PropTypes.bool,
+  small: PropTypes.bool
 }
 
 export default Button;

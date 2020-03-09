@@ -6,7 +6,7 @@ excerpt: "One of the most common tasks for a Transcriptic user is viewing datase
 we run for them. The data viewing and interpretation tools available to life scientists today are surprisingly limited,
 and a powerful feature of Transcriptic is the ability to immediately explore and understand data right in the
 Transcriptic webapp. However, this experience had suffered neglect and needed UX and engineering improvements."
-categories: [ui-ux, code]
+categories: [ui-ux, code, transcriptic]
 images:
   - as-is.png
   - affinity-mapping.png
@@ -42,11 +42,12 @@ images:
   - ipad-dataset-view.png
 ---
 
-import TextTip from '../../../../components/TextTip';
-import MdxLayout from '../../../../components/MdxLayout';
-import Image from '../../../../components/MdxImage';
-import Gallery from '../../../../components/Gallery';
-import StorybookLink from '../../../../components/StorybookLink';
+import TextTip from '~components/TextTip';
+import MdxLayout from '~components/MdxLayout';
+import Image from '~components/MdxImage';
+import Gallery from '~components/Gallery';
+import StorybookLink from '~components/StorybookLink';
+import ItemBlurb from '~components/ItemBlurb';
 
 #### Problem Statement
 Transcriptic offers full transparency into the data captured during an experiment. When we execute a user's experiment,
@@ -69,38 +70,37 @@ Finally, the existing interface lacked clean aesthetics and made it difficult fo
 Working from the initial framing of this project, I identified the following stakeholder groups for which my solution would need to work:
 
 <MdxLayout layout="1:1:1" fullWidth showBorderBottom>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-    <div style={{ height: '180px', width: '180px', marginBottom: '2rem' }}>
-      <Image imgs={props.images} name="scientist-human" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-    </div>
+  <ItemBlurb
+    image={<Image imgs={props.images} name="scientist-human" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    imageSize={{ width: 180, height: 180 }}
+  >
 
   ###### Scientist Users
   The external users of Transcriptic hold many different titles, from Lab Managers to Accountants to Scientists.
   However, Scientists are typically the only members of a team that analyze datasets, so their needs will be the focus
   of this project.
 
-  </div>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-    <div style={{ height: '180px', width: '180px', marginBottom: '2rem' }}>
-      <Image imgs={props.images} name="employee-human" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-    </div>
+  </ItemBlurb>
+  <ItemBlurb
+    image={<Image imgs={props.images} name="employee-human" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    imageSize={{ width: 180, height: 180 }}
+  >
 
   ###### Internal Scientists
-  A good portion of Transcriptic's daily users are Transcriptic employees, responsible for customer success, scientific
-  development, or simple lab maintenance. These individuals are frequent consumers of datasets.
+  A good portion of Transcriptic's daily users are Transcriptic employees, responsible for customer success, scientific development, or simple lab maintenance. These individuals are frequent consumers of datasets.
 
-  </div>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-    <div style={{ height: '180px', width: '180px', marginBottom: '2rem' }}>
-      <Image imgs={props.images} name="engineer-human" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-    </div>
+  </ItemBlurb>
+  <ItemBlurb
+    image={<Image imgs={props.images} name="engineer-human" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    imageSize={{ width: 180, height: 180 }}
+  >
 
   ###### Software Engineers
   As Transcriptic adds new scientific capabilities, our engineering team is responsible for
   building out the accompanying dataset visualizations. My proposals need to reduce the engineering team's burden and
   likelihood of introducing visual bugs.
 
-  </div>
+  </ItemBlurb>
 </MdxLayout>
 
 ##### Job To Be Done

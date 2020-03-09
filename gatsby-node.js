@@ -10,7 +10,8 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        "~components": path.resolve(__dirname, "src/components")
+        "~components": path.resolve(__dirname, "src/components"),
+        "~images": path.resolve(__dirname, "src/images")
       }
     }
   });
@@ -36,6 +37,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 
 const templateByInstanceName = (node) => {
+  console.log(node.parent.sourceInstanceName, node.fields.slug);
   switch (node.parent.sourceInstanceName) {
     case 'work':
       return './src/templates/written/template.jsx';

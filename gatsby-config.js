@@ -26,7 +26,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `writing`,
-        path: `${__dirname}/src/pages/writing/posts/`,
+        path: `${__dirname}/src/content/writing/posts/`,
       },
     },
     {
@@ -34,7 +34,7 @@ module.exports = {
       options: {
         name: `pages`,
         path: `${__dirname}/src/content/`,
-        ignore: [`work/`, 'writing/']
+        ignore: [`${__dirname}/src/content/work/posts/**`, `${__dirname}/src/content/writing/posts/**`]
       },
     },
     {
@@ -42,6 +42,14 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/pages/`,
+        ignore: [`**/*.mdx`]
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/content/`,
         ignore: [`**/*.mdx`]
       },
     },
@@ -96,6 +104,14 @@ module.exports = {
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      }
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /images/
+        }
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality

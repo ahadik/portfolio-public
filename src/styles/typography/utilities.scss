@@ -66,7 +66,7 @@ $fontScale: (
     ),
     caption: (
       text: #{pow($fontMultiplier, -3)}rem,
-      line: 1.58
+      line: 2.03
     )
   ),
   mobile: (
@@ -177,7 +177,6 @@ $fontScale: (
   ol, ul {
     font-size: typeSize(list, $format);
     line-height: lineHeight(list, $format);
-    margin-left: #{pow($fontMultiplier, 4)}rem;
   }
 
   a {
@@ -219,4 +218,13 @@ $fontScale: (
 
 @mixin sans-serif {
   font-family: $sansSerifFamilies;
+}
+
+@mixin clear-list-style {
+  margin-left: 0;
+  
+  li::before {
+    display: none;
+    content: '';
+  }
 }

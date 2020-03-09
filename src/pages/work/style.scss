@@ -1,0 +1,54 @@
+.transcriptic-block {
+  padding: $spacing-06;
+  background-color: $tx-blue;
+
+  &__logo {
+    width: pxToRem(300px);
+    @include mobile {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    @include mobile {
+      flex-wrap: wrap;
+    }
+  }
+
+  &__text {
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: pxToRem(400px);
+
+    @include mobile {
+      flex-basis: 100%;
+      margin-bottom: $spacing-04;
+      text-align: center;
+    }
+  }
+
+  &__buttons {
+    flex-grow: 0;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 0;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: -$spacing-04;
+
+    & > * {
+      margin-bottom: $spacing-04 !important;
+    }
+
+    @include mobile {
+      justify-content: center;
+      flex-basis: 100%;
+    }
+  }
+}

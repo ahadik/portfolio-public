@@ -4,22 +4,26 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 
 import './styling.scss';
 
-import Image from '../../components/Image';
-import Page from "../../components/Page/Page";
-import Categories from '../../components/Categories';
+import Image from "~components/Image";
+import Page from "~components/Page";
+import Categories from "~components/Categories";
+import Link from "~components/Link";
 
 export default ({ data }) => {
   if (data) {
     const post = data.mdx;
     const featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
-    const { title, date, excerpt, categories, featuredImgCaption, images } = post.frontmatter;
+    const { title, date, excerpt, categories, images } = post.frontmatter;
     const allCategories = data.allWorkCategoriesJson.nodes[0].categories.entries;
     const postImages = {};
 
     if (images) {
       images.forEach((img) => {
-        if (img && img.childImageSharp) {
-          postImages[img.name] = img.childImageSharp.fluid
+        if (img) {
+          postImages[img.name] = {
+            fluid: img.childImageSharp && img.childImageSharp.fluid,
+            publicURL: img.publicURL
+          }
         }
       })
     }
@@ -39,7 +43,12 @@ export default ({ data }) => {
           </div>
           <If condition={featuredImgFluid}>
             <div className="written-content__featured-image col-12">
-              <Image image={featuredImgFluid} imgId="featured_image" caption={featuredImgCaption} />
+              <Image image={featuredImgFluid} imgId="featured_image" />
+            </div>
+          </If>
+          <If condition={categories.includes('transcriptic')}>
+            <div className="col-8 col-offset-2 mobile-col-12 stack__item--4">
+              <p className="serif">👋 Before you get going, you might check out this quick <Link to="/transcriptic">primer on Transcriptic and Strateos</Link>.</p>
             </div>
           </If>
           <div className="written-content__body serif col-8 col-offset-2 mobile-col-12">
@@ -80,7 +89,6 @@ export const query = graphql`
         date(formatString: "MMMM DD, YYYY")
         excerpt
         categories
-        featuredImgCaption
         featuredImage {
           childImageSharp {
             fluid(maxWidth: 1300) {
@@ -97,6 +105,8 @@ export const query = graphql`
               presentationWidth
             }
           }
+          extension
+          publicURL
         }
       }
     }

@@ -6,6 +6,8 @@ $padding: $spacing-03;
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-bottom: $spacing-04;
+  border-bottom: 1px solid color(light, gray);
 
   &__checkbox-input {
     position: absolute;
@@ -21,9 +23,6 @@ $padding: $spacing-03;
 
     &:before {
       content: '\f0c8';
-      // height: .7em;
-      // width: .7em;
-      // border: 1px solid color(dark, gray);
       display: block;
       margin-right: $spacing-04;
       font-family: 'Font Awesome 5 Pro';
@@ -45,6 +44,7 @@ $padding: $spacing-03;
     background-color: $white;
     padding: $padding;
     white-space: nowrap;
+    align-items: center;
 
     &:hover {
       background-color: color(light, gray);
@@ -74,7 +74,7 @@ $padding: $spacing-03;
     flex-direction: column;
     position: absolute;
     top: 100%;
-    transform: translateY(-#{$spacing-01});
+    transform: translateY(-#{$spacing-06});
     opacity: 0;
     left: -$spacing-05;
     border: 1px solid color(medium, gray);
@@ -87,7 +87,7 @@ $padding: $spacing-03;
     &--open {
       opacity: 1;
       visibility: visible;
-      transform: translateY(#{$spacing-03});
+      transform: translateY(-#{$spacing-03});
     }
   }
 

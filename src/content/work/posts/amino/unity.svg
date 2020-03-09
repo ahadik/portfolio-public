@@ -1,0 +1,15 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#24597C;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;}
+</style>
+<circle class="st0" cx="150" cy="150" r="150"/>
+<g>
+	<circle class="st1" cx="149.7" cy="54.4" r="25"/>
+	<circle class="st1" cx="67" cy="197.6" r="25"/>
+	<ellipse transform="matrix(0.1602 -0.9871 0.9871 0.1602 0.6162 395.9843)" class="st1" cx="233" cy="197.6" rx="25" ry="25"/>
+	<path class="st2" d="M149.5,54.5l83,143h-166L149.5,54.5z"/>
+</g>
+</svg>
