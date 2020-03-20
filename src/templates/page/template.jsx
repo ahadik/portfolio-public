@@ -1,9 +1,12 @@
 import React from "react";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { MDXProvider } from "@mdx-js/react"
 
-import Image from '../../components/Image';
-import Page from "../../components/Page/Page";
+import {default as CoreImage} from '~components/Image';
+import Page from "~components/Page/Page";
+import SEO from "~components/seo";
+import generateShortcodes from '~templates/shortcodes';
 
 import './style.scss';
 
@@ -22,8 +25,11 @@ export default ({ data }) => {
       })
     }
 
+    const shortcodes = generateShortcodes(postImages);
+
     return (
       <Page>
+        <SEO title={title} />
         <div className="row page-content">
           <div className="page-content__header col-8 col-offset-2 mobile-col-12">
             <h1 className="page-content__title">{title}</h1>
@@ -38,13 +44,15 @@ export default ({ data }) => {
           </div>
           <If condition={featuredImgFluid}>
             <div className="page-content__featured-image col-12">
-              <Image image={featuredImgFluid} imgId="featured_image" />
+              <CoreImage image={featuredImgFluid} imgId="featured_image" disablePreview />
             </div>
           </If>
           <div className="page-content__body serif col-8 col-offset-2 mobile-col-12">
             <Choose>
               <When condition={post}>
-                <MDXRenderer images={postImages}>{post.body}</MDXRenderer>
+                <MDXProvider components={shortcodes}>
+                  <MDXRenderer images={postImages}>{post.body}</MDXRenderer>
+                </MDXProvider>
               </When>
               <Otherwise>
                 <div dangerouslySetInnerHTML={{  __html: post.html }} />
@@ -74,6 +82,7 @@ export const query = graphql`
     }
     mdx(fields: { slug: { eq: $slug } }) {
       body
+      tableOfContents
       frontmatter {
         title
         subtitle

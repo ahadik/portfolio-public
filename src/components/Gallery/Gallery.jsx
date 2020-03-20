@@ -30,7 +30,7 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { children, caption, allowWrap } = this.props;
+    const { children, caption, allowWrap, imgs } = this.props;
     return (
       <div className={classnames('gallery', { 'gallery--wrapping': allowWrap })}>
         <If condition={this.state.activePreview}>
@@ -53,8 +53,8 @@ class Gallery extends React.Component {
               </div>
               <div className="gallery__preview-strip">
                 {React.Children.map(children, (child) => {
-                  if((child.props.mdxType === 'Image') && (child.props.imgs && child.props.name)) {
-                    const image = child.props.imgs[child.props.name];
+                  if((child.props.mdxType === 'Image') && child.props.name) {
+                    const image = imgs[child.props.name];
                     return (
                       <div className="gallery__preview-thumbnail" onClick={() => this.flipPreview(image)}>
                         <Choose>
@@ -75,8 +75,8 @@ class Gallery extends React.Component {
         </If>
         <div className="gallery__body">
           {React.Children.map(children, (child) => {
-            if((child.props.mdxType === 'Image') && (child.props.imgs && child.props.name)) {
-              const image = child.props.imgs[child.props.name];
+            if((child.props.mdxType === 'Image') && child.props.name) {
+              const image = imgs[child.props.name];
               return (
                 <div className="gallery__item" onClick={() => this.flipPreview(image)} style={{ flexGrow: image.aspectRatio || 1 }}>
                   {React.cloneElement(child, { allowPreview: false })}

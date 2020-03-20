@@ -158,7 +158,7 @@ export const  query = graphql`
       }
     }
     allMdx(
-      filter: { fileAbsolutePath: {regex : "\/work/"} }
+      filter: { fields: { slug: { glob: "/work/*" } } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       totalCount

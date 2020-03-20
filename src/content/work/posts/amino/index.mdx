@@ -23,14 +23,11 @@ images:
   - macbook-demo.png
 ---
 
-import { graphql } from "gatsby"
-
-import Gallery from '~components/Gallery';
-import Image from '~components/MdxImage';
-import MdxLayout from '~components/MdxLayout';
-import Link from '~components/Link';
-
 import AminoPosts from './amino-posts.jsx';
+
+###### A Quick Note
+This project spans many years – and this page offers an overview of its origins. More details on individual aspects of this project can be found in these case studies:
+<AminoPosts />
 
 #### Why a Design System?
 When I first joined Transcriptic, I was the only designer supporting more than two dozen engineers and scientists. It quickly became apparent to me that no matter how hard I tried, I would never be able to provide design support to every new feature. The timelines and product demands were simply too much to keep up with. Furthermore, I kept seeing the same UI regressions popping up over and over again: broken layouts, inconsistent interactions, CSS name collisions...
@@ -44,28 +41,32 @@ Getting the buy-in to put time and resources towards a Design System at a rapidl
 ###### 1: Maximize Team Productivity
 So much of design and engineering's time went into re-implementing UI experiences and re-solving small design challenges in our many views and applications. Furthermore, I did not have the capacity to provide detailed mocks for all new features – I needed to help the engineering team build new polished UIs without my input. *There were clear productivity gains to be had by centralizing the common aspects our user interface design and engineering.*
 
-<Gallery caption="Two different tables in the same Strateos app, each with similar functionality, implemented in different ways.">
-  <Image imgs={props.images} name="inventory-table" hasShadow />
-  <Image imgs={props.images} name="location-table" hasShadow />
-</Gallery>
+<MdxLayout fullWidth>
+  <Gallery caption="Two different tables in the same Strateos app, each with similar functionality, implemented in different ways.">
+    <Image name="inventory-table" hasShadow />
+    <Image name="location-table" hasShadow />
+  </Gallery>
+</MdxLayout>
 
 ###### 2: Align Design Languages
 The Transcriptic stack consists of four separate apps. Lacking a shared design language, their visual design, interaction patterns and affordances had begun to diverge – creating a jarring experience for users (namely Transcriptic employees) moving between them. *Standardizing the design languages across all of our apps would dramatically improve the user experience.*
 
-<Gallery caption="Viewing an experiment as a customer and employee. There are some shared elements, but the two views have different layouts, hierarchy and interactions.">
-  <Image imgs={props.images} name="user-run" />
-  <Image imgs={props.images} name="admin-run" />
-</Gallery>
+<MdxLayout fullWidth>
+  <Gallery caption="Viewing an experiment as a customer and employee. There are some shared elements, but the two views have different layouts, hierarchy and interactions.">
+    <Image name="user-run" />
+    <Image name="admin-run" />
+  </Gallery>
+</MdxLayout>
 
 ###### 3. Cleanup A Fragmented User Experience
 Even within individual Transcriptic apps, our user experience was clunky, and our visual design brittle. It felt like every day we needed to patch a UI regression introduced by a seemingly innocuous bug fix or feature release. *Building our interface from centrally maintained components and styling utilities would greatly reduce the amount of time we spent patching UI regressions.*
 
-<Image imgs={props.images} name="spacing-task" caption="An example of one of the dozens of UI bug tickets that would get filed with our engineering team." />
+<Image name="spacing-task" caption="An example of one of the dozens of UI bug tickets that would get filed with our engineering team." />
 
 ###### 4. Reduce and Simplify UI Code
 Lacking a well-maintained, centralized set of UI components and styling utilities, our codebase was bloated with duplicate code that was extremely vulnerable to unintentional CSS overrides and side-effects. *Using carefully implemented and maintained React components and Sass mixins/variables would increase our development speed, and reduce the amount of styling side-effects introduced by new features.*
 
-<Image imgs={props.images} name="typography" caption="Our codebase had new and legacy typography systems demonstrating how unnecessarily opaque and complex our styling code was." />
+<Image name="typography" caption="Our codebase had new and legacy typography systems demonstrating how unnecessarily opaque and complex our styling code was." />
 
 ##### Reception
 My proposal to address these four goals was met warmly by our VP of Engineering. I got the green-light to spend a substantial amount of my time a design system.
@@ -74,7 +75,7 @@ My proposal to address these four goals was met warmly by our VP of Engineering.
 To begin, I drew on my experience working on the <Link href="http://www.carbondesignsystem.com/">IBM Carbon Design System</Link> and developed four core principles to drive the development of the Design System.
 
 <MdxLayout layout="2:10" className="stack__item--6">
-  <Image imgs={props.images} name="autonomy" />
+  <Image name="autonomy" />
 
   <div>
 
@@ -84,7 +85,7 @@ All Transcriptic UIs should feel unified. Even though each of our many tools acc
   </div>
 </MdxLayout>
 <MdxLayout layout="2:10" className="stack__item--6">
-  <Image imgs={props.images} name="independence" />
+  <Image name="independence" />
 
   <div>
 
@@ -94,7 +95,7 @@ Each piece of Amino performs on its own. This is a UX and engineering ideal. For
   </div>
 </MdxLayout>
 <MdxLayout layout="2:10" className="stack__item--6">
-  <Image imgs={props.images} name="autonomy" />
+  <Image name="autonomy" />
 
   <div>
 
@@ -104,7 +105,7 @@ The compose-ability and structure of Amino lets developers work autonomously, wi
   </div>
 </MdxLayout>
 <MdxLayout layout="2:10" className="stack__item--6">
-  <Image imgs={props.images} name="focus" />
+  <Image name="focus" />
 
   <div>
 
@@ -118,12 +119,14 @@ We do software and biology, and Amino is made by software developers and biologi
 ##### Component Audit
 To understand the full scope of the Transcriptic UI footprint, I walked through each of our apps and took screenshots of every unique aspect of the UI that I could find, such as visual components and layouts. I printed these screenshots out and cut them up into their constituent parts. Then, I performed some basic affinity mapping to understand into which groups the various components fell.
 
-<Gallery caption="Grouping UI elements together by functionality allowed me to see where we had duplicated UI code.">
-  <Image imgs={props.images} name="component-audit-1" />
-  <Image imgs={props.images} name="component-audit-2" />
-  <Image imgs={props.images} name="component-audit-3" />
-  <Image imgs={props.images} name="component-audit-4" />
-</Gallery>
+<MdxLayout fullWidth>
+  <Gallery caption="Grouping UI elements together by functionality allowed me to see where we had duplicated UI code.">
+    <Image name="component-audit-1" />
+    <Image name="component-audit-2" />
+    <Image name="component-audit-3" />
+    <Image name="component-audit-4" />
+  </Gallery>
+</MdxLayout>
 
 From here, the next step was to consolidate this set of UI elements down into a Sketch Library of sharable components.
 

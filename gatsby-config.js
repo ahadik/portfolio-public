@@ -84,7 +84,8 @@ module.exports = {
             options: {
               showLineNumbers: true
             }
-          }
+          },
+          `gatsby-remark-slug`
         ]
       }
     },

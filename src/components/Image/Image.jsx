@@ -78,7 +78,7 @@ class Image extends React.Component {
 
   render() {
 
-    const { swapDelay, proportion, image, hasShadow, maxHeight, caption, to, href, allowPreview, ...props } = this.props;
+    const { swapDelay, proportion, image, hasShadow, maxHeight, caption, to, href, disablePreview, isScreenshot, ...props } = this.props;
 
     // if there's more than one image in the stack, and the first image has a different id, then remove it in a few seconds.
     if ((this.state.imageStack.length > 1) && (this.state.imageStack[0].imgId !== getImgIdFromProps(this.props))) {
@@ -90,7 +90,7 @@ class Image extends React.Component {
     const ratio = proportion || (1/image.aspectRatio);
 
     return (
-      <div className="image stack__children--2">
+      <div className={classnames('image', 'stack__children--2', { 'image--screenshot': isScreenshot })}>
         <div
           className={classnames('image__viewport', { 'image__viewport--shadow': hasShadow })}
           style={{
@@ -113,7 +113,7 @@ class Image extends React.Component {
           {
             this.state.imageStack.map((img) => {
               return (
-                <div className={classnames('image__wrapper', { 'image__wrapper--no-preview': !allowPreview })} key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={allowPreview ? this.openPreview : undefined}>
+                <div className={classnames('image__wrapper', { 'image__wrapper--no-preview': disablePreview })} key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={!disablePreview ? this.openPreview : undefined}>
                   <If condition={to || href}>
                     <Choose>
                       <When condition={to}>
@@ -148,12 +148,13 @@ Image.propTypes = {
   proportion: PropTypes.number,
   hasShadow: PropTypes.bool,
   maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  allowPreview: PropTypes.bool
+  disablePreview: PropTypes.bool,
+  isScreenshot: PropTypes.bool
 }
 
 Image.defaultProps = {
   swapDelay: 800,
-  allowPreview: true
+  disablePreview: false
 }
 
 export default Image;

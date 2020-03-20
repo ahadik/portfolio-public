@@ -6,12 +6,12 @@
   "author": "Alex Hadik <alex@alexhadik.com>",
   "dependencies": {
     "@mdx-js/mdx": "^1.5.5",
-    "@mdx-js/react": "^1.5.5",
+    "@mdx-js/react": "^1.5.7",
     "@mdx-js/runtime": "^1.5.5",
     "@reach/router": "^1.3.3",
     "classnames": "^2.2.6",
     "gatsby": "^2.19.24",
-    "gatsby-cli": "^2.10.0",
+    "gatsby-cli": "^2.10.10",
     "gatsby-image": "^2.2.39",
     "gatsby-plugin-manifest": "^2.2.39",
     "gatsby-plugin-mdx": "^1.0.71",
@@ -23,6 +23,7 @@
     "gatsby-remark-images": "^3.1.44",
     "gatsby-remark-prismjs": "^3.3.31",
     "gatsby-remark-relative-images": "^0.2.3",
+    "gatsby-remark-slug": "^0.1.0",
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-transformer-json": "^2.2.26",
     "gatsby-transformer-remark": "^2.6.50",
@@ -36,7 +37,8 @@
     "rc-tooltip": "^4.0.0-alpha.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "remark-slug": "^5.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

@@ -9,6 +9,11 @@ $underline-color: color(medium, gold);
   background-size: 100% 3px;
   transition: background-size 0.2s, background-position 0.2s;
 
+  &--id {
+    $underline-color: color(medium, green);
+    background-image: linear-gradient(to right, $underline-color 100%, $underline-color 100%);
+  }
+
   &:hover {
     background-size: 100% 100%;
     background-position: 0 0em;

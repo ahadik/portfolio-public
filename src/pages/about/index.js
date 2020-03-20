@@ -1,9 +1,9 @@
 import React from 'react';
 import { graphql } from "gatsby"
 
-import Page from "../../components/Page/Page";
-import SEO from "../../components/seo";
-import Image from '../../components/Image';
+import Page from "~components/Page/Page";
+import SEO from "~components/seo";
+import Image from '~components/Image';
 
 import './about.scss';
 

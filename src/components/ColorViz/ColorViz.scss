@@ -1,0 +1,116 @@
+$sampleHeight: 26px;
+$stickHeight: 15px;
+$pickerSize: 9px;
+
+.color-viz {
+  position: relative;
+  margin: 40px;
+
+  &__title {
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    margin-bottom: $spacing-04;
+  }
+
+  &__control {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: $spacing-06;
+    margin-left: auto;
+    margin-right: auto;
+    width: min-content;
+  }
+
+  &__input {
+    margin-left: $spacing-03;
+    margin-right: $spacing-03;
+  }
+
+  &__reset {
+    cursor: pointer;
+    color: color(medium, blue);
+    font-size: 0.75rem;
+    margin-top: -3px;
+    margin-left: $spacing-03;
+  }
+  
+  &__samples {
+    height: $sampleHeight;
+  }
+
+  &__palette {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+.scale {
+  width: 100%;
+  height: 40px;
+  border: 1px solid lightgray;
+  background-image: linear-gradient(to left, white, black);
+  margin: 10px 0;
+}
+
+.sample {
+  z-index: 1;
+  position: absolute;
+  transform: translateX(-50%);
+  
+  &:before {
+    position: absolute;
+    content: ' ';
+    display: block;
+    width: 1px;
+    height: $stickHeight;
+    background-color: lightgray;
+    left: 50%;
+  }
+
+  &--top:before {
+    transform: translate(-50%, $sampleHeight);
+  }
+
+  &--bottom:before {
+    transform: translate(-50%, -$stickHeight);
+  }
+
+  &__picker {
+    display: block;
+    height: $pickerSize;
+    width: $pickerSize;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+  }
+    
+  &--top &__picker {
+    transform: translate(-50%, ($stickHeight + $sampleHeight));
+  }
+
+  &--bottom &__picker {
+    transform: translate(-50%, -($stickHeight + $pickerSize));
+  }
+  
+  &__box {
+    width: $sampleHeight;
+    height: $sampleHeight;
+    position: relative;
+    border: 1px solid lightgray;
+    border-radius: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.color-viz-swatch {
+  height: 30px;
+  display: block;
+  flex-grow: 1;
+}

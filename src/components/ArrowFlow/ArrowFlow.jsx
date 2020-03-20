@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './ArrowFlow.scss';
 
-const ArrowFlow = ({ children, itemSize, itemStyle, itemClass }) => {
+const ArrowFlow = ({ children, itemSize, itemStyle, itemClass, ...props }) => {
   let itemStylePrime = itemStyle || {};
   
   if (itemSize) {
@@ -19,7 +19,7 @@ const ArrowFlow = ({ children, itemSize, itemStyle, itemClass }) => {
   }
 
   return (
-    <div className="arrow-flow inline__children--6">
+    <div className="arrow-flow inline__children--6" {...props}>
       {
         React.Children.map(children, (child, index) => {
           return (

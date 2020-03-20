@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import './Link.scss';
 
-const Link = ({ to, href, children, ...props }) => {
+const Link = ({ to, href, children, id, ...props }) => {
   return (
     <Choose>
       <When condition={to}>
@@ -12,6 +12,9 @@ const Link = ({ to, href, children, ...props }) => {
       </When>
       <When condition={href}>
         <a className="link" href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+      </When>
+      <When condition={id}>
+      <a className="link link--id" href={id}>{children}</a>
       </When>
     </Choose>
   );
@@ -23,7 +26,8 @@ Link.propTypes = {
     PropTypes.arrayOf(PropTypes.node)
   ]).isRequired,
   href: PropTypes.string,
-  to: PropTypes.string
+  to: PropTypes.string,
+  id: PropTypes.string
 }
 
 export default Link;

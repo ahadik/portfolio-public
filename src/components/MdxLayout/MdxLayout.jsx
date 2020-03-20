@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import './MdxLayout.scss';
@@ -22,7 +23,7 @@ const parseLayout = (layout) => {
   return values.map(num => num * multiplier);
 };
 
-const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom, className}) => {
+const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom, className, ...props}) => {
   let defaultLayout;
   if (!layout) {
     // create a default layout that best fits all the children in to a single row.
@@ -55,6 +56,7 @@ const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom
           classes
         )
       }
+      {...props}
     >
       {React.Children.map(children, (child, index) => {
         return (
@@ -65,6 +67,15 @@ const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom
       })}
     </div>
   );
+};
+
+MdxLayout.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
+  layout: PropTypes.string,
+  fullWidth: PropTypes.bool,
+  showBorderTop: PropTypes.bool,
+  showBorderBottom: PropTypes.bool,
+  className: PropTypes.string
 };
 
 export default MdxLayout;

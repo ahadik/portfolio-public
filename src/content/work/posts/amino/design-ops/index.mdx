@@ -12,21 +12,33 @@ images:
   - storybook.png
   - react.png
   - sketch.png
+  - sketch-screenshot.png
+  - icons.png
+  - icon-export-console.png
+  - fontello-screenshot.png
+  - connected-components-screenshot.png
+  - zeplin-screenshot.png
+  - zeplin-colors.png
+  - zeplin-typography.png
+  - zeplin-component.png
+  - sass-file.png
+  - storybook-screenshot.png
+  - story-file.png
+  - chromatic-screenshot.png
+  - macbook-documentation-site.png
+  - component-markdown.png
+  - component-proptypes.png
+  - component-documentation-page.png
+  - documentation-z-index.png
+  - documentation-colorway.png
 ---
-
-import MdxLayout from '~components/MdxLayout';
-import Image from '~components/MdxImage';
-import Link from '~components/Link';
-import TextTip from '~components/TextTip';
-import ArrowFlow from '~components/ArrowFlow';
-import ItemBlurb from '~components/ItemBlurb';
 
 #### The Amino Ecosystem
 Amino consists of seven tools, each of which integrate with each other to assist designers and developers in their work.
 
-<MdxLayout layout="1:1:1" fullWidth>
+<MdxLayout layout="1:1:1" fullWidth style={{ marginTop: '2rem' }}>
   <ItemBlurb
-    image={<Image imgs={props.images} name="sketch" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="sketch" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
@@ -35,7 +47,7 @@ Amino consists of seven tools, each of which integrate with each other to assist
 
   </ItemBlurb>
   <ItemBlurb
-    image={<Image imgs={props.images} name="fontello" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="fontello" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
@@ -44,7 +56,7 @@ Amino consists of seven tools, each of which integrate with each other to assist
 
   </ItemBlurb>
   <ItemBlurb
-    image={<Image imgs={props.images} name="zeplin" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="zeplin" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
@@ -53,18 +65,18 @@ Amino consists of seven tools, each of which integrate with each other to assist
 
   </ItemBlurb>
 </MdxLayout>
-<MdxLayout layout="1:1:1" fullWidth>
+<MdxLayout layout="1:1:1" fullWidth style={{ marginTop: '2rem' }}>
   <ItemBlurb
-    image={<Image imgs={props.images} name="react" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="react" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
-  ###### React
-  The <Link href="/amino/typography">typography</Link>, <Link href="/amino/colorway">colors</Link>, <Link href="">grid system</Link> and components defined in our Sketch Library are reflected in code in a React codebase – which is distrbuted as an NPM package. 
+  ###### React/Sass
+  The <Link href="/amino/typography">typography</Link>, <Link href="/amino/colorway">colors</Link>, <Link href="">grid system</Link> and components defined in our Sketch Library are reflected in code in a React codebase with Sass styling – which is distrbuted as an NPM package.
 
   </ItemBlurb>
   <ItemBlurb
-    image={<Image imgs={props.images} name="storybook" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="storybook" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
@@ -73,7 +85,7 @@ Amino consists of seven tools, each of which integrate with each other to assist
 
   </ItemBlurb>
   <ItemBlurb
-    image={<Image imgs={props.images} name="chromatic" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="chromatic" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
@@ -82,10 +94,10 @@ Amino consists of seven tools, each of which integrate with each other to assist
 
   </ItemBlurb>
 </MdxLayout>
-<MdxLayout layout="1:1:1" fullWidth>
+<MdxLayout layout="1:1:1" fullWidth style={{ marginTop: '2rem', marginBottom: '2rem' }}>
   <div />
   <ItemBlurb
-    image={<Image imgs={props.images} name="amino-docs" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />}
+    image={<Image name="amino-docs" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 100, height: 100 }}
   >
 
@@ -99,25 +111,242 @@ Amino consists of seven tools, each of which integrate with each other to assist
 #### Foundation Design vs. Product Design
 The Design Team uses these tools in different ways, depending on whether we are working on foundation design, or production design.
 
-**Foundation Design** is any design work that is focused on the expansion or improvement of Amino – such as a new component, or improved typography. Our design stack for Foundation Design flows in the following order:
+###### Foundation Design
+This includes any design work that is focused on the expansion or improvement of Amino – such as a new component, or improved typography. Our design stack for Foundation Design flows in the following order:
 
-<ArrowFlow itemSize={{ width: 50, height: 50}}>
-  <Image imgs={props.images} name="sketch" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="zeplin" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="react" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="storybook" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="chromatic" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
+<ArrowFlow itemSize={{ width: 50, height: 50}} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+  <ToolTip content="Sketch"><Image name="sketch" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="Zeplin"><Image name="zeplin" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="React"><Image name="react" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="Storybook"><Image name="storybook" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="Chromatic"><Image name="chromatic" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
 </ArrowFlow>
 
 Initial designs are completed in Sketch, before being communicated to engineers team in Zeplin. Engineers work from Zeplin to implement additions or improvements, using Storybook as their point of reference. Finally, their work is tested in Chromatic, to make sure that they have added only intentional visual changes.
 
-**Production Design** work is focused on the improvement of a product, the proposed solution for which draws on Amino. For Product Design, our design stack looks like this:
+###### Production Design
+This work is focused on the improvement of a product, the proposed solution for which draws on Amino. For Product Design, our design stack looks like this:
 
-<ArrowFlow itemSize={{ width: 50, height: 50}}>
-  <Image imgs={props.images} name="sketch" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="zeplin" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="amino-docs" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
-  <Image imgs={props.images} name="react" allowPreview={false} imgStyle={{ objectFit: 'contain' }} />
+<ArrowFlow itemSize={{ width: 50, height: 50}} style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+  <ToolTip content="Sketch"><Image name="sketch" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="Zeplin"><Image name="zeplin" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="Documentation"><Image name="amino-docs" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
+  <ToolTip content="React"><Image name="react" disablePreview imgStyle={{ objectFit: 'contain' }} /></ToolTip>
 </ArrowFlow>
 
-As before, initial designs and user flows are completed and Sketch and distributed in Zeplin. Thanks to Connected Components, our engineers can see precisely which components to use while implementing the mock. For additional information on a component, they may turn to the Amino Documentation to see more detailed descriptions of properties.
+As before, initial designs and user flows are completed and Sketch and distributed in Zeplin. Thanks to Connected Components, our engineers can see right in Zeplin precisely which components to use while implementing a mock. For additional information on a component, they may turn to the Amino Documentation to see more detailed descriptions of properties. In the end, the final deliverable is always design-reviewed React code.
+
+#### Building Amino
+From the tooling that makes up the Amino ecosystem, a subset is used in the process of improving and maintaining Amino.
+
+##### Sketch Library
+The Amino Sketch Library is the Design Team's most accessible resource for creating mockups. However, since Design maintains the Amino codebase, we consider the coded components as our source of visual truth. This frees up Designers from fretting over mindless pixel adjustments when creating mocks – we shake the details shake out in code.
+
+<Image name="sketch-screenshot" caption="Our Sketch Library includes every component found in the Amino React codebase." />
+
+##### Fontello
+We use FontAwesome Pro for the majority of our icons, however given the scientific nature of Transcriptic's products, we often need icons not provided by FontAwesome. We distribute FontAwesome as part of Amino, and we wanted to provide a similar API to engineers for accessing FontAwesome and our custom icons – so we maintain our own icon font!
+<Image name="icons" caption="The Amino Icon Font adds life-science specific icons to our repertoire." hasShadow />
+
+We use Fontello, a web-based service, to generate the CSS and font fils for the Amino Icon Font. To automate the font's maintenance as much as possible, we leverage the Sketch and Fontello APIs.
+
+###### Sketch API Integration
+When a designer wants to add a new icon, or modify an existing one, they begin in the Icon Font Sketch file – and place their finished work in the Published page. Then, they run a Node script exposed in Amino's `package.json` to automagically export all of the icons from Sketch to SVGs in the Amino repository.
+
+<Image name="icon-export-console" />
+
+You can read more about how this script works in <Link to="/blog/automating-sketch">this blog post</Link>.
+
+###### Fontelli API Integration
+With the icon SVGs exported for use, we can now use the <Link href="https://github.com/fontello/fontello#developers-api">Fontello API</Link> to automatically load the existing icon font in the Fontello web-app.
+
+<Image name="fontello-screenshot" caption="The Fontello webapp is used to update our three icon fonts as needed." />
+
+1. We use a Yarn script and the `fontello-cli open` command to open three Fontello webapp instances, each loaded with either the Light, Regular, or Solid weight of our icon font.
+2. <TextTip content="We're working to make icon upload automatic, so that no manual work is needed.">In these tabs</TextTip>, the Designer uploads SVGs exported from Sketch of any new icons.
+3. Then, <TextTip content="We're working on automating this too.">the designer downloads</TextTip> the JSON config file for each weight to their local Amino repository.
+4. Finally, the designer generates and builds new icon font files and accompanying CSS files with a Yarn script that uses the `fontello-cli install` command.
+
+###### Using the Icon Font
+We distribute our icon font within Amino alongside FontAwesome – so developers can use both in much the same way. They just use our icon font's class names, instead of FontAwesome's:
+
+``` jsx
+// FontAwesome Bolt Icon in Light Weight
+<i className="fal fa-bolt" />
+
+// Amino Plate Icon in Light Weight
+<i className="aminol-plate" />
+```
+
+##### Zeplin
+In the process of improving and maintaining Amino, we use Zeplin to collect and document the components and styles defined in our Sketch Library.
+
+###### Styleguides
+We use Zeplin Styleguides extensively to help engineers understand what colors, typography and components are used within mocks. Once we load these details from Sketch into Zeplin, it connects them to mocks – dramatically reducing the amount of redlines and manual documentation our Design team needs to create for handoff.
+
+<Gallery>
+  <Image name="zeplin-colors" />
+  <Image name="zeplin-typography" />
+  <Image name="zeplin-component" />
+</Gallery>
+
+###### Connected Components
+Zeplin's new Connected Components feature is an *amazing* way to let engineers see exactly which component is being used in a mock. It's a feature of the Zeplin CLI that uses a configuration file in the Amino codebase to connect components from a Zeplin Styleguide directly to the React code of those components. Magic! The configuration file looks something like this:
+
+<Image name="connected-components-screenshot" />
+
+The Design team uses a handy <Link href="https://marketplace.visualstudio.com/items?itemName=zeplin.zeplin">VSCode extension</Link> to build out the configuration file, which is essentially a list of Amino's UI components. For each component, we provided the path to the React component and the name of the component in Sketch.
+
+Every time we release a new version of Amino, our Jenkins pipeline triggers the Zeplin CLI to link our Sketch and React components together in Zeplin. The Zeplin CLI consumes the Zeplin configuration file, parses out code snippets and inline documentation for each React component, and sends the parsed information to Zeplin for display when inspecting mocks.
+
+##### React and Sass
+Amino's true source of truth its underlying code. Since the Design Team maintains the Amino codebase, we're able to ensure that each component and style is implemented perfectly. Amino is built as a React library, and we use Sass for our styling.
+
+###### React
+Every component in Amino is represented in JSX. There's nothing too crazy here – we build very standard React components. However we do adhere to some basic inline comment formats that help the Zeplin CLI, and our documentation site parse out notes for each component.
+
+```jsx
+import React     from 'react';
+import PropTypes from 'prop-types';
+
+/**
+ * This comment block gives a high-level overview of the component's
+ * purpose. It should be focused on appropriate use of the component,
+ * so that a developer knows if this is the right component for them
+ * to use. 
+ */
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // Component setup
+  }
+
+  render() {
+    return (<div className="my-component" foo={this.props.bar} />);
+  }
+}
+
+MyComponent.propTypes = {
+  /**
+   * This documentation describes what the bar prop does and what its
+   * value is used for/how it effects the component.
+   */
+  bar: PropTypes.string.isRequired
+}
+
+export default MyComponent;
+```
+
+###### Sass
+Alongside each React component sits the component's CSS styling, as a Sass file. These Sass files use many global variables and mixins that we maintain to help keep Amino's styling code succinct.
+
+<Image name="sass-file" />
+
+You can learn more about the Sass we developed to handle our system-wide styling in these articles:
+
+- <Link to="/work/amino">Amino Colorway</Link>
+- <Link to="/work/amino">Amino Typography</Link>
+- <Link to="/work/amino">Amino Spacing and Layout</Link>
+
+<div className="stack__children--4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+  
+</div>
+
+##### Storybook
+Since the Amino React Library doesn't have a UI of its own, we use Storybook as a sandbox for development. Storybook is a development server used to render Stories, each of which show a component in a certain state or context.
+
+<Button href="https://amino-storybook.transcriptic.com/" iconRight="fal fa-long-arrow-right" animateRight hasBorder>See the Amino Storybook Live Here</Button>
+
+If we're adding a new component, or improving an existing one, we use Storybook to see the result of our code changes. Storybook is also an excellent tool to view and inspect a component without having to find it in use in a product.
+
+Stories are created by adding specially named JSX files alongside our React component files. Storybook automatically finds these files, and renders each in a separate view in a webapp.
+
+<MdxLayout fullWidth>
+  <Gallery caption="Storybook provides a space to explore components in isolation from a product.">
+    <Image name="story-file" />
+    <Image name="storybook-screenshot" />
+  </Gallery>
+</MdxLayout>
+
+
+##### Chromatic
+It's incredibly important that Amino be a trusted source of design standards – and as a result, we have built tooling to ensure that unintended visual side-effects and regressions are not introduced. We use Chromatic to run visual regression tests on all of the Stories we build out in Storybook.
+
+Chromatic is part of our Continuous Integration, and runs every time a PR is put up on GitHub. It takes visual snapshots of every Storybook story, and compares them to snapshots from the most recent commit on Amino's master branch. If anything has changed, it flags it for further review by the design team. This ensures that in the process of building or fixing components, we don't accidentally introduce un-intended side-effects elsewhere in the codebase.
+
+<Image name="chromatic-screenshot" caption="Chromatic flagging a successful bug fix, where previously profile images had not been loading, but now are." />
+
+Chromatic has been instrumental in closing the gap between design and development on Amino. Not all of our designers code, but Chromatic pulls them into the code review process by allowing them to inspect and accept/deny visual changes.
+
+#### Using Amino
+We have have put in substantial effort to make the development of Amino as automated as possible. This work opens up possibilities downstream as well to offer tooling to the engineers who use Amino to implement new features.
+
+##### Zeplin
+Zeplin is an extremely powerful tool for engineers to use while implementing mocks. It is a visual communication channel for the Design Team whereby we can explain the design foundation of a mock to the Engineering team.
+
+ As mentioned <Link id="#zeplin-1">above</Link>, we connect our Sketch and React components in Zeplin every time we release a new version of Amino. This allows Zeplin to expose the React code and documentation of each Amino component used in a mockup.
+
+<Image name="zeplin-screenshot" caption="An Engineer can see exactly which component a Designer used when creating a mock." />
+
+This contextual information is invaluable to engineers as they work – dramatically increasing the usability of Amino, and our product development velocity.
+
+##### Documentation
+The final tool Engineers use when building with Amino is the <Link href="https://amino.transcriptic.com">Amino Documentation Site</Link>.
+
+<MdxLayout fullWidth>
+  <Image name="macbook-documentation-site" disablePreview />
+</MdxLayout>
+
+The Amino Documentation Site is engineered from the ground up to remain up-to-date and in-sync with Amino as it grows and changes. We worked under the presumption that our thinly stretched design team would never be able to manually keep a documentation site updated.
+
+To achieve this, the site is built on <Link href="https://www.gatsbyjs.org/">Gatsby</Link> and consumes Amino as a dependency. It generates documentation based on the library's React and Sass code, and MarkDown files that accompany Amino components.
+
+###### Making Amino's Styling Utilities Discoverable
+The first bit of the Documentation Site simply exposes the many Sass variables and mixins provided by Amino. More than just documenting these utilities though, the site seeks to explain why these utilities are provided and what proper use looks like.
+
+<MdxLayout layout="1:1" fullWidth style={{ marginBottom: '2rem' }}>
+  <Image name="documentation-colorway" caption="The color variables exposed by Amino are detailed on a page generated dynamically from Amino's color palette - ensuring it's always up-to-date." />
+  <Image name="documentation-z-index" caption="Other utilities, such as Amino's z-index system, are detailed on separate pages and draw directly from Amino's Sass code as much as possible." />
+</MdxLayout>
+
+###### Coupling Component Documentation and Code
+We tightly couple our UI component documentation content to our React code. Every component in Amino is arranged in a directory structure like this:
+
+```
+components/
+├── CoolComponent/
+│   ├── index.js
+│   ├── CoolComponent.jsx
+│   ├── CoolComponent.scss
+│   ├── CoolComponent.spec.jsx
+│   ├── CoolComponent.stories.jsx
+│   └── CoolComponent.md
+```
+
+In the component's JSX file, <Link id="#react-and-sass">as described above</Link>, inline comments detail what the component should be used for and what its API is. Additional information about the component, such as more detailed usage guidelines, or demonstrations of various configurations are detailed in the component's MarkDown file.
+
+<MdxLayout layout="1:1" fullWidth>
+  <Image name="component-proptypes" caption="Inline API documentation in the JSX file of Amino's Button component." />
+  <Image name="component-markdown" caption="The MarkDown file that accompanies Amino's Button component." />
+</MdxLayout>
+
+Keeping both inline and more verbose documentation as part of the Amino repository elevates the importance of documentation to the same level as the underlying code. This means that documentation is reviewed alongside the code when a PR is created on GitHub.
+
+###### Leveraging Amino's Coupled Documentation
+Since Amino's documentation lives in the codebase – updating and improving alongside the code – the Amino Documentation Site can simply consume and display this content. The site uses Gatsby's GraphQL utility to query the content of the component's JSX file, as well as its MarkDown file. We use a Gatsby template to parse the component's inline documentation and API definition, and combine it with the content of the MarkDown file to create a single documentation page for each component:
+
+<Image name="component-documentation-page" caption="This entire page is generated automatically from content in the Amino dependency. To keep the documentation site up-to-date, the site simply needs to be re-built with the newest version of Amino." />
+
+Each page has four parts:
+
+1. An overview of the component – parsed from the top of the JSX file.
+2. Detailed documentation that explains how and when a component should be used, and what its capabilities are – which is taken from the MarkDown file.
+3. An interactive demo of the component where the user can change the values for each prop – created dynamically from parsing the component's prop types.
+4. A table detailing what each property's type is, what default values are set (if any), and why the prop is exposed – parsed from inline documentation of the JSX file.
+
+When an improvement is made to Amino, associated documentation is included in the same Pull Request. Every time a new version of Amino is released, we need only to upgrade the Amino dependency, and rebuild and deploy the site to deliver the updated documentation to our engineers.
+
+#### In Review
+The tooling surround Amino is extensive, however it multiplies the capacity of our limited design team many times over through automation, and deep integration with engineering workflows. If you'd like to learn more, these blog posts and case studies detail some of the technical challenges we overcame in bringing these tools online.

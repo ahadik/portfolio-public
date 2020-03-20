@@ -1,4 +1,7 @@
 .image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &__viewport {
     width: 100%;
     height: 0;
@@ -37,6 +40,10 @@
     position: absolute;
     width: 100%;
     height: 100%;
+  }
+
+  &__caption {
+    width: max-content;
   }
 
   &__preview-container {

@@ -6,11 +6,13 @@ $strip-height: 6rem;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  align-items: center;
 
   &__body {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    width: 100%;
   }
 
   &--wrapping &__body {
@@ -21,6 +23,7 @@ $strip-height: 6rem;
     flex-basis: 100%;
     margin-top: $spacing-02;
     max-width: 100%;
+    width: max-content;
   }
 
   &__preview-content {

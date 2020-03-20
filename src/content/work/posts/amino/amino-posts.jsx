@@ -28,9 +28,9 @@ class AminoPosts extends React.Component {
       `}
       render={(data) => {
         return (
-          <ol>
+          <ul>
             {data.allMdx.edges.map((edge) => <li><Link to={edge.node.fields.slug}>{edge.node.frontmatter.title}</Link></li>)}
-          </ol>
+          </ul>
         )
       }}
       />
