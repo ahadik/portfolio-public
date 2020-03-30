@@ -7,18 +7,20 @@ const getCategoryFromId = (id, categories) => {
 }
 
 const Categories = ({ categoryIds, categories, onClose }) => {
-
   return (
     <div style={{ display: 'flex', 'flexDirection': 'row' }} className="inline__children--3">
       {
         categoryIds.map((catId) => {
           const category = getCategoryFromId(catId, categories);
-          return <Tag
-            name={category.name}
-            icon={category.icon}
-            key={category.id}
-            onClose={onClose && (() => { onClose(category.id) })}
-          />; 
+          if (category) {
+            return <Tag
+              name={category.name}
+              icon={category.icon}
+              key={category.id}
+              onClose={onClose && (() => { onClose(category.id) })}
+            />; 
+          }
+          return undefined;
         })
       }
     </div>

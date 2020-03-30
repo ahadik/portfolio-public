@@ -10,9 +10,8 @@ const ArticleCard = (props) => {
       <Link to={props.link}><span className="article-card__link" /></Link>
       <div className="article-card__info">
         <h5 className="serif invert article-card__title">{props.title}</h5>
-        <div className="stack__children--3">
-          <p className="caption monospace invert-secondary article-card__date"><b>{props.date}</b></p>
-          <p className="caption monospace invert-secondary article-card__date">{props.categories.sort().join(', ')}</p>
+        <div className="stack__children--1">
+          <p className="caption monospace invert-secondary article-card__categories">{props.categories.sort().join(', ')}</p>
         </div>
       </div>
       <div className="article-card__background">

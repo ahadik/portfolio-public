@@ -16,9 +16,12 @@ export default ({ data }) => {
 
   if (data) {
     const post = data.mdx;
-    const featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
-    const { title, date, excerpt, categories, images } = post.frontmatter;
-    const allCategories = data.allWorkCategoriesJson.nodes[0].categories.entries;
+    let featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
+    if (!featuredImgFluid) {
+      featuredImgFluid = post.frontmatter.previewImage && post.frontmatter.previewImage.childImageSharp.fluid;
+    }
+    const { title, date, excerpt, categories, images, subtitle } = post.frontmatter;
+    const allCategories = data.allCategoriesJson.nodes[0].categories;
     const postImages = {};
 
     if (images) {
@@ -38,9 +41,12 @@ export default ({ data }) => {
       <Page>
         <SEO title={title} />
         <div className="row written-content">
-          <div className="written-content__header col-8 col-offset-2 mobile-col-12">
+          <div className="written-content__header col-8 col-offset-2 mobile-col-12 tablet-col-12">
             <h1 className="written-content__title">{title}</h1>
-            <p className="monospace secondary caption written-content__date">{date}</p>
+            <If condition={subtitle}>
+              <h5 className="secondary">{subtitle}</h5>
+            </If>
+            <p className="monospace secondary caption written-content__date">{date} | {post.timeToRead} minute read</p>
             <div className="stack__children--6 written-content__categories">
               <Categories categoryIds={categories} categories={allCategories} />
               <If condition={excerpt}>
@@ -54,11 +60,11 @@ export default ({ data }) => {
             </div>
           </If>
           <If condition={categories.includes('transcriptic')}>
-            <div className="col-8 col-offset-2 mobile-col-12 stack__item--4">
+            <div className="col-8 col-offset-2 mobile-col-12 tablet-col-12 stack__item--4">
               <p className="serif">👋 This project is from my time at Transcriptic. Before you get going, you might check out this quick <Link to="/transcriptic">primer on Transcriptic and Strateos</Link>.</p>
             </div>
           </If>
-          <div className="written-content__body serif col-8 col-offset-2 mobile-col-12">
+          <div className="written-content__body serif col-8 col-offset-2 mobile-col-12 tablet-col-12">
             <Choose>
               <When condition={post}>
                 <MDXProvider components={shortcodes}>
@@ -80,26 +86,34 @@ export default ({ data }) => {
 
 export const query = graphql`
   query($slug: String!) {
-    allWorkCategoriesJson {
+    allCategoriesJson {
       nodes {
         categories {
-          entries {
-            icon
-            id
-            name
-          }
+          icon
+          id
+          name
         }
       }
     }
     mdx(fields: { slug: { eq: $slug } }) {
       body
       tableOfContents
+      timeToRead
       frontmatter {
         title
+        subtitle
         date(formatString: "MMMM DD, YYYY")
         excerpt
         categories
         featuredImage {
+          childImageSharp {
+            fluid(maxWidth: 1300) {
+              ...GatsbyImageSharpFluid
+              presentationWidth
+            }
+          }
+        }
+        previewImage {
           childImageSharp {
             fluid(maxWidth: 1300) {
               ...GatsbyImageSharpFluid

@@ -9,7 +9,7 @@
     overflow: hidden;
 
     &--shadow {
-      box-shadow: 0 0 4px color(light, gray);
+      box-shadow: 0 0 8px 2px transparentize(color(dark, gray), 0.6);
     }
   }
 
@@ -43,7 +43,9 @@
   }
 
   &__caption {
-    width: max-content;
+    max-width: 100ch;
+    width: 100%;
+    text-align: center;
   }
 
   &__preview-container {

@@ -21,7 +21,7 @@ $width: pxToRem(21px);
 
     &:nth-child(2) {
       bottom: 50%;
-      transform: translateY(50%) translateX(2px);
+      transform: translateY(50%) translateX(0);
       width: 80%;
       transition: width 0.2s;
     }

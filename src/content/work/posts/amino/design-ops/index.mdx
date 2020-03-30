@@ -250,10 +250,6 @@ You can learn more about the Sass we developed to handle our system-wide styling
 - <Link to="/work/amino">Amino Typography</Link>
 - <Link to="/work/amino">Amino Spacing and Layout</Link>
 
-<div className="stack__children--4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-  
-</div>
-
 ##### Storybook
 Since the Amino React Library doesn't have a UI of its own, we use Storybook as a sandbox for development. Storybook is a development server used to render Stories, each of which show a component in a certain state or context.
 
@@ -337,7 +333,9 @@ Keeping both inline and more verbose documentation as part of the Amino reposito
 ###### Leveraging Amino's Coupled Documentation
 Since Amino's documentation lives in the codebase – updating and improving alongside the code – the Amino Documentation Site can simply consume and display this content. The site uses Gatsby's GraphQL utility to query the content of the component's JSX file, as well as its MarkDown file. We use a Gatsby template to parse the component's inline documentation and API definition, and combine it with the content of the MarkDown file to create a single documentation page for each component:
 
-<Image name="component-documentation-page" caption="This entire page is generated automatically from content in the Amino dependency. To keep the documentation site up-to-date, the site simply needs to be re-built with the newest version of Amino." />
+<MdxLayout fullWidth padBoth>
+  <Image name="component-documentation-page" caption="This entire page is generated automatically from content in the Amino dependency. Updating the documentation simply requires rebuilding the site with the newest version of Amino." />
+</MdxLayout>
 
 Each page has four parts:
 

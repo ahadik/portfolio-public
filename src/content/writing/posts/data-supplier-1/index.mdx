@@ -1,0 +1,299 @@
+---
+date: "2020-03-21"
+title: "Making a Data Supplier Plugin: Part 1"
+subtitle: "Bootstrapping Your Sketch Plugin with SKPM"
+previewImage: "preview-photo.png"
+featuredImage: "cover-photo.png"
+excerpt: "As a designer of Chemistry software, I spend a lot of time inserting fake chemical data into my mocks — so I decided to create a Sketch Data Supplier plugin to make streamline my workflow. This blog series walks through my learnings as I built out this plugin. In this first post, I'll explain the basics of setting up a data supplier plugin using SKPM."
+images:
+  - data-demo.png
+  - skpm.png
+  - data-supplier-test-1.png
+  - data-supplier-test-2.png
+  - devtools-install.png
+  - devtools-demo.png
+categories: [design-ops, code]
+---
+
+###### TL;DR
+I made a Sketch plugin. It provides fun chemical data to Sketch when you ask it to. <Link href="https://github.com/ahadik/chemfill/">Here's the GitHub</Link> and <Link to="/work/chemfill">here's a case study</Link> that gives a good overview of the project.
+
+#### The Road Ahead
+This is the first part of a three-part series about building a Sketch Data Provider Plugin. Over the next three posts, we'll cover a broad collection of content. Here's what you can expect:
+
+- **Part 1: Getting Started with SKPM** — You're reading this post now! In it, I detail the purpose and scope of this project, and explain how to setup a basic Data Supplier Sketch plugin.
+- **<Link to="writing/data-supplier-2">Part 2: Creating a Sketch Image Data Provider for SVGs</Link>** — In the next post, I'll describe how to build an Image Data Supplier that pulls an SVG image from an API, and converts it to a PNG that can be supplied to Sketch.
+- **<Link to="writing/data-supplier-3">Part 3: Creating Text Data Providers and Polishing the User Experience</Link>** — In the final post, I'll describe how to cleanly package several data suppliers in one plugin, and how to create a strong Data Provider Plugin User Experience.
+
+#### The Project
+I spend a good chunk of my time at Strateos creating mocks for our Automated Chemistry and Biology products. Often, I need to insert fake chemical data to make sure my mocks are <TextTip content="And to get scientists to stop asking why the data looks funny during user testing.">realistic</TextTip>. Finding fake chemical structures and data got a little tiring after a while, so I decided to make a <Link href="https://blog.sketchapp.com/do-more-with-data-2b765e870e4f">Sketch Data Supplier Plugin</Link> to make this process faster.
+
+###### Defining The Data
+The types of data I was hoping to provide through this plugin were:
+
+- *Structures:* Images of molecules showing the atoms and bonds that make up a structure.
+- *Formulas:* The molecular formulas that detail the type and count of atoms in a molecule. These look something like C<sub>48</sub>H<sub>62</sub>N<sub>8</sub>O<sub>11</sub> and likely bring back pangs of fear from high school chemistry class.
+- *Weights:* These numbers represent the molecular weight of a molecule. For designers who aren't familiar with chemistry, it's helpful to provide them values that are representative of the numbers likely to be encountered in production use. They tend to be numbers like 608.74.
+- *<Link href="https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system">SMILES Strings:</Link>* These strings of text represent the physical structure of a molecule. They're often used to store molecular structure information in databases, and Chemists use them to copy structures between applications and communicate with colleagues. As a result, they're a common presence in the UI of Chemistry products, and they look something like this: <code>C\[C@H\]1CC\[C@@H\](NCc2ccc3c(c2)Cc2c(-c4ccc(CC(=O)O)cc4)n\[nH\]c2-3)CC1</code>
+
+#### What Is a Data Provider Plugin?
+In Sketch 52, the Sketch team introduced <Link href="https://www.sketch.com/docs/data/">Data Suppliers</Link> and a new <Link href="https://developer.sketch.com/reference/api/#data-supplier">DataSupplier API</Link>, which allows developers to create <Link href="https://blog.sketchapp.com/do-more-with-data-2b765e870e4f">Data Supplier Plugins</Link>.
+
+<Image name="data-demo" caption="Sketch comes with default Data Providers for things like profile images." />
+
+The default Data Suppliers in Sketch, along with other plugins released by the Sketch community, allow designers to design with real data. I set out to build one of these plugins.
+
+#### Building A Plugin
+###### Bootstrapping
+Luckily, there are great tutorials and resources for creating a Data Supplier plugin. I decided to make use of <Link href="https://github.com/skpm/skpm">SKPM (Sketch Plugin Manager)</Link>, which is a Node module that assists with creating, building and publishing Sketch plugins. Perhaps most importantly, it comes with a Webpack-based build pipeline that transpiles basic JS code into a form Sketch can work with.
+
+<MdxLayout layout="5:2:5">
+  <div />
+  <Image name="skpm" />
+</MdxLayout>
+
+Sketch, as a Mac OS app, is written in Objective-C and thus plugins for Sketch are also written in Objective-C or alternatively, <Link href="https://developer.sketch.com/plugins/cocoascript">Cocoascript</Link> — the Javascript/Objective-C cross-over episode of a language that combines the syntax of both. Neither Objective-C or Cocoascript are particularly fun languages to work with, so SKPM is a real life saver. Making life even easier, SKPM watches your work and reloads your plugin whenever to save changes — neat!
+
+###### The Manifest
+SKPM makes use of Sketch's JS API and provides templates to get you going quickly. I've decided to name this plugin ChemFill, I'll run `skpm create ChemFill --template skpm/with-datasupplier` to set up a Data Supplier template (getting your capitalization right in this command will help you down the road):
+
+```
+chemfill/
+├── assets/
+└── src/
+    ├── manifest.json
+    └── my-command.js
+```
+
+We'll start with the `manifest.json` file. Its contents will look something like this:
+
+```json
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "suppliesData": true,
+  "commands": [
+    {
+      "script": "my-command.js",
+      "handlers": {
+        "actions": {
+          "Startup": "onStartup",
+          "Shutdown": "onShutdown",
+          "SupplyData": "onSupplyData"
+        }
+      }
+    }
+  ],
+  "menu": {
+    "title": "ChemFill"
+  }
+}
+```
+
+The `manifest.json` file is what Sketch inspects in order to expose your plugin to the user, and know what code to run when the user triggers the plugin. In this template manifest, we're telling Sketch that we have one command, and its logic exists inside `my-command.js`. We also have three actions: `Startup`, `Shutdown`, and `SupplyData`. `Startup` and `Shutdown` are used to do some basic housekeeping. `SupplyData` is the action we want to focus on. We'll change that to list the several things we want this plugin to do:
+
+```json
+{
+  "script": "my-command.js",
+  "handlers": {
+    "actions": {
+      "Startup": "onStartup",
+      "Shutdown": "onShutdown",
+      "SupplyRandomStructure": "onSupplyRandomStructure",
+      "SupplyRandomSMILES": "onSupplyRandomSMILES",
+      "SupplyRandomFormula": "onSupplyRandomFormula",
+      "SupplyRandomWeight": "onSupplyRandomWeight"
+    }
+  }
+}
+```
+
+Now Sketch knows that we'll be exposing four actions, and what the name of the JS functions will be for those actions. For example, we want to run the function `onSupplyRandomStructure` when the `SupplyRandomStructure` action is triggered.
+
+We'll also change the name of the main JS file to `chemfill.js`, so our final `manifest.json` file looks something like this:
+
+```json
+{
+  "name": "ChemFill",
+  "identifier": "chemfill",
+  "version": "1.1.0",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "suppliesData": true,
+  "description": "A Chemical Structure data supplier plugin.",
+  "author": "Alexander Hadik",
+  "authorEmail": "alex@alexhadik.com",
+  "icon": "icon.png",
+  "commands": [
+    {
+      "script": "chemfill.js",
+      "handlers": {
+        "actions": {
+          "Startup": "onStartup",
+          "Shutdown": "onShutdown",
+          "SupplyRandomStructure": "onSupplyRandomStructure",
+          "SupplyRandomSMILES": "onSupplyRandomSMILES",
+          "SupplyRandomFormula": "onSupplyRandomFormula",
+          "SupplyRandomWeight": "onSupplyRandomWeight"
+        }
+      }
+    }
+  ],
+  "menu": {
+    "title": "ChemFill"
+  }
+}
+```
+
+###### Javascript Boilerplate
+
+With our manifest defined, it's time to set up our Javascript to support it. SKPM provides an extensive amount of code right out of the gate. In our now renamed `chemfill.js` file, we'll see the following:
+
+
+```javascript
+import sketch from 'sketch';
+import util from 'util';
+
+const { DataSupplier } = sketch
+
+export function onStartup () {
+  // To register the plugin, uncomment the relevant type:
+  DataSupplier.registerDataSupplier('public.text', 'my-plugin', 'SupplyData')
+  // DataSupplier.registerDataSupplier('public.image', 'my-plugin', 'SupplyData')
+}
+
+export function onShutdown () {
+  // Deregister the plugin
+  DataSupplier.deregisterDataSuppliers()
+}
+
+export function onSupplyData (context) {
+  let dataKey = context.data.key
+  const items = util.toArray(context.data.items).map(sketch.fromNative)
+  items.forEach((item, index) => {
+    let data = Math.random().toString()
+    DataSupplier.supplyDataAtIndex(dataKey, data, index)
+  })
+}
+```
+At the top, SKPM brings in the Sketch JS API module and de-structures the `DataSupplier` utility from it. It also sets up our `onStartup` and `onShutdown` functions — two functions we saw specified in the `manifest.json` file. In the `onStartup` function, a `SupplyData` text data supplier is registered. We want to change this to align with our `manifest.json` file, which means renaming and registering a few suppliers:
+
+```javascript
+export function onStartup() {
+  // Define four data suppliers
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Structure', 'SupplyRandomStructure');
+  DataSupplier.registerDataSupplier('public.text', 'SMILES String', 'SupplyRandomSMILES');
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Formula', 'SupplyRandomFormula');
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Weight', 'SupplyRandomWeight');
+}
+```
+
+Finally, SKPM defines an `onSupplyData` function, which we'll rename to match our changes above. We'll also add our other data suppliers as stubs:
+
+```javascript
+// Rename from onSupplyData to onSupplyRandomStructure
+export function onSupplyRandomStructure (context) {
+  let dataKey = context.data.key
+  const items = util.toArray(context.data.items).map(sketch.fromNative)
+  items.forEach((item, index) => {
+    let data = Math.random().toString()
+    DataSupplier.supplyDataAtIndex(dataKey, data, index)
+  })
+}
+
+// Stub out these three functions — we'll come back to them later.
+export function onSupplyRandomSMILES (context) {
+  return;
+}
+
+export function onSupplyRandomFormula (context) {
+  return;
+}
+
+export function onSupplyRandomWeight (context) {
+  return;
+}
+```
+
+Let's break down what's going on inside this first data supplier function:
+
+```javascript
+// The Sketch API will pass a context object as the single argument
+// to the action
+export function onSupplyRandomStructure(context) {
+  // The dataKey is a string we'll use to tell Sketch where to
+  // provide data back to. We'll pick it out now and use it later.
+  let dataKey = context.data.key;
+
+  // The context object contains a collection of the Sketch objects for 
+  // which you want to provide data (shapes for image data and text
+  // objects for text data). We pick them out, convert them to an array,
+  // and use a Sketch utility to convert them to JS objects.
+  const items = util.toArray(context.data.items).map(sketch.fromNative);
+
+  // For every item, we get unique data and provide it using the
+  // DataSupplier utility.
+  items.forEach((item, index) => {
+    // SKPM starts us off with supplying random numbers.
+    let data = Math.random().toString()
+    DataSupplier.supplyDataAtIndex(dataKey, data, index)
+  })
+}
+```
+
+###### Building and Running with SKPM
+Great! We should test that our code so far works. SKPM can build our plugin, link it to Sketch and rebuild it automatically when we change files. The `package.json` generated by SKPM defines the Node `start` command to run SKPM's build process with the watch and run flags set:
+
+```
+> yarn start
+  yarn run v1.22.4
+
+  $ skpm-build --watch --run
+  🖨  Copied src/manifest.json in 2ms
+  ⚒  Copied assets/icon.png
+  ⚒  Built command.js in 822ms
+```
+
+This command will create a new directory called `chemfill.sketchplugin` that contains transpiled production Sketch plugin code in a file structure that Sketch expects for plugins. It's not meant to be edited, and SKPM's default `gitignore` excludes this directory. SKPM will also symlink it to your global Sketch `Plugins` directory so that you can access the plugin from Sketch for testing.
+
+```
+chemfill/
+├── assets/
+├── chemfill.sketchplugin/
+│   └── Contents/
+│       ├── Resources/
+│       └── Sketch/
+│           ├── manifest.json
+│           ├── chemfill.js
+│           └── chemfill.js.map
+└── src/
+    ├── manifest.json
+    └── chemfill.js
+```
+
+With our plugin <TextTip content="SKPM will keep running and rebuilding as we change files btw.">successfully built</TextTip>, we can head on over to Sketch to see it in action.
+
+<Image name="data-supplier-test-1" />
+
+Hopefully, if you pop in some text and right click, you'll see our Molecular Structure Data Supplier show up. If it's not there, double check your `manifest.json` file to make sure that everything is specified correctly. Here's <Link href="https://github.com/skpm/with-datasupplier/blob/master/template/src/manifest.json">a good template</Link> for a sanity check.
+
+Click on the data supplier to dump a random number into our text object.
+
+<Image name="data-supplier-test-2" />
+
+If this doesn't work, you might have a bug in your code.
+
+###### Debugging
+There are some good tools for debugging Sketch plugins, the most useful of which is sketch-dev-tools.
+
+<Image name="devtools-install" />
+
+After installing it, you can access a console that reads out errors and `console.log` calls, along with other useful utilities.
+
+<Image name="devtools-demo" hasShadow />
+
+###### In Summary
+In this first post, we laid out the scope of this project, and walked through the steps of getting a basic data-supplier plugin running in Sketch using SKPM. In the following two posts, we'll walk through the process of building text and image data supplier plugins that draw from an API.
+
+<Button animateRight iconRight="fal fa-long-arrow-right" to="/writing/data-supplier-2" hasBorder>Part 2: Building an Image Data Supplier</Button>

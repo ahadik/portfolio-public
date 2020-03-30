@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import Page from "~components/Page/Page";
 import SEO from "~components/seo";
 import Image from '~components/Image';
+import Link from "~components/Link";
 
 import './about.scss';
 
@@ -16,7 +17,7 @@ const AboutPage = (props) => {
           <Image image={props.data.portrait.childImageSharp.fluid} imgId="paperangel" />
         </div>
         <div className="col-5 mobile-col-12  about-page__header-title">
-          <h3 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at Transcriptic.</h3>
+          <h3 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h3>
         </div>
       </div>
       <div className="row row--large-spacing">
@@ -30,7 +31,7 @@ const AboutPage = (props) => {
             my UX and front-end engineering skills. I missed the life sciences though, and Transcriptic offered
             the perfect next step.
           </p>
-          <p>I joined Transcriptic in 2016 as their first and only designer. Since then, I've built our design
+          <p><Link to="/transcriptic/role">I joined Transcriptic in 2016</Link> as their first and only designer. Since then, I've built our design
             team and discipline establishing – among other things – a product development process grounded in user
             research, a design system called Amino, and strong brand identity.
           </p>

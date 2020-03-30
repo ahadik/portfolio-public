@@ -10,11 +10,12 @@ images:
   - standard-and-inverse.png
   - full-system.png
   - spacing.png
+  - slack-comment.png
 categories: [ui-ux, transcriptic, code]
 ---
 
 #### Requirements
-Kicking off this effort, I wanted to have some clear goals to guide my work. For the most part, I borrowed from the Amino Colorway requirements:
+Kicking off this effort, I wanted to have some clear goals to guide my work. For the most part, I borrowed from the <Link to="/work/amino/colorway">Amino Colorway</Link> requirements:
 
 *The Amino Typography system must...*
 - *be context agnostic.* Amino Typography must be compatible with dark or light UIs, and usable on a variety of screen types.
@@ -25,19 +26,21 @@ Kicking off this effort, I wanted to have some clear goals to guide my work. For
 #### State of the World
 At the start of this effort, our typography styling code was twisted into knots — meaning that our UI lacked any sense of typographic consistency. Our products drew on a broad collection of typographic systems, from Bootstrap to home-grown ones, including one gated by a `.new-typography` CSS class... 🤦🏻‍♂️
 
-<Image name="new-typography" />
+<Image name="new-typography" caption="One of the several typographic systems that made up our typography styling at the beginning of this effort." />
 
 #### Process
 Attempting any sort of audit would be somewhat fruitless, so instead I dove in and started from scratch. Before getting into the details, I needed to decide on a scale.
 
 ##### Scale
-I knew that there was no reason to re-invent the wheel on our typography. To begin, I settled on the standard 16px base font size. When deciding how I wanted to scale up and down from this base, I knew that I wanted a system I could compute in code, instead of managing manually. This wasn't quite as easy as I imagined though.
+I knew that there was no reason to re-invent the wheel on our typography. To begin, I settled on the standard 16px base font size. When deciding how I wanted to scale up and down from this base, I knew that I wanted a system I could compute in code, instead of managing manually.
 
-My first challenge was determining how the scale would expand and contract. For sizes smaller than 16px, I wanted the scale to shrink linearly, for an even downwards progression. However for the larger sizes, I wanted the scale to increase exponentially, so that each step up in the scale grew by more than the last. This allowed each step in the scale to have a unique purpose, visually distinct from the others.
+My first challenge was determining how the scale would expand and contract. For sizes smaller than 16px, I wanted the chose to shrink linearly, for an even downwards progression. For the larger sizes, I decided to scale exponentially, so that each step up in the scale grew by more than the last.
+
+Working from these decisions, I chose a universal multiplier of 0.125 that would be applied differently moving up and down the scale. The result was quite pleasing.
 
 <Image name="scale" />
 
-To achieve this effect, I arrived at a universal multiplier of 0.125 that would be applied differently moving up and down the scale. The scale is implemented in Sass as follows:
+After defining this scale in our Sketch library, I went about implementing it in Sass as follows:
 
 ```scss
 /*
@@ -107,14 +110,14 @@ Weight and color provide a lot of flexibility and extensibility, however the tex
 ###### Fonts
 Finally, we wanted to allow designers to move between a small selection of typefaces in their designs. I defined the following options:
 
-- Default: Sets the type to Strateos's body font, Atlas.
-- Branded: Sets the type to our Strateos brand font Axia.
+- Default: Sets the type to Strateos's body font, <Link href="https://commercialtype.com/catalog/atlas">Atlas</Link>.
+- Branded: Sets the type to our Strateos brand font of <Link href="https://fonts.adobe.com/fonts/axia">Axia</Link>.
 - Monospace: Sets the type to a monospace typeset of Monaco, Menlo, Consolas, and finally Courier New.
 
 All told, the final result came out as follows:
 
 <MdxLayout fullWidth>
-  <Image name="full-system" />
+  <Image name="full-system" disablePreview />
 </MdxLayout>
 
 ###### Implementation
@@ -190,11 +193,15 @@ With a full specification for text styles, some basic spacing rules were necessa
   <Image name="spacing" disablePreview />
 </MdxLayout>
 
-#### Application
+#### Bringing It To Life
 Refactoring the applications that consumed this text styling was a long process. The first step was to rip off the bandaid and remove Bootstrap typography. We had been relying on various aspects of Bootstrap to fill in styling holes. Removing this dependency reduced the size of our styling code drastically, and revealed all of the areas that were now ill formatted.
 
 I also removed the old typography system that had been only partially implemented. From here, I completed manual audits and walkthroughs to find areas that did not inherit the appropriate styling based on HTML tags alone.
 
-All told, the process took a week or so, and in the end, we had a clear, consistent typographic system. Feedback was overwhelmingly positive. Most users, internal and external, recognized that the text in the app became more legible and consistent.
+All told, the process took a week or so, and in the end, we had a clear, consistent typographic system. Feedback was overwhelmingly positive. Most users, internal and external, recognized that the text in the app became more legible and consistent. Some even called it sexy!
 
-Since its inception, this typography system has proved resilient, needing very few updates. When updates were necessary, the changes could be applied across the entire app at once - a trivial benefit to web development, but never before achieved at Transcriptic.
+<Image name="slack-comment" />
+
+Since its inception, this typography system has proved resilient, needing very few updates. When updates were necessary, the changes could be applied across the entire app at once - a substantial benefit to both our users, and our engineering team.
+
+

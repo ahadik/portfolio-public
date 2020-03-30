@@ -1,0 +1,365 @@
+---
+date: "2020-03-25"
+title: "Making a Data Supplier Plugin: Part 2"
+subtitle: "Creating a Sketch Image Data Provider for SVGs"
+previewImage: "preview-photo.png"
+featuredImage: "cover-photo.png"
+excerpt: "A really powerful feature of Sketch is being able to pull images into your project using a Data Supplier. Building off of part one of this series, in this second post I'll detail how to query an API for an image, convert it to a Sketch friendly format and insert it into your project automagically. 🎩🐰✨"
+images:
+  - chembl-demo.png
+  - ash-slack.png
+  - image-test-1.png
+  - image-test-2.png
+categories: [design-ops, code]
+---
+
+###### TL;DR
+I made a Sketch plugin. It provides fun chemical data to Sketch when you ask it to. <Link href="https://github.com/ahadik/chemfill/">Here's the GitHub</Link> and <Link to="/work/chemfill">here's a case study</Link> that gives a good overview of the project.
+
+#### Where We've Been and Where We're Going
+This is part two of a three-part series. So you know where we've been and where we're going, the breakdown of this series is:
+
+- **<Link to="writing/data-supplier-1">Part 1: Getting Started with SKPM</Link>** — In the first post, I detailed the purpose and scope of this project, and explained how to get a basic Data Supplier Sketch plugin setup.
+- **Part 2: Creating a Sketch Image Data Provider for SVGs** — You're reading this post now! In it, I'll describe how to build an Image Data Supplier that pulls an SVG image from an API, and converts it to a PNG that can be supplied to Sketch.
+- **<Link to="writing/data-supplier-3">Part 3: Creating Text Data Providers and Polishing the User Experience</Link>** — In the next post, I'll describe how to cleanly package several data suppliers in one plugin, and how to create a strong Data Provider Plugin User Experience.
+
+#### Getting Started
+###### Defining The Data
+As a refresher, the types of data I want to provide through this plugin are:
+
+- *Structures:* Images of molecules showing the atoms and bonds that make up a structure.
+- *Formulas:* The molecular formulas that detail the type and count of atoms in a molecule. These look something like C<sub>48</sub>H<sub>62</sub>N<sub>8</sub>O<sub>11</sub> and likely bring back pangs of fear from high school chemistry class.
+- *Weights:* These numbers represent the molecular weight of a molecule. For designers who aren't familiar with chemistry, it's helpful to provide them values that are representative of the numbers likely to be encountered in production use. They tend to be numbers like 608.74.
+- *<Link href="https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system">SMILES Strings:</Link>* These strings of text represent the physical structure of a molecule. They're often used to store molecular structure information in databases, and Chemists use them to copy structures between applications and communicate with colleagues. As a result, they're a common presence in the UI of Chemistry products, and they look something like this: <code>C\[C@H\]1CC\[C@@H\](NCc2ccc3c(c2)Cc2c(-c4ccc(CC(=O)O)cc4)n\[nH\]c2-3)CC1</code>
+
+
+###### Finding a Source
+I needed to find a place to get this data from. I spoke with my company's resident Medicinal Chemist, Ash, and he pointed me in the direction of <Link href="https://www.ebi.ac.uk/chembl/">ChEMBL</Link>. From the ChEMBL website:
+
+>ChEMBL is a manually curated database of bioactive molecules with drug-like properties. It brings together chemical, bioactivity and genomic data to aid the translation of genomic information into effective new drugs.
+
+The best part of ChEMBL is that they have an extensive, <Link href="https://www.ebi.ac.uk/chembl/api/data/docs">reasonably well documented API</Link> for their database.
+
+<Image name="chembl-demo" caption="The ChEMBL API explorer gives a great sense of what kind of data can be retrieved from the API." />
+
+I decided that this industry standard database was the perfect source to draw from for my plugin.
+
+###### Seeding The Plugin
+The biggest challenge with using the ChEMBL API was that it doesn't provide data for random molecules, you have to request information for specific molecules using a ChEMBL ID. In the example above, we're retrieving the structure of molecule `CHEMBL405398`, otherwise known as C<sub>19</sub>H<sub>21</sub>BrN<sub>6</sub>O. I wanted my plugin to provide a seemingly limitless variety of molecules, so I would need to create a large list of ChEMBL IDs from which my plugin could draw for API requests.
+
+Luckily, Ash has the hookup, and somehow had a copy of the ChEMBL database sitting around in text format.
+
+<Image name="ash-slack" />
+
+The only issue? Unzipped, this text file was 470MB... 😬 This was obviously far too big of a file to parse or query on the spot and could never be shipped along with a plugin. I would need to sample from it and generate a smaller list of ChEMBL IDs. A <Link href="https://github.com/ahadik/chemfill/blob/master/scripts/extract_ids.js">short Node script</Link> later, and I had a parser that could read through the ChEMBL database dump line by line, and write out a JSON file of however many ChEMBL IDs the user requested. I decided to start with 1000 ChEMBL IDs.
+
+```bash
+./extract_ids.js ./chembl_db.txt ./chembl_ids.json --samples 1000
+```
+
+This static asset needs to be placed somewhere that we can access in our Javascript code. In <Link to="/writing/data-supplier-1">Part 1</Link> of this series, <Link to="/writing/data-supplier-1#building-and-running-with-skpm">I described the file-structure</Link> that SKPM maintains to create Sketch plugin bundles. One of these directories is a top level `assets` directory. On build, SKPM copies the contents of this directory into `chemfill.sketchplugin/Contents/Resources`, which is where our production code will draw from. So we'll place our ChEMBL IDs file in `/assets` and let SKPM suck it up to the `Resources` directory when we build the plugin.
+
+#### Building the Image Provider
+###### Pulling from the ChEMBL API
+In <Link to="/writing/data-supplier-1">Part 1</Link> of this series, we got a basic data supplier plugin configured and working. Now, it's time to work out how to get an image of random molecular structures. Luckily, the ChEMBL API has a route that provides just that:
+
+```bash
+> curl https://ebi.ac.uk/chembl/api/data/image/CHEMBL405398?format=svg
+
+  <?xml version='1.0' encoding='iso-8859-1'?>
+  <svg width='500px' height='500px' viewBox='0 0 500 500'>
+  <!-- END OF HEADER -->
+    <path ... />
+    <path ... />
+    ...
+  </svg>
+```
+
+Easy-peazy! All we need to do is grab the SVG string from that HTTP request and we'll be on our way!
+
+To begin, let's just get our data supplier function pulling down SVG text from ChEMBL. We'll need to set some basic global variables and parse the JSON file of ChEMBL IDs we generated. That's a fairly expensive operation that requires reading a file from disk, so we'll do it once, right after we import dependencies.
+
+We'll need to navigate the file system to import the JSON file. While the traditional Node `fs` library doesn't work in the Sketch plugin environment, SKPM thankfully provides a drop-in replacement. We'll need to install that (`yarn install @skpm/fs`) and then import it to our script.
+
+<MdxLayout fullWidth>
+
+```javascript
+// Up top, we import the SKPM fs replacement
+import fs from '@skpm/fs';
+
+// We also need we need a reference to the current Sketch document, which we'll use later
+import sketchDom from 'sketch/dom';
+const document = sketchDom.getSelectedDocument();
+
+// Then we specify that static resources should come from the /Resources directory, and we
+// define a temporary directory path where we can store images before they get sent to our
+// Sketch plugin.
+const RESOURCE_PATH = '../Resources/';
+const TMP_DIR = path.join(os.tmpdir(), 'com.sketchapp.chemfill-plugin');
+
+// Extract the IDs from the seed JSON file.
+const idsFileRaw = fs.readFileSync(path.resolve(path.join(RESOURCE_PATH, 'chembl-ids.json')));
+const { ids } = JSON.parse(idsFileRaw);
+```
+
+</MdxLayout>
+
+Now we'll update the `onSupplyRandomStructure` data provider to pull SVG content down from ChEMBL.
+
+<MdxLayout fullWidth>
+
+```javascript
+export function onSupplyRandomStructure(context) {
+  let dataKey = context.data.key;
+  const items = util.toArray(context.data.items).map(sketch.fromNative);
+
+  items.forEach((item, index) => {
+    // Get a random ChEMBL ID
+    const chemblID = ids[Math.floor(Math.random() * ids.length)];
+
+    // Create a URL for ChEMBL API request
+    const structureURL = `https://www.ebi.ac.uk/chembl/api/data/image/${chemblID}?format=svg`;
+
+    // SKPM provides a drop-in replacement for the JS fetch
+    // method that works the the Sketch environment.
+    fetch(structureURL)
+    .then((res) => {
+      if(res.status === 200) {
+        const svgString = res.text()._value;
+        DataSupplier.supplyDataAtIndex(dataKey, svgString, index);
+      }
+      throw `Status code ${res.status} returned from ChEMBL API 😔`;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  })
+}
+```
+
+</MdxLayout>
+
+This is a good start, but at the moment, all this data supplier will do is insert a huge SVG string into a text field. We want to provide an image instead.
+
+###### Converting an SVG to a PNG
+So we're successfully pulling down an SVG string, but when it comes to providing an SVG to an image data supplier, we've got ourselves a problem: Sketch won't accept SVGs for Image Data Suppliers. 😢 Even worse, it turns out that ChEMBL can *only* return SVG representations of molecules.  Somehow we need to convert the SVG returned from ChEMBL to a PNG before being passed on to the Data Supplier.
+
+There <Link href="https://www.npmjs.com/package/convert-svg-to-png">are</Link> <Link href="https://www.npmjs.com/package/svg-to-png">several</Link> <Link href="https://www.npmjs.com/package/svg2img">Node</Link> <Link href="https://www.npmjs.com/package/svg-png-converter">modules</Link> on NPM for converting SVGs to PNGs, but all of them are incompatible with the Sketch plugin environment which is, notably, *not* a Node environment. They rely on some combination the Node `fs` library, a headless Chrome instance, and other binaries — all of which can't be accessed within the context of a transpiled Sketch plugin.
+
+After some extensive head-scratching, I realized I could just use the tool at my disposal, Sketch itself!
+
+The first step in this direction is to change the `onSupplyRandomStructure` to be an image provider. Back up in our `onStartup` function, we need to change the supplier type:
+
+<MdxLayout fullWidth>
+
+```javascript
+export function onStartup() {
+  // DataSupplier.registerDataSupplier('public.text', 'Molecular Structure', 'SupplyRandomStructure');
+  DataSupplier.registerDataSupplier('public.image', 'Molecular Structure', 'SupplyRandomStructure');
+  DataSupplier.registerDataSupplier('public.text', 'SMILES String', 'SupplyRandomSMILES');
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Formula', 'SupplyRandomFormula');
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Weight', 'SupplyRandomWeight');
+}
+```
+
+</MdxLayout>
+
+Next, we need to use Sketch to convert this SVG string to a PNG saved in a temporary directory. The steps of this process will be:
+
+1. Insert SVG into the open Sketch document as a new layer.
+2. Export the layer as a PNG using the Sketch API to a temporary directory.
+3. Delete the layer.
+4. Pass the file path of the exported PNG to the data supplier.
+
+Let's try it out.
+
+<MdxLayout fullWidth>
+
+```javascript
+const chemblID = ids[Math.floor(Math.random() * ids.length)];
+const structureURL = `https://www.ebi.ac.uk/chembl/api/data/image/${chemblID}?format=svg`;
+
+fetch(structureURL)
+.then((res) => {
+  if(res.status === 200) {
+    const svgString = res.text()._value;
+
+    // STEP 1: Insert the SVG as a Layer Group
+
+    // Convert the SVG string to a NSData object.
+    const svgData = svgString.dataUsingEncoding(NSUTF8StringEncoding);
+
+    // Create an SVG importer and import the SVG Data as a layer.
+    const svgImporter = MSSVGImporter.svgImporter();
+    svgImporter.prepareToImportFromData(svgData);
+    const svgLayer = svgImporter.importAsLayer();
+
+    // Create a random string to name the layer with.
+    const guid = NSProcessInfo.processInfo().globallyUniqueString();
+    svgLayer.setName(guid);
+
+    // Push the layer onto the top of the layers array of the first page in the
+    // Sketch document.
+    document.pages[0].layers.push(svgLayer)
+
+    // STEP 2: Export the Layer Group as a PNG
+    try {
+      // Export the SVG layer as a PNG using the Sketch API
+      sketch.export(svgLayer, {
+        formats: 'png',
+        scales: "3", // Exports the SVG at 3x scale
+        output: TMP_DIR
+      });
+      
+      // STEP 3: Delete the SVG Layer from the document
+      svgLayer.removeFromParent();
+
+      // STEP 4: Pass the PNG file path to the Data Supplier
+      const pngPath = path.join(TMP_DIR,`${svgLayer.name()}.png`);
+      DataSupplier.supplyDataAtIndex(dataKey, pngPath, index);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+})
+```
+
+</MdxLayout>
+
+Whew! That's a whole thing.
+
+#### Putting It All Together
+Let's see what that looks like as a final script:
+
+<MdxLayout fullWidth>
+
+```javascript
+import sketch from 'sketch';
+import util from 'util';
+import fs from '@skpm/fs';
+import path from 'path';
+import os from 'os';
+import sketchDom from 'sketch/dom';
+
+const { DataSupplier } = sketch;
+const document = sketchDom.getSelectedDocument();
+
+const RESOURCE_PATH = '../Resources/';
+const TMP_DIR = path.join(os.tmpdir(), 'com.sketchapp.chemfill-plugin');
+
+// Extract the IDs from the seed JSON file.
+const idsFileRaw = fs.readFileSync(path.resolve(path.join(RESOURCE_PATH, 'chembl-ids.json')));
+const { ids } = JSON.parse(idsFileRaw);
+
+export function onStartup() {
+  // Define four data suppliers
+  DataSupplier.registerDataSupplier('public.image', 'Molecular Structure', 'SupplyRandomStructure');
+  DataSupplier.registerDataSupplier('public.text', 'SMILES String', 'SupplyRandomSMILES');
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Formula', 'SupplyRandomFormula');
+  DataSupplier.registerDataSupplier('public.text', 'Molecular Weight', 'SupplyRandomWeight');
+}
+
+export function onShutdown() {
+  // Deregister the plugin
+  DataSupplier.deregisterDataSuppliers();
+
+  try {
+    if (fs.existsSync(TMP_DIR)) {
+      fs.rmdirSync(TMP_DIR);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export function onSupplyRandomStructure(context) {
+  let dataKey = context.data.key;
+  const items = util.toArray(context.data.items).map(sketch.fromNative);
+
+  items.forEach((item, index) => {
+    const chemblID = ids[Math.floor(Math.random() * ids.length)];
+    const structureURL = `https://www.ebi.ac.uk/chembl/api/data/image/${chemblID}?format=svg`;
+
+    fetch(structureURL)
+    .then((res) => {
+      if(res.status === 200) {
+        return(res.text()._value);
+      }
+    })
+    .then((svgString) => {
+      // Convert the SVG string to a NSData object.
+      const svgData = svgString.dataUsingEncoding(NSUTF8StringEncoding);
+
+      // Create an SVG importer and import the SVG Data as a layer.
+      const svgImporter = MSSVGImporter.svgImporter();
+      svgImporter.prepareToImportFromData(svgData);
+      const svgLayer = svgImporter.importAsLayer();
+
+      // Create a random string to name the layer with.
+      const guid = NSProcessInfo.processInfo().globallyUniqueString();
+      svgLayer.setName(guid);
+
+      // Push the layer onto the top of the layers array of the first page in the
+      // Sketch document.
+      document.pages[0].layers.push(svgLayer)
+
+      // Export the Layer Group as a PNG
+      try {
+        // Export the SVG layer as a PNG using the Sketch API
+        sketch.export(svgLayer, {
+          formats: 'png',
+          scales: "3", // Exports the SVG at 3x scale
+          output: TMP_DIR
+        });
+        
+        // Delete the SVG Layer from the document
+        svgLayer.removeFromParent();
+
+        // Pass the PNG file path to the Data Supplier
+        const pngPath = path.join(this.temp_dir,`${svgLayer.name()}.png`);
+        DataSupplier.supplyDataAtIndex(dataKey, pngPath, index);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  });
+}
+
+// Stub out these three functions — we'll come back to them later.
+export function onSupplyRandomSMILES (context) {
+  return;
+}
+
+export function onSupplyRandomFormula (context) {
+  return;
+}
+
+export function onSupplyRandomWeight (context) {
+  return;
+}
+```
+
+</MdxLayout>
+
+###### Testing it Out
+With our script all put together, let's test it out! SKPM will have been building our plugin as we go, so we can hop into Sketch and give it a go:
+
+<Image name="image-test-1" />
+
+Our Molecule Structure Data Supplier shows up right where we'd like it to.
+
+<Image name="image-test-2" />
+
+And sure enough, in pops our structure. Success!
+
+#### In Review
+In this post we walked through the process of:
+
+1. Pulling data from an API using SKPM's utilities.
+2. Converting an SVG string to a PNG image using Sketch's API.
+3. Providing a saved PNG image to a Sketch Data Supplier.
+
+In the next and final post, we'll clean up our code to make it more re-usable, fill in our final data provider methods, and add some flair with custom icons and other UI features.
+
+<Button animateRight iconRight="fal fa-long-arrow-right" to="/writing/data-supplier-2" hasBorder>Part 3: Providing Text Data and Refining User Experience</Button>
+

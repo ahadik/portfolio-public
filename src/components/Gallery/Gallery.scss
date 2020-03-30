@@ -13,6 +13,10 @@ $strip-height: 6rem;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;
+
+    @include mobile {
+      flex-wrap: wrap;
+    }
   }
 
   &--wrapping &__body {
@@ -97,7 +101,10 @@ $strip-height: 6rem;
 
   &__item {
     cursor: pointer;
-    margin: $spacing-02;
+    
+    & + & {
+      margin-left: $spacing-06;
+    }
   }
 
   &--wrapping &__item {

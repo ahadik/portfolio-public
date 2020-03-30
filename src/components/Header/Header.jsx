@@ -7,6 +7,16 @@ import MobileMenuToggle from './MobileMenuToggle';
 
 import './Header.scss';
 
+const HeaderPageTitle = () => {
+  return (
+    <div className="header-page-title">
+      <Link to="/work" className="header-page-title__item monospace" activeClassName="header-page-title__item--active" partiallyActive>Work</Link>
+      <Link to="/writing" className="header-page-title__item monospace" activeClassName="header-page-title__item--active" partiallyActive>Writing</Link>
+      <Link to="/about" className="header-page-title__item monospace" activeClassName="header-page-title__item--active" partiallyActive>About</Link>
+    </div>
+  );
+}
+
 const HeaderMenu = ({ orientation }) => {
   return (
     <ul className={
@@ -18,9 +28,9 @@ const HeaderMenu = ({ orientation }) => {
         }
       )
     }>
-      <li className="header-menu__item"><Link to="/work">Work</Link></li>
-      <li className="header-menu__item"><Link to="/writing">Writing</Link></li>
-      <li className="header-menu__item"><Link to="/about">About</Link></li>
+      <li className="header-menu__item"><Link to="/work" activeClassName="header-menu__link--active" partiallyActive>Work</Link></li>
+      <li className="header-menu__item"><Link to="/writing" activeClassName="header-menu__link--active" partiallyActive>Writing</Link></li>
+      <li className="header-menu__item"><Link to="/about" activeClassName="header-menu__link--active" partiallyActive>About</Link></li>
     </ul>
   );
 }
@@ -60,10 +70,11 @@ class Header extends React.Component {
             </h4>
           </div>
           <div className="header__right-content">
-            <div className="header__desktop-nav desktop">
+            <div className="header__desktop-nav tablet-and-desktop">
               <HeaderMenu />
             </div>
-            <div className="header__mobile-toggle mobile" onClick={this.toggleMenu}>
+            <div className="header__mobile-toggle mobile inline__children--5" onClick={this.toggleMenu}>
+              <HeaderPageTitle />
               <MobileMenuToggle isOpen={this.state.mobileMenuOpen} />
             </div>
             <div className={classnames('header__mobile-nav', 'mobile', { 'header__mobile-nav--open': this.state.mobileMenuOpen })}>

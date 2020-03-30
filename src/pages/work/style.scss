@@ -4,7 +4,7 @@
 
   &__logo {
     width: pxToRem(300px);
-    @include mobile {
+    @include mq(mobile, tablet) {
       margin-left: auto;
       margin-right: auto;
     }
@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    @include mobile {
+    @include mq(mobile, tablet) {
       flex-wrap: wrap;
     }
   }
@@ -24,10 +24,12 @@
     flex-grow: 1;
     flex-basis: pxToRem(400px);
 
-    @include mobile {
+    @include mq(mobile, tablet) {
       flex-basis: 100%;
       margin-bottom: $spacing-04;
       text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 
@@ -46,7 +48,7 @@
       margin-bottom: $spacing-04 !important;
     }
 
-    @include mobile {
+    @include mq(mobile, tablet) {
       justify-content: center;
       flex-basis: 100%;
     }

@@ -10,6 +10,7 @@ import ItemBlurb from '~components/ItemBlurb';
 import Gallery from '~components/Gallery';
 import Button from '~components/Button';
 import Citation from '~components/Citation';
+import YouTube from '~components/YouTube';
 
 const generateShortcodes = (postImages) => {
   return {
@@ -26,6 +27,7 @@ const generateShortcodes = (postImages) => {
       return <Gallery {...props} imgs={postImages} />;
     },
     Button,
+    YouTube,
     cite: Citation
   };
 }

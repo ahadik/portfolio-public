@@ -19,13 +19,6 @@ images:
   - lilly-chemspeed.jpg
 ---
 
-import Image from '~components/MdxImage';
-import Gallery from '~components/Gallery';
-import YouTube from '~components/YouTube';
-import Button from '~components/Button';
-import MdxLayout from '~components/MdxLayout';
-import TextTip from '~components/TextTip';
-
 > At Strateos, our mission is to turn the life sciences into an information technology, driven by data, computation, and
   high-throughput robotics with the goal of substantially advancing drug discovery. Our team brings together deep
   expertise in biology, automation, and software engineering to set new standards for the way scientific research is done.
@@ -37,13 +30,13 @@ Environment (TCLE) – a cloud-based software suite – enabled scientists to s
 the robotic platform all through a single web-based user interface. Top pharmaceutical and biotech companies used the
 Transcriptic robotic cloud lab in their own labs as well as externally through Transcriptic’s Cloud Bioassay Services.
 
-<Image imgs={props.images} name="ginkgo-dashboard" caption="A scientist at Ginkgo Bioworks uses the Transcriptic dashboard in one of their on-premise biology foundries." />
+<Image name="ginkgo-dashboard" caption="A scientist at Ginkgo Bioworks uses the Transcriptic dashboard in one of their on-premise biology foundries." />
 
 Today, Transcriptic's products have been re-branded under the Strateos identity. Strateos supports Transcriptic's
 original users – while simultaneously expanding the platform's capabilities to cloud-based biology
 and <TextTip content="The branch of chemistry concerned with the creation of new pharmaceuticals.">medicinal chemistry</TextTip> experimentation.
 Researchers can remotely submit their experiments, and sit back while our robots do the work. Along the way, they can
-track the progress of their expirment in real time, allowing them to focus on accelerating discoveries instead of
+track the progress of their experiments in real time, allowing them to focus on accelerating discoveries instead of
 labor-intensive bench work.
 
 ###### Advantages
@@ -69,7 +62,7 @@ robotic cloud infrastructure. This is our only customer facing application and d
 
 <div class="row" style={{ marginBottom: '1rem' }}>
   <div className="col-10 col-offset-1 mobile-col-12 mobile-col-offset-0">
-    <Image imgs={props.images} name="ipad-webapp" caption="Screenshot of a qPCR dataset as seen on the Strateos web application." />
+    <Image name="ipad-webapp" caption="Screenshot of a qPCR dataset as seen on the Strateos web application." />
   </div>
 </div>
 
@@ -79,7 +72,7 @@ clients, and launch and manage experiments that have been submitted by customers
 while following prompts from this application are extremely complex and crucial to execute correctly. A single misstep
 could damage the entire supply of a customer’s sample.
 
-<Image imgs={props.images} name="scientist-dashboard" caption="A Strateos Scientist launching a customer's experiment using the TCLE Dashboard." />
+<Image name="scientist-dashboard" caption="A Strateos Scientist launching a customer's experiment using the TCLE Dashboard." />
 
 ###### Robotic Operation
 Strateos operates robotic modules for executing biology experiments remotely. Lab operators manage these modules using a
@@ -87,7 +80,7 @@ scheduling dashboard. This app displays the current activity of the robotics, as
 complete for the module, such as handing off new materials, or receiving processed materials. It also exposes actions
 the operator can take directly, such as emergency procedures or direct debugging commands.
 
-<Image imgs={props.images} name="robotic-dashboard" caption="The Operator workstation attached to a Strateos robotic workcell." />
+<Image name="robotic-dashboard" caption="The Operator workstation attached to a Strateos robotic workcell." />
 
 #### Strateos Robotic Lab Facilities
 The software described above is backed by robotic facilities, capable of carrying out experiments with little to no
@@ -99,7 +92,7 @@ Our Menlo Park laboratory is Strateos's original facility, built by the Transcri
 four <TextTip content={<span><b>Workcell:</b> A collection of automated devices, each with capabilities useful to scientific experimentation, that are physically integrated by robotic arms. The arms move experimental samples between devices.</span>}>workcells</TextTip> that
 each have different scientific capabilities.
 
-<Image imgs={props.images} name="workcell" caption="One of the robotic workcells in operation in the Menlo Park robotic lab facility." />
+<Image name="workcell" caption="One of the robotic workcells in operation in the Menlo Park robotic lab facility." />
 
 We do most of our testing and development at this facility – before rolling out software and hardware improvements to
 our other labs.
@@ -111,9 +104,9 @@ in San Diego.
 
 <MdxLayout fullWidth>
   <Gallery caption="The Strateos San Diego Cloud Lab houses 11,000 square feet of biological and chemical automation.">
-    <Image imgs={props.images} name="lilly-lab" />
-    <Image imgs={props.images} name="lilly-arm" />
-    <Image imgs={props.images} name="lilly-chemspeed" />
+    <Image name="lilly-lab" />
+    <Image name="lilly-arm" />
+    <Image name="lilly-chemspeed" />
   </Gallery>
 </MdxLayout>
 

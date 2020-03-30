@@ -132,7 +132,7 @@ class Image extends React.Component {
         </div>
         
         <If condition={caption}>
-          <p className="caption monospace full-width image__caption">{caption}</p>
+          <p className="caption monospace image__caption">{caption}</p>
         </If>
       </div>
     );

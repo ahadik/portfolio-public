@@ -23,7 +23,7 @@ const parseLayout = (layout) => {
   return values.map(num => num * multiplier);
 };
 
-const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom, className, ...props}) => {
+const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom, className, padTop, padBottom, padBoth, ...props}) => {
   let defaultLayout;
   if (!layout) {
     // create a default layout that best fits all the children in to a single row.
@@ -41,6 +41,8 @@ const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom
     'grid-break-8-to-12': fullWidth,
     'mdx-layout--border-top': showBorderTop,
     'mdx-layout--border-bottom': showBorderBottom,
+    'mdx-layout--margin-top': padTop || padBoth,
+    'mdx-layout--margin-bottom': padBottom || padBoth
   };
 
   if (className) {
@@ -75,6 +77,9 @@ MdxLayout.propTypes = {
   fullWidth: PropTypes.bool,
   showBorderTop: PropTypes.bool,
   showBorderBottom: PropTypes.bool,
+  padTop: PropTypes.bool,
+  padBottom: PropTypes.bool,
+  padBoth: PropTypes.bool,
   className: PropTypes.string
 };
 

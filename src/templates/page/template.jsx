@@ -13,14 +13,21 @@ import './style.scss';
 export default ({ data }) => {
   if (data) {
     const post = data.mdx;
-    const featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
+    let featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
+    // If for some reason a featured image can't be found, use the previewImage as backup.
+    if (!featuredImgFluid) {
+      featuredImgFluid = post.frontmatter.previewImage && post.frontmatter.previewImage.childImageSharp.fluid;
+    }
     const { title, subtitle, excerpt, images } = post.frontmatter;
     const postImages = {};
 
     if (images) {
       images.forEach((img) => {
-        if (img && img.childImageSharp) {
-          postImages[img.name] = img.childImageSharp.fluid
+        if (img) {
+          postImages[img.name] = {
+            fluid: img.childImageSharp && img.childImageSharp.fluid,
+            publicURL: img.publicURL
+          }
         }
       })
     }
@@ -31,7 +38,7 @@ export default ({ data }) => {
       <Page>
         <SEO title={title} />
         <div className="row page-content">
-          <div className="page-content__header col-8 col-offset-2 mobile-col-12">
+          <div className="page-content__header col-8 col-offset-2 mobile-col-12 tablet-col-12">
             <h1 className="page-content__title">{title}</h1>
             <If condition={subtitle}>
               <h5 className="secondary">{subtitle}</h5>
@@ -47,7 +54,7 @@ export default ({ data }) => {
               <CoreImage image={featuredImgFluid} imgId="featured_image" disablePreview />
             </div>
           </If>
-          <div className="page-content__body serif col-8 col-offset-2 mobile-col-12">
+          <div className="page-content__body serif col-8 col-offset-2 mobile-col-12 tablet-col-12">
             <Choose>
               <When condition={post}>
                 <MDXProvider components={shortcodes}>
@@ -69,26 +76,33 @@ export default ({ data }) => {
 
 export const query = graphql`
   query($slug: String!) {
-    allWorkCategoriesJson {
+    allCategoriesJson {
       nodes {
         categories {
-          entries {
-            icon
-            id
-            name
-          }
+          icon
+          id
+          name
         }
       }
     }
     mdx(fields: { slug: { eq: $slug } }) {
       body
       tableOfContents
+      timeToRead
       frontmatter {
         title
         subtitle
         date(formatString: "MMMM DD, YYYY")
         excerpt
         featuredImage {
+          childImageSharp {
+            fluid(maxWidth: 1300) {
+              ...GatsbyImageSharpFluid
+              presentationWidth
+            }
+          }
+        }
+        previewImage {
           childImageSharp {
             fluid(maxWidth: 1300) {
               ...GatsbyImageSharpFluid
@@ -104,6 +118,8 @@ export const query = graphql`
               presentationWidth
             }
           }
+          extension
+          publicURL
         }
       }
     }

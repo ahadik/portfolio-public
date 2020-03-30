@@ -8,8 +8,6 @@ const TextTableColumn = ({ format, font }) => {
     'mobile': format === 'mobile'
   };
 
-  classes[font] = font;
-
   return(
     <div
       className={
@@ -20,16 +18,16 @@ const TextTableColumn = ({ format, font }) => {
       }
     >
       <div><p className="monospace text-table-column__header">{format}</p></div>
-      <div className="text-table-column__cell"><h1 className="headline">Headline</h1></div>
-      <div className="text-table-column__cell"><h1>Heading 1</h1></div>
-      <div className="text-table-column__cell"><h2>Heading 2</h2></div>
-      <div className="text-table-column__cell"><h3>Heading 3</h3></div>
-      <div className="text-table-column__cell"><h4>Heading 4</h4></div>
-      <div className="text-table-column__cell"><h5>Heading 5</h5></div>
-      <div className="text-table-column__cell"><h6>Heading 6</h6></div>
-      <div className="text-table-column__cell"><p>Paragraph</p></div>
-      <div className="text-table-column__cell"><span>Base</span></div>
-      <div className="text-table-column__cell"><p className="caption">Caption</p></div>
+      <div className="text-table-column__cell"><h1 className={classnames(font, 'headline')}>Headline</h1></div>
+      <div className="text-table-column__cell"><h1 className={classnames(font)}>Heading 1</h1></div>
+      <div className="text-table-column__cell"><h2 className={classnames(font)}>Heading 2</h2></div>
+      <div className="text-table-column__cell"><h3 className={classnames(font)}>Heading 3</h3></div>
+      <div className="text-table-column__cell"><h4 className={classnames(font)}>Heading 4</h4></div>
+      <div className="text-table-column__cell"><h5 className={classnames(font)}>Heading 5</h5></div>
+      <div className="text-table-column__cell"><h6 className={classnames(font)}>Heading 6</h6></div>
+      <div className="text-table-column__cell"><p className={classnames(font)}>Paragraph</p></div>
+      <div className="text-table-column__cell"><span className={classnames(font)}>Base</span></div>
+      <div className="text-table-column__cell"><p className={classnames(font, 'caption')}>Caption</p></div>
     </div>
   );
 }

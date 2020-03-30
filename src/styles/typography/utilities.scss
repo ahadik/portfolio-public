@@ -49,7 +49,7 @@ $fontScale: (
       line: 1.58
     ),
     h6: (
-      text: #{pow($fontMultiplier, -1)}rem,
+      text: #{pow($fontMultiplier, 0)}rem,
       line: 1.58
     ),
     paragraph: (
@@ -65,7 +65,7 @@ $fontScale: (
       line: 1.26
     ),
     caption: (
-      text: #{pow($fontMultiplier, -3)}rem,
+      text: #{pow($fontMultiplier, -1)}rem,
       line: 2.03
     )
   ),

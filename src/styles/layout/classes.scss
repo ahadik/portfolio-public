@@ -1,10 +1,28 @@
 .mobile {
-  @include desktop {
+  @include mq(tablet, desktop) {
+    display: none !important;
+  }
+}
+
+.tablet {
+  @include mq(mobile, desktop) {
     display: none !important;
   }
 }
 
 .desktop {
+  @include mq(mobile, tablet) {
+    display: none !important;
+  }
+}
+
+.mobile-and-tablet {
+  @include desktop {
+    display: none !important;
+  }
+}
+
+.tablet-and-desktop {
   @include mobile {
     display: none !important;
   }

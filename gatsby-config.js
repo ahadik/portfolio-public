@@ -63,7 +63,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-json`,
       options: {
-        typeName: ({ object }) => `${object.categories.type}CategoriesJson`,
+        typeName: `CategoriesJson`,
       }
     },
     {

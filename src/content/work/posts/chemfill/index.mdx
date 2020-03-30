@@ -1,0 +1,112 @@
+---
+date: "2020-03-25"
+title: "ChemFill"
+subtitle: "A Molecular Structure Data Provider Plugin for Sketch"
+previewImage: "preview-photo.png"
+featuredImage: "cover-photo.png"
+excerpt: "The modern developer ecosystem is extra-ordinarily fully featured — with a seemingly infinite number of tools available to boost productivity. The same cannot be said for design. Even the smallest improvement to Sketch gets the design community chatting. However, we are finally at a tipping point where designers can create tools for themselves and their peers. I added to this growing ecosystem of design tooling by creating a little Sketch plugin called ChemoFill."
+images:
+  - mid-fidelity-mockup.png
+  - molecule.png
+  - data-demo.png
+  - chembl-demo.png
+  - skpm.png
+  - plugins-directory.png
+  - runner-demo.png
+  - final-screenshot.png
+  - formula-demo.png
+  - structure-demo.png
+categories: [design-ops, code, transcriptic]
+---
+
+###### TL;DR
+I made a Sketch plugin. It provides fun chemical data to Sketch when you ask it to. <Link href="https://github.com/ahadik/chemfill/">Here's the GitHub</Link> and <Link to="/writing/data-supplier-1">here's the first of three blog posts</Link> describing how I made it.
+
+#### The Problem
+
+>This interface looks great, I only have one question. Why does the boronic acid have both an alkyl and an aryl group?<cite>Medicinal Chemist User</cite>
+
+I was standing in a conference room at the headquarters of Eli Lilly — one of America's largest pharmaceutical companies. Here, I was presenting my latest mocks for a web interface that this company would soon be using to run automated medicinal chemistry. The heads of a half dozen PhD Chemists swung in my direction, anticipating an answer to this question — which had been asked by one of Lilly's most respected scientists.
+
+The true answer was that I had no idea what he was even asking, and even if I did, the answer didn't really matter. You see, the mock he was referring to looked something like this:
+
+<Image name="mid-fidelity-mockup" hasShadow caption="A mid-fidelity mockup displaying a completely made-up chemical structure." />
+
+The mocks I was showing to this group of scientists were mid-fidelity and filled completely with fake data. That didn't change the fact that this scientist — like so many others — was unable to see past the chemical structure I'd made up in my head and scribbled in.
+
+The funny thing about scientists is that they are so used to terrible software that it's nearly impossible to explain to them what a "mid-fidelity mock" is. Anything is better than what they're currently using and so they often mistake mockups for real software. While this is endearing, it makes user testing incredibly hard. How can you get honest feedback when all a chemist wants to do is analyze the compounds you've doodled?
+
+<MdxLayout layout="1:4:1">
+  <div />
+  <Image name="molecule" caption="This is what a real molecule looks like." />
+  <div />
+</MdxLayout>
+
+I decided to simply meet scientists at their level, and use accurate chemical structures in all of my designs — from mid-fidelity up to production design. *The challenge was to do this without dramatically slowing down my workflow.*
+
+#### Requirements
+Before diving into this project, I detailed a few simple requirements:
+
+- Complete integration. This solution should fit neatly into a designer's existing workflow.
+- High accuracy. Even the slightest inaccuracy can be an unnecessary distraction during user testing.
+- High variety. A designer should be able to access a large selection of molecules, to ensure that mocks stand up to any molecular shape.
+- Multiple data types. A designer should be able to access images of molecular structures, as well as text data for Molecules.
+
+#### Solution
+To begin with, I chose my medium — a Sketch plugin. All of my digital design work happens in Sketch, so it just made sense to build a solution for that environment. In Sketch 52, the Sketch team introduced <Link href="https://www.sketch.com/docs/data/">Data Suppliers</Link> and a new <Link href="https://developer.sketch.com/reference/api/#data-supplier">DataSupplier API</Link>, which allows developers to create <Link href="https://blog.sketchapp.com/do-more-with-data-2b765e870e4f">Data Supplier Plugins</Link>.
+
+<Image name="data-demo" caption="Sketch comes with default Data Providers for things like profile images." />
+
+The default Data Suppliers in Sketch, along with other plugins released by the Sketch community, allow designers to design with real data. It was clear that a Sketch Data Plugin was the perfect solution for what I was trying to achieve.
+
+#### Bringing It To Life
+###### Defining The Data
+Working from the requirements I detailed, I needed to figure out exactly what kind of data to provide. In my own work, the molecular data I spent the most time inserting, and that Chemists most often got tripped up by, was:
+
+- *Structures:* Images of molecules showing the atoms and bonds that make up a structure.
+- *Formulas:* The molecular formulas that detail the type and count of atoms in a molecule. These look something like C<sub>48</sub>H<sub>62</sub>N<sub>8</sub>O<sub>11</sub> and likely bring back pangs of fear from high school chemistry class.
+- *Weights:* These numbers represent the molecular weight of a molecule. For designers who aren't familiar with chemistry, it's helpful to provide them values that are representative of the numbers likely to be encountered in production use. They tend to be numbers like 608.74.
+- *<Link href="https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system">SMILES Strings:</Link>* These strings of text represent the physical structure of a molecule. They're often used to store molecular structure information in databases, and Chemists use them to copy structures between applications and communicate with colleagues. As a result, they're a common presence in the UI of Chemistry products, and they look something like this: <code>C\[C@H\]1CC\[C@@H\](NCc2ccc3c(c2)Cc2c(-c4ccc(CC(=O)O)cc4)n\[nH\]c2-3)CC1</code>
+
+
+###### Finding a Source
+Now that I knew what kind of data I needed to provide, I needed to find a place to get it from. I spoke with Strateos's resident Medicinal Chemist, Ash, and he pointed me in the direction of <Link href="https://www.ebi.ac.uk/chembl/">ChEMBL</Link>. From the ChEMBL website:
+
+>ChEMBL is a manually curated database of bioactive molecules with drug-like properties. It brings together chemical, bioactivity and genomic data to aid the translation of genomic information into effective new drugs.
+
+The best part of ChEMBL is that they have an extensive, <Link href="https://www.ebi.ac.uk/chembl/api/data/docs">well documented API for their database</Link>.
+
+<Image name="chembl-demo" caption="The ChEMBL API explorer gives a great sense of what kind of data can be retrieved from the API." />
+
+I decided that this industry standard database was the perfect source to draw from for my plugin.
+
+###### Putting It All Together
+Luckily, there are great tutorials and resources for creating a Data Supplier plugin. I made use of <Link href="https://github.com/skpm/skpm">SKPM (Sketch Plugin Manager)</Link>, which is a Node module that assists with creating, building and publishing Sketch plugins. Perhaps most importantly, it comes with a Webpack-based build pipeline that transpiles basic JS code into a form Sketch can work with.
+
+<MdxLayout layout="5:2:5">
+  <div />
+  <Image name="skpm" />
+</MdxLayout>
+
+I put together a series of post in my blog that details the full process of developing this plugin, and you can <Link to="/writing/data-supplier-1">read the first post here</Link>. I'll spare you the gorey details in this case-study.
+
+#### The Final Product
+I named this plugin ChemFill and it's now published on the Sketch Plugin directory — anyone can <Link href="https://github.com/ahadik/chemfill/">download</Link>, install and use it!
+
+<Image name="plugins-directory" />
+
+Once installed, you can start inserting real chemical data directly into your Sketch mocks.
+
+###### Chemical Structures
+You can insert chemical structures using the Image Data Supplier...
+
+<Image name="structure-demo" caption="Select a shape and fill it with an image of a compound using the Data flyout menu." />
+
+###### Chemical Data
+As well as chemical data using the Text Data Suppliers...
+ 
+<Image name="formula-demo" caption="Select any text box and populate it using the chemical data type of your choice." />
+
+Overall, this plugin has been invaluable to the Strateos Design team for quickly creating mocks using real chemical data.
+
+<Image name="final-screenshot" />

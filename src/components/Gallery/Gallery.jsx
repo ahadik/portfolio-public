@@ -33,53 +33,60 @@ class Gallery extends React.Component {
     const { children, caption, allowWrap, imgs } = this.props;
     return (
       <div className={classnames('gallery', { 'gallery--wrapping': allowWrap })}>
-        <If condition={this.state.activePreview}>
-          <Lightbox onClose={this.closePreview}>
-            <div className="gallery__preview-content">
-              <div className="gallery__preview-image-container">
-                <div className="gallery__preview-image" style={{ maxWidth: this.state.activePreview.presentationWidth || '70%' }}>
-                  <Choose>
-                    <When condition={this.state.activePreview.fluid}>
-                      <Img fluid={this.state.activePreview.fluid} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
-                    </When>
-                    <When condition={this.state.activePreview.publicURL}>
-                      <img src={this.state.activePreview.publicURL} style={{ position: 'absolute', height: '100%', width: '100%', objectFit: 'contain' }} />
-                    </When>
-                  </Choose>
+        <div className="tablet-and-desktop">
+          <If condition={this.state.activePreview}>
+            <Lightbox onClose={this.closePreview}>
+              <div className="gallery__preview-content">
+                <div className="gallery__preview-image-container">
+                  <div className="gallery__preview-image" style={{ maxWidth: this.state.activePreview.presentationWidth || '70%' }}>
+                    <Choose>
+                      <When condition={this.state.activePreview.fluid}>
+                        <Img
+                          fluid={this.state.activePreview.fluid}
+                          imgStyle={{ objectFit: 'contain' }}
+                          style={{ position: 'absolute', height: '100%', width: '100%' }}
+                          disablePreview
+                        />
+                      </When>
+                      <When condition={this.state.activePreview.publicURL}>
+                        <img src={this.state.activePreview.publicURL} style={{ position: 'absolute', height: '100%', width: '100%', objectFit: 'contain' }} />
+                      </When>
+                    </Choose>
+                  </div>
+                  <If condition={caption}>
+                    <p className="caption monospace full-width gallery__preview-caption">{caption}</p>
+                  </If>
                 </div>
-                <If condition={caption}>
-                  <p className="caption monospace full-width gallery__preview-caption">{caption}</p>
-                </If>
+                <div className="gallery__preview-strip">
+                  {React.Children.map(children, (child) => {
+                    if((child.props.mdxType === 'Image') && child.props.name) {
+                      const image = imgs[child.props.name];
+                      return (
+                        <div className="gallery__preview-thumbnail" onClick={() => this.flipPreview(image)}>
+                          <Choose>
+                            <When condition={image.fluid}>
+                              <Img fluid={image.fluid} imgStyle={{ objectFit: 'contain' }} style={{width: `calc(${image.fluid.aspectRatio} * 7rem)` }} />
+                            </When>
+                            <When condition={image.publicURL}>
+                              <img src={image.publicURL} />
+                            </When>
+                          </Choose>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
               </div>
-              <div className="gallery__preview-strip">
-                {React.Children.map(children, (child) => {
-                  if((child.props.mdxType === 'Image') && child.props.name) {
-                    const image = imgs[child.props.name];
-                    return (
-                      <div className="gallery__preview-thumbnail" onClick={() => this.flipPreview(image)}>
-                        <Choose>
-                          <When condition={image.fluid}>
-                            <Img fluid={image.fluid} imgStyle={{ objectFit: 'contain' }} style={{width: `calc(${image.fluid.aspectRatio} * 7rem)` }} />
-                          </When>
-                          <When condition={image.publicURL}>
-                            <img src={image.publicURL} />
-                          </When>
-                        </Choose>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-            </div>
-          </Lightbox>
-        </If>
+            </Lightbox>
+          </If>
+        </div>
         <div className="gallery__body">
           {React.Children.map(children, (child) => {
             if((child.props.mdxType === 'Image') && child.props.name) {
               const image = imgs[child.props.name];
               return (
                 <div className="gallery__item" onClick={() => this.flipPreview(image)} style={{ flexGrow: image.aspectRatio || 1 }}>
-                  {React.cloneElement(child, { allowPreview: false })}
+                  {React.cloneElement(child, { disablePreview: true })}
                 </div>
               );
             }

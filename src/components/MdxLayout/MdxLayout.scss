@@ -9,4 +9,12 @@
     margin-bottom: 2rem;
     border-bottom: 1px solid color(light, gray);
   }
+
+  &--pad-top {
+    margin-top: 1rem;
+  }
+
+  &--pad-bottom {
+    margin-bottom: 1rem;
+  }
 }

@@ -85,7 +85,7 @@ class Filter extends React.Component {
           </div>
           <Options options={options} onToggleSelect={onToggleSelect} open={this.state.open} selected={selected} />
           <If condition={selected}>
-            <div className="desktop">
+            <div className="tablet-and-desktop">
               <Categories categoryIds={selected} onClose={(id) => { onToggleSelect(id, false)}} categories={allOptions} />
             </div>
           </If>

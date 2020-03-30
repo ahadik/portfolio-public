@@ -49,6 +49,16 @@
   display: block;
 }
 
+.gatsby-highlight {
+  .token.comment {
+    color: #61707b;
+  }
+}
+
+.gatsby-highlight + .gatsby-highlight {
+  margin-top: 1rem;
+}
+
 @mixin language-tags($languages) {
   @each $language in $languages {
     .gatsby-highlight pre.language-#{$language}::before {
@@ -59,7 +69,7 @@
   }
 }
 
-@include language-tags(jsx scss javascript html css);
+@include language-tags(jsx scss javascript html css json);
 
 // Site styling
 body {
@@ -191,26 +201,50 @@ h6 + ul {
 }
 
 p + h1 {
-  margin-top: #{pow($fontMultiplier, 3)}rem
+  margin-top: #{pow($fontMultiplier, 4)}rem
 }
 
-p + h2 {
-  margin-top: #{pow($fontMultiplier, 2)}rem
-}
-
+ul + h2,
+ol + h2,
+p + h2,
+.mdx-layout + h2,
+.image + h2,
+.gatsby-highlight + h2,
+.youtube + h2,
+.gallery + h2,
 ul + h3,
 ol + h3,
 p + h3,
+.mdx-layout + h3,
+.image + h3,
+.gatsby-highlight + h3,
+.youtube + h3,
+.gallery + h3,
 ul + h4,
 ol + h4,
 p + h4,
+.mdx-layout + h4,
+.image + h4,
+.gatsby-highlight + h4,
+.youtube + h4,
+.gallery + h4,
 ul + h5,
 ol + h5,
 p + h5,
+.mdx-layout + h5,
+.image + h5,
+.gatsby-highlight + h5,
+.youtube + h5,
+.gallery + h5,
 ul + h6,
 ol + h6,
-p + h6 {
-  margin-top: #{$fontMultiplier}rem
+p + h6,
+.mdx-layout + h6,
+.image + h6,
+.gatsby-highlight + h6,
+.youtube + h6,
+.gallery + h6 {
+  margin-top: #{pow($fontMultiplier, 3)}rem
 }
 
 p + p,
@@ -218,16 +252,17 @@ p + ol,
 p + ul,
 ol + p,
 ul + p,
-p + .mdx-layout,
 p + .gallery,
 p + .image,
 p + .button,
-p + .gatsby-highlight {
+p + .gatsby-highlight,
+p + .youtube,
+p + .mdx-layout {
   margin-top: 1rem;
 }
 
 $blockClasses: (button, gallery, mdx-layout, image, gatsby-highlight);
-$textTags: (h4, h5, h6, p, ol, ul);
+$textTags: (p, ol, ul);
 
 @each $block in $blockClasses {
   @each $tag in $textTags {
@@ -295,6 +330,13 @@ h1, h2, h3, h4, h5, h6, p, li {
     background: color(light, gray) !important;
     color: color(dark, blue) !important;
     border: 1px solid color(medium, gray) !important;
+    &::before {
+      content: '';
+    }
+
+    &::after {
+      content: '';
+    }
   }
 }
 
