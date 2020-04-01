@@ -13,6 +13,8 @@ $strip-height: 6rem;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;
+    margin-left: -$spacing-03;
+    margin-right: -$spacing-03;
 
     @include mobile {
       flex-wrap: wrap;
@@ -21,6 +23,7 @@ $strip-height: 6rem;
 
   &--wrapping &__body {
     flex-wrap: wrap;
+    margin-top: -$spacing-06;
   }
 
   &__caption {
@@ -101,14 +104,12 @@ $strip-height: 6rem;
 
   &__item {
     cursor: pointer;
-    
-    & + & {
-      margin-left: $spacing-06;
-    }
+    margin-left: $spacing-03;
+    margin-right: $spacing-03;
   }
 
   &--wrapping &__item {
-    min-width: 30%;
+    margin-top: $spacing-06;
   }
 
   @include mobile {

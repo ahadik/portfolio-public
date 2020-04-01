@@ -112,25 +112,25 @@ From these pain points, I narrowed the scope of the project down to four core *u
 <MdxLayout fullWidth layout="1:1:1:1" showBorderTop showBorderBottom>
 <div className="center-text">
 
-  ###### <i className="fa fa-check" /> Determine Success
+  ###### <i className="fa fa-check"></i> Determine Success
   Biologists need to understand if an experiment was even modestly successful so that they can determine if a dataset is worth analyzing further.
 
 </div>
 <div className="center-text">
 
-  ###### <i className="fa fa-search" /> Explore Data
+  ###### <i className="fa fa-search"></i> Explore Data
   Biologists need to be able to sort, search and filter their data on the fly so that they can compare datasets and gain a deeper understanding of the results.
 
 </div>
 <div className="center-text">
 
-  ###### <i className="fa fa-microscope" /> Specific Views
+  ###### <i className="fa fa-microscope"></i> Specific Views
   Biologists need to view datasets in layouts and visualizations specific to the type of experiment that was run.
 
 </div>
 <div className="center-text">
 
-  ###### <i className="fa fa-code" /> Quick Implementation
+  ###### <i className="fa fa-code"></i> Quick Implementation
   Software Engineers need to quickly create new Dataset views without duplicating existing code, or introducing visual regressions.
 
 </div>
@@ -145,10 +145,12 @@ My task was to provide a re-designed user experience for navigating and accessin
 4. **Useable:** Biologists have well defined approaches to data. Our solution should not dictate a preferred approach but instead meet Biologists where they stand.
 
 ##### Initial Sketches
-<Gallery caption="Rough sketches of the known dataset types.">
-  <Image name="sketch1" />
-  <Image name="sketch2" />
-</Gallery>
+<MdxLayout fullWidth>
+  <Gallery caption="Rough sketches of the known dataset types.">
+    <Image name="sketch1" />
+    <Image name="sketch2" />
+  </Gallery>
+</MdxLayout>
 
 My initial sketches focused on the core components needed to appropriately display data objects, with some basic attention paid to layout. These sketches were foundational to the final architecture proposed.
 
@@ -234,7 +236,7 @@ Primitives are the basic visualizations we support. They are the atomic units fr
   Often, basic plots and graphs help scientists digest an experiment's results. This set of data visualization primitives addresses the vast majority of our user's needs.
 
   <StorybookLink href="https://amino-storybook.transcriptic.com/?path=/story/chart--barchart" />
-  <Gallery allowWrap>
+  <Gallery itemsPerRow={3}>
     <Image name="bar-chart-data-viz" />
     <Image name="line-area-graph-data-viz" />
     <Image name="line-graph-data-viz" />

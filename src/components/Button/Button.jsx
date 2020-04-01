@@ -5,14 +5,14 @@ import classnames from 'classnames';
 
 import './Button.scss';
 
-const Button = ({ children, iconLeft, iconRight, variant, style, hasBorder, onClick, to, href, animateRight, small }) => {
+const Button = ({ children, iconLeft, iconRight, variant, appearance, hasBorder, onClick, to, href, animateRight, small }) => {
 
   function buttonClasses(...additionalClasses) {
     return classnames(
       'button',
       'inline__children--3',
       `button--${variant}`,
-      `button--${style}`,
+      `button--${appearance}`,
       ...additionalClasses,
       {
         'button--bordered': hasBorder,
@@ -59,7 +59,7 @@ const Button = ({ children, iconLeft, iconRight, variant, style, hasBorder, onCl
 
 Button.defaultProps = {
   variant: 'black',
-  style: 'label',
+  appearance: 'label',
   hasBorder: false
 }
 
@@ -71,7 +71,7 @@ Button.propTypes = {
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
   variant: PropTypes.oneOf(['black', 'blue', 'green', 'white']),
-  style: PropTypes.oneOf(['label', 'fill']),
+  appearance: PropTypes.oneOf(['label', 'fill']),
   hasBorder: PropTypes.bool,
   onClick: PropTypes.func,
   to: PropTypes.string,

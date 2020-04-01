@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Note from '~components/Note';
 import Image from '~components/MdxImage';
 import Link from "~components/Link";
 import MdxLayout from '~components/MdxLayout';
@@ -23,6 +24,7 @@ const generateShortcodes = (postImages) => {
     ToolTip,
     ArrowFlow,
     ItemBlurb,
+    Note,
     Gallery: function(props) {
       return <Gallery {...props} imgs={postImages} />;
     },

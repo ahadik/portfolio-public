@@ -12,7 +12,8 @@ exports.onCreateWebpackConfig = ({ actions }) => {
       alias: {
         "~components": path.resolve(__dirname, "src/components"),
         "~images": path.resolve(__dirname, "src/images"),
-        "~templates": path.resolve(__dirname, "src/templates")
+        "~templates": path.resolve(__dirname, "src/templates"),
+        "~static": path.resolve(__dirname, "static")
       }
     }
   });

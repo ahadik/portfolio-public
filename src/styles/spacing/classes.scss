@@ -2,22 +2,22 @@
   .stack__children--#{$increment} {
     
     & > * + * {
-      margin-top: $value;
+      margin-top: $value !important;
     }
   }
 
   .stack__item--#{$increment} {
-    margin-bottom: $value;
+    margin-bottom: $value !important;
   }
 
   .inline__children--#{$increment} {
     & > * + * {
-      margin-left: $value;
+      margin-left: $value !important;
     }
   }
 
   .inline__item--#{$increment} {
-    margin-left: $value;
+    margin-left: $value !important;
   }
 
   .inset__even--#{increment} {

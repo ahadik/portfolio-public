@@ -78,7 +78,7 @@ class Image extends React.Component {
 
   render() {
 
-    const { swapDelay, proportion, image, hasShadow, maxHeight, caption, to, href, disablePreview, isScreenshot, ...props } = this.props;
+    const { swapDelay, proportion, image, hasShadow, maxHeight, caption, to, href, disablePreview, isScreenshot, wrapperStyle, className, ...props } = this.props;
 
     // if there's more than one image in the stack, and the first image has a different id, then remove it in a few seconds.
     if ((this.state.imageStack.length > 1) && (this.state.imageStack[0].imgId !== getImgIdFromProps(this.props))) {
@@ -90,7 +90,7 @@ class Image extends React.Component {
     const ratio = proportion || (1/image.aspectRatio);
 
     return (
-      <div className={classnames('image', 'stack__children--2', { 'image--screenshot': isScreenshot })}>
+      <div className={classnames('image', 'stack__children--2', className, { 'image--screenshot': isScreenshot })} style={wrapperStyle}>
         <div
           className={classnames('image__viewport', { 'image__viewport--shadow': hasShadow })}
           style={{
@@ -149,7 +149,9 @@ Image.propTypes = {
   hasShadow: PropTypes.bool,
   maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   disablePreview: PropTypes.bool,
-  isScreenshot: PropTypes.bool
+  isScreenshot: PropTypes.bool,
+  wrapperStyle: PropTypes.instanceOf(Object),
+  className: PropTypes.string
 }
 
 Image.defaultProps = {

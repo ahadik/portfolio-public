@@ -48,6 +48,8 @@ $variants: (black, blue, green, white);
 
     &--#{$variant}#{&}--fill {
       background-color: color(light, $variant);
+      padding: $spacing-03;
+      border-style: solid;
     }
 
     &--#{$variant}#{&}--bordered {

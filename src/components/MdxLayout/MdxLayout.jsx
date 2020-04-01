@@ -23,7 +23,7 @@ const parseLayout = (layout) => {
   return values.map(num => num * multiplier);
 };
 
-const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom, className, padTop, padBottom, padBoth, ...props}) => {
+const MdxLayout = ({children, layout, tabletLayout, fullWidth, showBorderTop, showBorderBottom, className, padTop, padBottom, padBoth, ...props}) => {
   let defaultLayout;
   if (!layout) {
     // create a default layout that best fits all the children in to a single row.
@@ -31,6 +31,7 @@ const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom
   }
   // if a layout prop was passed, then parse it, otherwise use the default layout.
   const parsedLayout = layout ? parseLayout(layout) : defaultLayout;
+  const parsedTabletLayout = tabletLayout && parseLayout(tabletLayout);
 
   if (parsedLayout.length < React.Children.count(children)) {
     console.error(`Layout of ${layout} defines fewer columns than the number of provided children.`);
@@ -61,8 +62,20 @@ const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom
       {...props}
     >
       {React.Children.map(children, (child, index) => {
+        const classNameObject = {};
+        if (parsedTabletLayout) {
+          classNameObject[`tablet-col-${parsedTabletLayout[index]}`] = !!parsedTabletLayout;
+        }
         return (
-          <div className={`mobile-col-12 col-${parsedLayout[index]}`}>
+          <div
+            className={
+              classnames(
+                'mobile-col-12',
+                `col-${parsedLayout[index]}`,
+                classNameObject
+              )
+            }
+          >
             {child}
           </div>
         );
@@ -74,6 +87,7 @@ const MdxLayout = ({children, layout, fullWidth, showBorderTop, showBorderBottom
 MdxLayout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
   layout: PropTypes.string,
+  tabletLayout: PropTypes.string,
   fullWidth: PropTypes.bool,
   showBorderTop: PropTypes.bool,
   showBorderBottom: PropTypes.bool,

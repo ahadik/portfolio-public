@@ -30,9 +30,9 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { children, caption, allowWrap, imgs } = this.props;
+    const { children, caption, itemsPerRow, imgs } = this.props;
     return (
-      <div className={classnames('gallery', { 'gallery--wrapping': allowWrap })}>
+      <div className={classnames('gallery', { 'gallery--wrapping': !!itemsPerRow })}>
         <div className="tablet-and-desktop">
           <If condition={this.state.activePreview}>
             <Lightbox onClose={this.closePreview}>
@@ -85,7 +85,14 @@ class Gallery extends React.Component {
             if((child.props.mdxType === 'Image') && child.props.name) {
               const image = imgs[child.props.name];
               return (
-                <div className="gallery__item" onClick={() => this.flipPreview(image)} style={{ flexGrow: image.aspectRatio || 1 }}>
+                <div
+                  className="gallery__item"
+                  onClick={() => this.flipPreview(image)}
+                  style={{
+                    flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
+                    flexBasis: itemsPerRow && `calc(${100 / itemsPerRow}% - 16px)`
+                  }}
+                >
                   {React.cloneElement(child, { disablePreview: true })}
                 </div>
               );
@@ -102,7 +109,7 @@ class Gallery extends React.Component {
 
 Gallery.propTypes = {
   caption: PropTypes.string,
-  allowWrap: PropTypes.bool
+  itemsPerRow: PropTypes.number
 }
 
 export default Gallery;
