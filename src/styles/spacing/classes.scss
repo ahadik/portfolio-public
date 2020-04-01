@@ -1,6 +1,5 @@
 @each $increment, $value in $spacingVars {
   .stack__children--#{$increment} {
-    
     & > * + * {
       margin-top: $value !important;
     }

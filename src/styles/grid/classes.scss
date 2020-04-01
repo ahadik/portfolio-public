@@ -44,6 +44,11 @@ $totalWidth: calc(100% - #{($gridPadding * $numGutters)});
     margin-right: $offsetVal;
     width: calc(100% + (-2 * #{$offsetVal}));
   }
+
+  .grid-break-screen-width {
+    margin-left: calc((100vw - 100%) / -2);
+    width: 100vw;
+  }
 }
 
 @mixin deviceGrid($device) {

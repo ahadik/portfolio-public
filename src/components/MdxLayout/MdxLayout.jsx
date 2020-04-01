@@ -12,6 +12,10 @@ const parseLayout = (layout) => {
   // sum the values in the array
   const valueSum = values.reduce((agg, num) => agg + num );
   // test if the values passed in add up to a divisor of 12.
+  if (valueSum > 12) {
+    return values;
+  }
+
   if ((numCols % valueSum) !== 0) {
     // if not, throw an error because this layout can't be expanded to a 12 column layout
     console.error(`Layout of ${layout} can't be expanded to fit a 12 column grid (sum is not divisor of 12).`);
@@ -23,7 +27,7 @@ const parseLayout = (layout) => {
   return values.map(num => num * multiplier);
 };
 
-const MdxLayout = ({children, layout, tabletLayout, fullWidth, showBorderTop, showBorderBottom, className, padTop, padBottom, padBoth, ...props}) => {
+const MdxLayout = ({children, layout, tabletLayout, fullWidth, maxWidth, showBorderTop, showBorderBottom, className, padTop, padBottom, padBoth, ...props}) => {
   let defaultLayout;
   if (!layout) {
     // create a default layout that best fits all the children in to a single row.
@@ -40,6 +44,7 @@ const MdxLayout = ({children, layout, tabletLayout, fullWidth, showBorderTop, sh
 
   const classes = {
     'grid-break-8-to-12': fullWidth,
+    'grid-break-screen-width': maxWidth,
     'mdx-layout--border-top': showBorderTop,
     'mdx-layout--border-bottom': showBorderBottom,
     'mdx-layout--margin-top': padTop || padBoth,
@@ -89,6 +94,7 @@ MdxLayout.propTypes = {
   layout: PropTypes.string,
   tabletLayout: PropTypes.string,
   fullWidth: PropTypes.bool,
+  maxWidth: PropTypes.bool,
   showBorderTop: PropTypes.bool,
   showBorderBottom: PropTypes.bool,
   padTop: PropTypes.bool,

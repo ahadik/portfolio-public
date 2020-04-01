@@ -30,9 +30,9 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { children, caption, itemsPerRow, imgs } = this.props;
+    const { children, caption, itemsPerRow, imgs, tabletStack } = this.props;
     return (
-      <div className={classnames('gallery', { 'gallery--wrapping': !!itemsPerRow })}>
+      <div className={classnames('gallery', { 'gallery--wrapping': !!itemsPerRow || tabletStack, 'gallery--tablet-wrap': tabletStack })}>
         <div className="tablet-and-desktop">
           <If condition={this.state.activePreview}>
             <Lightbox onClose={this.closePreview}>
@@ -109,7 +109,8 @@ class Gallery extends React.Component {
 
 Gallery.propTypes = {
   caption: PropTypes.string,
-  itemsPerRow: PropTypes.number
+  itemsPerRow: PropTypes.number,
+  tabletStack: PropTypes.bool
 }
 
 export default Gallery;
