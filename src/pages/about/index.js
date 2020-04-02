@@ -4,7 +4,10 @@ import { graphql } from "gatsby"
 import Page from "~components/Page/Page";
 import SEO from "~components/seo";
 import Image from '~components/Image';
+import Button from '~components/Button';
 import Link from "~components/Link";
+
+import Resume from "~static/alex-hadik-resume.pdf";
 
 import './about.scss';
 
@@ -18,6 +21,7 @@ const AboutPage = (props) => {
         </div>
         <div className="col-5 mobile-col-12  about-page__header-title">
           <h3 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h3>
+          <Button variant="green" iconLeft="fal fa-arrow-down" hasBorder href={Resume}>Download Resume</Button>
         </div>
       </div>
       <div className="row row--large-spacing">
@@ -32,8 +36,8 @@ const AboutPage = (props) => {
             the perfect next step.
           </p>
           <p><Link to="/transcriptic/role">I joined Transcriptic in 2016</Link> as their first and only designer. Since then, I've built our design
-            team and discipline establishing – among other things – a product development process grounded in user
-            research, a design system called Amino, and strong brand identity.
+            team and discipline establishing – among other things – <Link to="/work/chemical-synthesis">a product development process</Link> grounded in user
+            research, <Link to="/work/amino">a design system</Link> called Amino, and a <Link to="/work/transcriptic-photography">strong brand identity</Link>.
           </p>
         </div>
       </div>

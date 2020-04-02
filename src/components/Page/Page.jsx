@@ -63,11 +63,11 @@ class Page extends React.Component {
       `}
       render={(data) => {
         return (
-          <>
+          <div className={this.props.pageClass}>
             <Header siteTitle={data.site.siteMetadata.title} visible={this.state.visible} />
             <main className="page__main-content">{this.props.children}</main>
             <Footer />
-          </>
+          </div>
         )
       }}
       />

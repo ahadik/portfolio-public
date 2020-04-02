@@ -25,7 +25,53 @@ $strongWeight: 900;
 $fontScale: (
   desktop: (
     headline: (
-      text: #{pow($fontMultiplier, 12)}rem,
+      text: #{pow($fontMultiplier, 11)}rem,
+      line: 1.26
+    ),
+    h1: (
+      text: #{pow($fontMultiplier, 10)}rem,
+      line: 1.26
+    ),
+    h2: (
+      text: #{pow($fontMultiplier, 9)}rem,
+      line: 1.26
+    ),
+    h3: (
+      text: #{pow($fontMultiplier, 8)}rem,
+      line: 1.26
+    ),
+    h4: (
+      text: #{pow($fontMultiplier, 6)}rem,
+      line: 1.58
+    ),
+    h5: (
+      text: #{pow($fontMultiplier, 4)}rem,
+      line: 1.58
+    ),
+    h6: (
+      text: #{pow($fontMultiplier, 0)}rem,
+      line: 1.58
+    ),
+    paragraph: (
+      text: 1rem,
+      line: 1.875
+    ),
+    list: (
+      text: 1rem,
+      line: 1.875
+    ),
+    base: (
+      text: 1rem,
+      line: 1.26
+    ),
+    caption: (
+      text: #{pow($fontMultiplier, -1)}rem,
+      line: 2.03
+    )
+  ),
+  tablet: (
+    headline: (
+      text: #{pow($fontMultiplier, 10)}rem,
       line: 1.26
     ),
     h1: (

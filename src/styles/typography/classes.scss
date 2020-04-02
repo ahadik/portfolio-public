@@ -363,6 +363,10 @@ h1, h2, h3, h4, h5, h6, p, li {
   @include typography(mobile);
 }
 
+@include tablet {
+  @include typography(tablet);
+}
+
 .mobile {
   @include typography(mobile);
 }

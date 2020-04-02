@@ -27,7 +27,7 @@ class WorkPage extends React.Component {
   render() {
 
     return (
-      <Page>
+      <Page pageClass="work-page">
         <SEO title="Work" />
         <div className="row">
           <div className="col-12 transcriptic-block">
@@ -55,7 +55,7 @@ class WorkPage extends React.Component {
           renderer={
             ({ node }) => {
               return (
-                <div className="col-4 tablet-col-6 mobile-col-12" style={{ marginTop: 15 }} key={node.id}>
+                <div className="col-4 tablet-col-6 mobile-col-12 work-page__article-card" style={{ marginTop: 15 }} key={node.id}>
                   <ArticleCard
                     title={node.frontmatter.title}
                     date={node.frontmatter.date}

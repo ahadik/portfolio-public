@@ -1,11 +1,11 @@
 .page {
-
   &__main-content {
     max-width: $max-width;
+    min-height: calc(100vh - #{$header-height} - #{$spacing-06} - #{$footer-height});
     margin-left: auto;
     margin-right: auto;
     margin-top: $header-height;
-    padding: $spacing-08 $spacing-08 0;
+    padding: $spacing-06 $spacing-08 0;
     box-sizing: content-box;
   }
 }

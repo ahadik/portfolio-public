@@ -33,7 +33,7 @@ class HomePage extends React.Component {
         verb: 'build',
         subject: 'humans',
         title: 'a Maker',
-        purpose: 'create whatever it is I happen to be curious about'
+        purpose: 'craft furniture and electronics'
       },
       {
         verb: 'explore',
@@ -45,7 +45,7 @@ class HomePage extends React.Component {
         verb: 'photograph',
         subject: 'fun',
         title: 'a Photographer',
-        purpose: 'document life\'s fleeting moments'
+        purpose: 'document landscapes, friends and my travels'
       },
       {
         verb: 'cook',
@@ -78,16 +78,12 @@ class HomePage extends React.Component {
   renderTextSnippet(type, alignment = 'left', underline = false) {
     return (
       <span
-        className="bold"
+        className="bold landing-page__text-blank"
         style={
           {
-            display: 'inline-block',
             width: `${this.maxLength(type)}ch`,
             textAlign: alignment,
-            borderBottomColor: '#333',
-            borderBottomStyle: 'solid',
-            borderBottomWidth: underline ? '1px' : '0px',
-            height: `1.75rem`
+            borderBottomWidth: underline ? '1px' : '0px'
           }
         }
       >{this.currentWords()[type]}</span>
@@ -96,26 +92,28 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <Page>
+      <Page pageClass="landing-page">
         <SEO title="Home" />
         <div className="row landing-page__introduction">
-          <div className="col-4 mobile-col-12">
+          <div className="col-12">
             <p className="monospace">Hello, my name is</p>
             <h1 className="headline serif landing-page__name">Alex Hadik.</h1>
           </div>
         </div>
         <div className="row">
-          <div className="col-4 mobile-col-12 stack__children--8">
-            <h5 className="serif">
-              I like to {this.renderTextSnippet('verb')}<br /> things for {this.currentWords().subject}.
-            </h5>
-            <p className="serif">I'm {this.renderTextSnippet('title', 'center', true)} living in San Francisco – where I {this.currentWords().purpose}.</p>
-          </div>
-          <div className="col-8 mobile-col-12">
+          <div className="col-12 landing-page__carousel">
+            <div className="landing-page__overlay landing-page__overlay--title">
+              <div className="landing-page__overlay--content">
+                <h5 className="serif">
+                  I like to {this.renderTextSnippet('verb')}<br /> things for {this.currentWords().subject}.
+                </h5>
+              </div>
+            </div>
             <If condition={this.props.data}>
               <ImageCarousel
                 duration={this.SLIDE_DURATION}
                 didAdvance={(slide) => { this.setState({ slide: slide }); }}
+                imageHeight="65vh"
                 images={[
                   {
                     img: this.props.data.imageOne.childImageSharp.fluid,
@@ -150,6 +148,11 @@ class HomePage extends React.Component {
                 ]}
                 />
             </If>
+            <div className="landing-page__overlay landing-page__overlay--subtitle">
+              <div className="landing-page__overlay--content" style={{ width: `calc(${this.maxLength('title')}ch + 25ch)` }}>
+                <p className="serif">I'm {this.renderTextSnippet('title', 'center', true)} living in San Francisco –<br />where I {this.currentWords().purpose}.</p>
+              </div>
+            </div>
           </div>
         </div>
       </Page>

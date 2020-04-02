@@ -1,5 +1,10 @@
 .about-page {
   &__header-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
     @include mobile {
       margin-top: $spacing-04;
     }

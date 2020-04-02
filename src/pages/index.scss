@@ -1,6 +1,95 @@
 .landing-page {
   &__name {
-    margin-top: 1rem;
-    font-size: 3.75vw;
+    margin-top: 0.5rem;
+  }
+
+  &__carousel {
+    position: relative;
+  }
+
+  &__overlay {
+    position: absolute;
+    left: -30px;
+    z-index: 100;
+    max-width: 0;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(1,.01,.81,1);
+    overflow: hidden;
+
+    @include mobile {
+      position: relative;
+      left: 0;
+    }
+
+    & h5,
+    & p {
+      color: $white;
+
+      @include mobile {
+        color: $black;
+      }
+    }
+  }
+
+  &__overlay--content {
+    padding: $spacing-06 $spacing-08;
+    background-color: $extra-black;
+    white-space: nowrap;
+
+    @include mobile {
+      padding: 0;
+      background-color: transparent;
+    }
+  }
+
+  &__overlay--title {
+    top: 30px;
+    animation-name: wipeInTitle;
+    animation-delay: 0s;
+
+    @include mobile {
+      top: 0;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__overlay--subtitle {
+    bottom: 3rem;
+    animation-name: wipeInSubtitle;
+    animation-delay: 0.5s;
+
+    @include mobile {
+      top: 0;
+      margin-top: 1rem;
+    }
+  }
+
+  &__text-blank {
+    display: inline-block;
+    border-bottom-color: color(medium, gray);
+    border-bottom-style: solid;
+    height: 1.75rem;
+    word-spacing: 10px;
+  }
+}
+
+@keyframes wipeInTitle {
+  from {
+    max-width: 0;
+  }
+
+  to {
+    max-width: 30rem;
+  }
+}
+
+@keyframes wipeInSubtitle {
+  from {
+    max-width: 0;
+  }
+
+  to {
+    max-width: 40rem;
   }
 }

@@ -91,46 +91,46 @@ class Image extends React.Component {
 
     return (
       <div className={classnames('image', 'stack__children--2', className, { 'image--screenshot': isScreenshot })} style={wrapperStyle}>
-        <div
-          className={classnames('image__viewport', { 'image__viewport--shadow': hasShadow })}
-          style={{
-            paddingBottom: `${ratio * 100}%`,
-            maxHeight: maxHeight
-          }}
-        >
-          <If condition={this.state.isPreview}>
-            <Lightbox onClose={this.closePreview}>
-              <div className="image__preview-container">
-                <div className="image__preview" style={{ maxWidth: image.presentationWidth || '70%' }}>
-                  <Img fluid={image} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
-                </div>
-                <If condition={caption}>
-                  <p className="caption monospace full-width image__preview-caption">{caption}</p>
-                </If>
-              </div>
-            </Lightbox>
-          </If>
-          {
-            this.state.imageStack.map((img) => {
-              return (
-                <div className={classnames('image__wrapper', { 'image__wrapper--no-preview': disablePreview })} key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={!disablePreview ? this.openPreview : undefined}>
-                  <If condition={to || href}>
-                    <Choose>
-                      <When condition={to}>
-                        <Link to={to} className="image__link"><span className="image__link-span" /></Link>
-                      </When>
-                      <When condition={href}>
-                        <a href={href} target="_blank" rel="noopener noreferrer" className="image__link" ><span className="image__link-span" /></a>
-                      </When>
-                    </Choose>
+        <div className="image__mask" style={{ maxHeight: maxHeight }}>
+          <div
+            className={classnames('image__viewport', { 'image__viewport--shadow': hasShadow })}
+            style={{
+              paddingBottom: `${ratio * 100}%`
+            }}
+          >
+            <If condition={this.state.isPreview}>
+              <Lightbox onClose={this.closePreview}>
+                <div className="image__preview-container">
+                  <div className="image__preview" style={{ maxWidth: image.presentationWidth || '70%' }}>
+                    <Img fluid={image} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
+                  </div>
+                  <If condition={caption}>
+                    <p className="caption monospace full-width image__preview-caption">{caption}</p>
                   </If>
-                  <Img fluid={img.image} {...props} />
                 </div>
-              );
-            })
-          }
+              </Lightbox>
+            </If>
+            {
+              this.state.imageStack.map((img) => {
+                return (
+                  <div className={classnames('image__wrapper', { 'image__wrapper--no-preview': disablePreview })} key={img.imgId} style={{ animationDuration: `${swapDelay}ms` }} onClick={!disablePreview ? this.openPreview : undefined}>
+                    <If condition={to || href}>
+                      <Choose>
+                        <When condition={to}>
+                          <Link to={to} className="image__link"><span className="image__link-span" /></Link>
+                        </When>
+                        <When condition={href}>
+                          <a href={href} target="_blank" rel="noopener noreferrer" className="image__link" ><span className="image__link-span" /></a>
+                        </When>
+                      </Choose>
+                    </If>
+                    <Img fluid={img.image} imgStyle={{ maxHeight: maxHeight }} {...props} />
+                  </div>
+                );
+              })
+            }
+          </div>
         </div>
-        
         <If condition={caption}>
           <p className="caption monospace image__caption">{caption}</p>
         </If>

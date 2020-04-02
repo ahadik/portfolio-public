@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Image from '../Image';
+import Image from '~components/Image';
 
 class ImageCarousel extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class ImageCarousel extends React.Component {
           image={this.props.images[this.state.slide].img}
           caption={this.props.images[this.state.slide].caption}
           imgId={this.props.images[this.state.slide].id}
+          maxHeight={this.props.imageHeight}
         />
       </div>
     );
@@ -51,6 +53,11 @@ class ImageCarousel extends React.Component {
 
 ImageCarousel.defaultProps = {
   duration: 5000
+}
+
+ImageCarousel.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  maxImageHeight: PropTypes.string
 }
 
 export default ImageCarousel;
