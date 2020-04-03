@@ -1,7 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import Image from '~components/Image';
+
+import './ImageCarousel.scss';
+
+const Navigation = ({ slideIndex, numSlides, onNav }) => {
+  return (
+    <div className="image-carousel__nav inline__children--3">
+      {[...Array(numSlides).keys()].map((undefined, index) => {
+        return (
+          <div
+            key={index}
+            className={classnames('image-carousel__nav-item',
+              { 'image-carousel__nav-item--active': index === slideIndex })
+            }
+            onClick={() => { onNav(index) }}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 class ImageCarousel extends React.Component {
   constructor(props) {
@@ -22,19 +43,30 @@ class ImageCarousel extends React.Component {
     clearTimeout(this.advanceTimeout);
   }
 
-  advanceSlide() {
-    this.setState((currState) => {
-      const maxSlide = this.props.images.length;
-      return {
-        slide: (this.state.slide + 1) % maxSlide
-      }
-    }, () => {
+  advanceSlide(index) {
+    console.log(index);
+    const setStateCb = () => {
       if (this.props.didAdvance) {
         this.props.didAdvance(this.state.slide);
       }
 
       this.advanceTimeout = setTimeout(this.advanceSlide, this.props.duration);
-    });
+    };
+
+    if (index !== undefined) {
+      clearTimeout(this.advanceTimeout);
+
+      this.setState({
+        slide: index
+      }, setStateCb);
+    } else {
+      this.setState((currState) => {
+        const maxSlide = this.props.images.length;
+        return {
+          slide: (currState.slide + 1) % maxSlide
+        }
+      }, setStateCb);
+    }
   }
 
   render() {
@@ -45,6 +77,14 @@ class ImageCarousel extends React.Component {
           caption={this.props.images[this.state.slide].caption}
           imgId={this.props.images[this.state.slide].id}
           maxHeight={this.props.imageHeight}
+          to={this.props.images[this.state.slide].to}
+          disablePreview
+          isFullScreenWidth
+        />
+        <Navigation
+          slideIndex={this.state.slide}
+          numSlides={this.props.images.length}
+          onNav={(slideIndex) => { this.advanceSlide(slideIndex) }}
         />
       </div>
     );

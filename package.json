@@ -52,7 +52,8 @@
     "eslint-plugin-jsx-control-statements": "^2.2.1",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "s3": "^4.4.0"
   },
   "keywords": [
     "gatsby"
@@ -66,7 +67,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "draft": "node ./scripts/create-post.js"
+    "draft": "node ./scripts/create-post.js",
+    "deploy": "gatsby clean && gatsby build && node ./scripts/deploy.js"
   },
   "repository": {
     "type": "git",

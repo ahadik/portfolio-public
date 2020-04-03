@@ -50,10 +50,16 @@
     height: 100%;
   }
 
+  &--full-width &__caption {
+    padding: 0 $spacing-04;
+    box-sizing: border-box;
+  }
+
   &__caption {
     max-width: 100ch;
     width: 100%;
     text-align: center;
+    height: 3.125rem;
   }
 
   &__preview-container {

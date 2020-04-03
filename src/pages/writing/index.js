@@ -11,7 +11,6 @@ const Blog = ({ data, search }) => {
   const allCategories = data.allCategoriesJson.nodes[0].categories;
   const edges = data.allMdx.edges;
   const firstNode = edges[0].node;
-  console.log(firstNode);
   return (
     <Page>
       <SEO title="About" />

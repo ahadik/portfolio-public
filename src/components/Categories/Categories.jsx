@@ -1,6 +1,8 @@
 import React from 'react';
 
-import Tag from '../Tag';
+import Tag from '~components/Tag';
+
+import "./Categories.scss";
 
 const getCategoryFromId = (id, categories) => {
   return categories.find((cat) => { return cat.id === id });
@@ -8,7 +10,7 @@ const getCategoryFromId = (id, categories) => {
 
 const Categories = ({ categoryIds, categories, onClose }) => {
   return (
-    <div style={{ display: 'flex', 'flexDirection': 'row' }} className="inline__children--3">
+    <div className="categories">
       {
         categoryIds.map((catId) => {
           const category = getCategoryFromId(catId, categories);

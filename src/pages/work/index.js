@@ -38,8 +38,8 @@ class WorkPage extends React.Component {
             </div>
             <div className="row">
               <div className="col-12 transcriptic-block__content inline__children--4">
-                <p className="invert monospace caption transcriptic-block__text">For the past 3+ years, I’ve been building and leading the Design Team at Transcriptic. If you’d like to learn about Transcriptic and my work there, you might start with some of these quick options.</p>
-                <div className="inline__children--4 transcriptic-block__buttons">
+                <p className="invert monospace caption transcriptic-block__text">For the past 3+ years, I’ve been building and leading the Design Team at Transcriptic. If you’d like to learn about Transcriptic and my work there, start with some of these quick options. <i className="fal fa-long-arrow-down mobile-and-tablet"/><i className="fal fa-long-arrow-right desktop"/></p>
+                <div className="transcriptic-block__buttons">
                   <Button iconLeft="fal fa-book" hasBorder variant="white" to={"/transcriptic" } small>Read the Transcriptic Primer</Button>
                   <Button iconLeft="fal fa-filter" hasBorder variant="white" onClick={() => { this.filteredContentRef.current.setFilter('transcriptic') }} small>Filter to Transcriptic Work</Button>
                 </div>

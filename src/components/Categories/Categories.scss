@@ -1,0 +1,16 @@
+$spacing: $spacing-02;
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: -$spacing;
+  margin-right: -$spacing;
+  margin-top: -$spacing * 2;
+
+  & > * {
+    margin-left: $spacing;
+    margin-right: $spacing;
+    margin-top: $spacing * 2;
+  }
+}

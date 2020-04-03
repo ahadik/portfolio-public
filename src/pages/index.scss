@@ -3,8 +3,15 @@
     margin-top: 0.5rem;
   }
 
-  &__carousel {
+  &__carousel-wrapper {
     position: relative;
+  }
+
+  &__carousel {
+    @include mobile {
+      width: 100vw;
+      margin-left: -$spacing-08;
+    }
   }
 
   &__overlay {
@@ -55,7 +62,7 @@
   }
 
   &__overlay--subtitle {
-    bottom: 3rem;
+    bottom: 7rem;
     animation-name: wipeInSubtitle;
     animation-delay: 0.5s;
 
