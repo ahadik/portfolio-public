@@ -11,6 +11,11 @@
       "icon": "fal fa-code"
     },
     {
+      "name": "Hardware",
+      "id": "hardware",
+      "icon": "fal fa-microchip"
+    },
+    {
       "name": "Design Ops",
       "id": "design-ops",
       "icon": "fal fa-cogs"

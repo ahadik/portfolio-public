@@ -87,7 +87,7 @@ class Gallery extends React.Component {
               return (
                 <div
                   className="gallery__item"
-                  onClick={() => this.flipPreview(image)}
+                  onClick={!tabletStack && (() => this.flipPreview(image))}
                   style={{
                     flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
                     flexBasis: itemsPerRow && `calc(${100 / itemsPerRow}% - 16px)`

@@ -9,6 +9,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from 'lodash';
 import { StaticQuery, graphql } from "gatsby";
+import classnames from 'classnames';
 
 import Header from "../Header/Header";
 import Footer from './Footer';
@@ -63,8 +64,8 @@ class Page extends React.Component {
       `}
       render={(data) => {
         return (
-          <div className={this.props.pageClass}>
-            <Header siteTitle={data.site.siteMetadata.title} visible={this.state.visible} />
+          <div className={classnames('page', this.props.pageClass)}>
+            <Header siteTitle={data.site.siteMetadata.title} visible={this.state.visible} isIntro={this.props.isLanding} />
             <main className="page__main-content">{this.props.children}</main>
             <Footer />
           </div>
@@ -77,6 +78,8 @@ class Page extends React.Component {
 
 Page.propTypes = {
   children: PropTypes.node.isRequired,
+  isLanding: PropTypes.bool,
+  pageClass: PropTypes.string
 }
 
 export default Page;

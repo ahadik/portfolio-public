@@ -1,0 +1,103 @@
+---
+date: "2014-05-04"
+title: "MicroMouse"
+featuredImage: "featured-image.jpg"
+previewImage: "featured-image.jpg"
+excerpt: "The IEEE Micro-Mouse competition is a world wide event in which college teams create a robot that can navigate a maze as quickly as possible. In 2014, Tristan Paine, Kevin Jung and myself entered with our MicroMau5 robot."
+categories: [hardware, code, personal]
+images:
+  - mouse-1.jpg
+  - mouse-2.jpg
+  - mouse-3.jpg
+  - mouse-4.jpg
+  - mouse-5.png
+  - mouse-6.png
+---
+
+#### The Team
+Our team of three consisted of a variety of skillsets. Tristan was our mechanical engineer and focused on the robot chassis and drive-train design. He also lead the effort to layout and fabricate our circuit board. Kevin, as an electrical engineer, focused on the sensor and microchip integration. Myself, as a software engineer, focused on our maze solving algorithm and localization and control systems.
+
+#### Robot Design
+Our robot consisted of a uni-body design, with the circuit board itself serving as the chassis. We designed this board ourselves, and had it fabricated in China. We assembled the electrical components onto the board ourselves.
+
+<MdxLayout fullWidth padBoth>
+  <Gallery>
+    <Image name="mouse-6" />
+    <Image name="mouse-5" />
+  </Gallery>
+</MdxLayout>
+
+An array of six IR sensors mounted to the front of our chassis provided data for localization and mapping.
+
+<MdxLayout fullWidth padBoth>
+  <Gallery itemsPerRow={2}>
+    <Image name="mouse-1" />
+    <Image name="mouse-2" />
+    <Image name="mouse-3" />
+    <Image name="mouse-4" />
+  </Gallery>
+</MdxLayout>
+
+We used an Arduino Uno as our micro-processor, as this micro-controller had the appropriate memory and I/O capabilities for our design.
+
+#### Algorithmic Approach
+I chose to base our maze solving algorithm on the flood fill approach, which is a common technique in the field of maze solving robots. The flood fill algorithm begins with the initial assumption that there are no walls in the maze, and assigns a distance to each cell that is a 'best guess' at the cell's distance from the goal. With no walls in the center, an initial distance can be easily calculated as:
+
+```
+<xMid, yMid> := coordinate of goal
+<x,y> := current coordinate
+dist := abs(xMid-x)+abs(yMid-y)
+```
+
+The general principal, and inspiration for the name, is to model how water might 'flood' to the center of this maze where the goal coordinate is the lowest point at 0. The object then is to assign an accurate 'weight' to each cell that determines that cell's 'height' or distance from the goal coordinate. With all cells properly calculated, one can flow from any cell downhill and be certain to reach the center in the optimal (shortest distance) time.
+
+#### Flood Fill in English
+The flood fill algorithm begins with the agent (the robot) in the corner of the maze, and the target (the goal cell) in the center. The maze is presumed to contain no walls and every cell has been assigned a preliminary weight using the method described above. Walls can only be discovered by the agent moving into an adjacent cell.
+
+Straight away, the agent can fill in the walls surrounding the starting cell. Then agent moves forward one cell and updates its maze in memory with new found walls. The agent then checks if the value of the new cell agrees or disagrees with the current version of the in-memory maze. Namely, the cell must be either one greater or one less than all surrounding cells, and there must be an accessible cell one less than the current cell. The only cell that violates these conditions is the goal cell.
+
+If the agent finds a cell is inconsistent with the maze, it adds this cell to a list of cells to check and update. The agent changes the value of the cell to a value that is consistent and removes the cell from the list. Then the agent repeats this check, add and change process on the next cell in the list until the list is empty. Once the list is empty, the agent moves to the next most ideal cell, updates its in-memory maze based on newly discovered walls, and repeats the cell verification process.
+
+
+#### Flood Fill in Pseudocode
+This algorithm is best implemented with a stack of cells to verify that the agent adds to and pops from. Micro-Mouse mazes are typically 16x16 squares so we'll work with a maze of those dimensions. We also use two mazes each storing integer values. Bit wise equivalences between integers stored in `wallmaze` are used for the maze construction and integer distance values are used to represent distance to the goal in `distmaze`.
+
+```
+distmaze := int[16][16]
+wallmaze := int[16][16]
+goal := (8,8)
+start := (0,0)
+checks := stack of cells to verify
+all cells in wallmaze := empty
+for cell in distmaze
+    cell := shortest dist to goal
+checks.push(start)
+while(start != goal)
+    while(checks !empty)
+        cellCheck := checks.pop
+        if cellCheck.value isn't 1 greater than accessible neighbors
+            minVal := minimal value of accessible neighbors of cellCheck
+            cellCheck := minVal++
+            for neighbor in cellCheck neighbors
+                cellCheck.push(neighbor)
+    advance to next ideal neighbor
+return ideal path
+```
+
+#### Implementation
+I implemented two version of this flood fill algorithm. They can be found in <Link href="https://github.com/ahadik/micromau5_code">this GitHub repository</Link>. The first is a Java implementation found in `/java_maze_code` and the second is a C implementation found in `/arduino_maze_code`.
+
+##### Java Implementation
+I originally wrote this algorithm in Java because that's what I was best equipped to code with on an airplane without an internet connection. I simply wanted to work out the kinks of the algorithm without worrying about learning C. This proved to be very helpful and ultimately led to my web visualizer Mau5Maze. The implementation consists of four classes:
+
+- MazeGenerator: Recursively generate mazes for testing purposes.
+- MazeSolver: Solve created mazes using the Flood Fill approach.
+- Parser: Parse mazes stored in text files into MazeSolver
+- Render: Print mazes in various states
+
+A call to `MazeGenerator` itself will print a random maze to standard out, which can be useful for saving collections of mazes to disk. A call to `MazeSolver` with integer inputs instantiates an instance of a `MazeGenerator` to generate a random maze of the specified size. A `Render` instance is instantiated in all cases to print the maze to standard out.
+
+##### Arduino Implementation in C
+This algorithm was ultimately created for use on our MicroMau5, so I did implement the algorithm in C. The structure and function is mostly the same, however I made a few improvements including using a struct for cells instead of pure integers to allow for more concise integration of arrays tracking distances versus maze formation. This code can be loaded onto an Arduino using the `micromau5.ino` file.
+
+Also included in this repository are all the libraries and code we used to drive the robot itself, such as the motors, encoders, IR sensors and gyroscope.

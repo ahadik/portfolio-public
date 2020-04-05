@@ -1,4 +1,23 @@
 .image-carousel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  &__caption {
+    height: 3.125rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+
+    @include mobile {
+      height: 4.0625rem;
+      padding: 0 $spacing-04;
+    }
+  }
 
   &__nav {
     display: flex;
@@ -8,7 +27,6 @@
     width: 100px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 1rem;
   }
 
   &__nav-item {

@@ -6,7 +6,7 @@ import './ArticleCard.scss';
 
 const ArticleCard = (props) => {
   return (
-    <div className="article-card">
+    <article className="article-card">
       <Link to={props.link}><span className="article-card__link" /></Link>
       <div className="article-card__info">
         <h5 className="serif invert article-card__title">{props.title}</h5>
@@ -19,7 +19,7 @@ const ArticleCard = (props) => {
           <Img fluid={props.image.childImageSharp.fluid} style={{ paddingBottom: '100%', height: 0 }} />
         </If>
       </div>
-    </div>
+    </article>
   );
 };
 

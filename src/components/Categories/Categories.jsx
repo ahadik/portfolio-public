@@ -12,7 +12,7 @@ const Categories = ({ categoryIds, categories, onClose }) => {
   return (
     <div className="categories">
       {
-        categoryIds.map((catId) => {
+        categoryIds.sort().map((catId) => {
           const category = getCategoryFromId(catId, categories);
           if (category) {
             return <Tag

@@ -19,37 +19,37 @@ class HomePage extends React.Component {
     this.wordCatalog = [
       {
         verb: 'design',
-        subject: 'humans',
+        subject: 'that advance science',
         title: 'a UX Designer',
         purpose: 'help robots and people to work together'
       },
       {
         verb: 'code',
-        subject: 'humans',
+        subject: 'that advance science',
         title: 'a Software Engineer',
         purpose: 'help designers and engineers to work together'
       },
       {
         verb: 'build',
-        subject: 'humans',
+        subject: 'for friends and family',
         title: 'a Maker',
         purpose: 'craft furniture and electronics'
       },
       {
         verb: 'explore',
-        subject: 'fun',
+        subject: 'that push my limits',
         title: 'an Adventurer',
         purpose: 'hike, ski and climb the Sierras'
       },
       {
         verb: 'photograph',
-        subject: 'fun',
+        subject: 'wherever I go',
         title: 'a Photographer',
         purpose: 'document landscapes, friends and my travels'
       },
       {
         verb: 'cook',
-        subject: 'people',
+        subject: 'for the people I love',
         title: 'hungry and',
         purpose: 'eat far more than I should'
       }
@@ -93,19 +93,18 @@ class HomePage extends React.Component {
   render() {
     return (
       <Page pageClass="landing-page">
-        <SEO title="Home" />
+        <SEO title="Alex Hadik's Portfolio" thumbnail={this.props.data.imageFour} />
         <div className="row landing-page__introduction">
           <div className="col-12">
-            <p className="monospace">Hello, my name is</p>
-            <h1 className="headline serif landing-page__name">Alex Hadik.</h1>
+            <p className="monospace">Hello! That's me! <i className="fal fa-arrow-up" /></p>
           </div>
         </div>
         <div className="row">
           <div className="col-12 landing-page__carousel-wrapper">
             <div className="landing-page__overlay landing-page__overlay--title">
-              <div className="landing-page__overlay--content">
+              <div className="landing-page__overlay--content" style={{ width: `calc(${this.maxLength('subject')}ch + 15ch)` }}>
                 <h5 className="serif">
-                  I like to {this.renderTextSnippet('verb')}<br /> things for {this.currentWords().subject}.
+                  I like to {this.renderTextSnippet('verb')}<br /><span className="landing-page__overlay--title-suffix"> things {this.currentWords().subject}.</span>
                 </h5>
               </div>
             </div>
@@ -114,7 +113,6 @@ class HomePage extends React.Component {
                 <ImageCarousel
                   duration={this.SLIDE_DURATION}
                   didAdvance={(slide) => { this.setState({ slide: slide }); }}
-                  imageHeight="65vh"
                   images={[
                     {
                       img: this.props.data.imageOne.childImageSharp.fluid,
@@ -156,7 +154,7 @@ class HomePage extends React.Component {
               <div className="landing-page__overlay--content" style={{ width: `calc(${this.maxLength('title')}ch + 25ch)` }}>
                 <p className="serif tablet-and-desktop">I'm {this.renderTextSnippet('title', 'center', true)} living in San Francisco –<br />where I {this.currentWords().purpose}.</p>
                 <p className="serif mobile">
-                  I'm {this.renderTextSnippet('title', 'center', true)}<br />living in San Francisco – where I<br /> {this.currentWords().purpose}.
+                  I'm {this.renderTextSnippet('title', 'center', true)}<br />living in San Francisco –<span className="landing-page__overlay--subtitle-suffix"> where I {this.currentWords().purpose}</span>.
                 </p>
               </div>
             </div>

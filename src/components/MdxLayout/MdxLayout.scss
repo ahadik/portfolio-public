@@ -1,4 +1,11 @@
 .mdx-layout {
+
+  &--screen-width {
+    overflow-x: hidden;
+    margin-left: calc((100vw - 100%) / -2);
+    width: 100vw;
+  }
+
   &--border-top {
     padding-top: 1rem;
     border-top: 1px solid color(light, gray);
@@ -11,10 +18,16 @@
   }
 
   &--pad-top {
-    margin-top: 1rem;
+    margin-top: 3rem;
   }
 
   &--pad-bottom {
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  &__child--vertical-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }

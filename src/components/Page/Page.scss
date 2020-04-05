@@ -1,4 +1,5 @@
 .page {
+  overflow-x: hidden;
   &__main-content {
     max-width: $max-width;
     min-height: calc(100vh - #{$header-height} - #{$spacing-06} - #{$footer-height});
@@ -7,5 +8,9 @@
     margin-top: $header-height;
     padding: $spacing-06 $spacing-08 0;
     box-sizing: content-box;
+
+    @include mobile {
+      padding: $spacing-06 $spacing-06 0;
+    }
   }
 }

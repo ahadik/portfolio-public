@@ -9,7 +9,7 @@
 
 module.exports = {
   region: 'us-east-1',
-  bucketName: 'alex-hadik-website',
+  bucketName: 'staging.alexhadik.com',
   accessKeyId: 'AKIAJ4ZJ4FEZWWCFY7OA',
   secretAccessKey: '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'
 };

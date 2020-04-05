@@ -44,7 +44,6 @@ class ImageCarousel extends React.Component {
   }
 
   advanceSlide(index) {
-    console.log(index);
     const setStateCb = () => {
       if (this.props.didAdvance) {
         this.props.didAdvance(this.state.slide);
@@ -74,13 +73,13 @@ class ImageCarousel extends React.Component {
       <div className="image-carousel">
         <Image
           image={this.props.images[this.state.slide].img}
-          caption={this.props.images[this.state.slide].caption}
           imgId={this.props.images[this.state.slide].id}
-          maxHeight={this.props.imageHeight}
           to={this.props.images[this.state.slide].to}
+          fillContainer
           disablePreview
           isFullScreenWidth
         />
+        <p className="monospace caption image-carousel__caption">{this.props.images[this.state.slide].caption}</p>
         <Navigation
           slideIndex={this.state.slide}
           numSlides={this.props.images.length}
@@ -96,8 +95,7 @@ ImageCarousel.defaultProps = {
 }
 
 ImageCarousel.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  maxImageHeight: PropTypes.string
+  images: PropTypes.arrayOf(PropTypes.instanceOf(Object))
 }
 
 export default ImageCarousel;

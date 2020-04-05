@@ -9,8 +9,12 @@ $mobile-height: 18rem;
   overflow: hidden;
 
   &--headline {
-    @include mq(tablet, desktop) {
+    @include desktop {
       height: $headline-height;
+    }
+
+    @include tablet {
+      height: auto;
     }
   }
 

@@ -1,0 +1,11 @@
+.video {
+  &__media {
+    width: 100%;
+  }
+
+  &__caption {
+    max-width: 100ch;
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -84,6 +84,7 @@ class Image extends React.Component {
       image,
       hasShadow,
       maxHeight,
+      fillContainer,
       caption,
       to,
       href,
@@ -113,17 +114,18 @@ class Image extends React.Component {
             className,
             {
               'image--screenshot': isScreenshot,
-              'image--full-width': isFullScreenWidth
+              'image--full-width': isFullScreenWidth,
+              'image--fill-container': fillContainer
             }
           )
         }
         style={wrapperStyle}
       >
-        <div className="image__mask" style={{ maxHeight: maxHeight }}>
+        <div className={classnames('image__mask', { 'image__mask--shadow': hasShadow })} style={{ maxHeight: maxHeight }}>
           <div
-            className={classnames('image__viewport', { 'image__viewport--shadow': hasShadow })}
+            className="image__viewport"
             style={{
-              paddingBottom: `${ratio * 100}%`
+              paddingBottom: fillContainer ? 0 : `${ratio * 100}%`
             }}
           >
             <If condition={this.state.isPreview}>
@@ -133,7 +135,7 @@ class Image extends React.Component {
                     <Img fluid={image} imgStyle={{ objectFit: 'contain' }} style={{ position: 'absolute', height: '100%', width: '100%' }} />
                   </div>
                   <If condition={caption}>
-                    <p className="caption monospace full-width image__preview-caption">{caption}</p>
+                    <figcaption className="caption monospace full-width image__preview-caption">{caption}</figcaption>
                   </If>
                 </div>
               </Lightbox>
@@ -152,7 +154,20 @@ class Image extends React.Component {
                         </When>
                       </Choose>
                     </If>
-                    <Img fluid={img.image} imgStyle={{ maxHeight: maxHeight }} {...props} />
+                    <Img
+                      fluid={img.image}
+                      style={{
+                        height: fillContainer && '100%',
+                        width: fillContainer && '100%'
+                      }}
+                      imgStyle={{
+                        objectFit: 'cover',
+                        height: fillContainer && '100%',
+                        width: '100%',
+                        maxHeight: maxHeight
+                      }}
+                      {...props}
+                    />
                   </div>
                 );
               })
@@ -160,7 +175,7 @@ class Image extends React.Component {
           </div>
         </div>
         <If condition={caption}>
-          <p className="caption monospace image__caption">{caption}</p>
+          <figcaption className="caption monospace image__caption">{caption}</figcaption>
         </If>
       </div>
     );

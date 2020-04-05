@@ -13,19 +13,36 @@ import './about.scss';
 
 const AboutPage = (props) => {
   return (
-    <Page>
-      <SEO title="About" />
-      <div className="row about-page">
-        <div className="col-6 mobile-col-12 about-page__header-image">
-          <Image image={props.data.portrait.childImageSharp.fluid} imgId="paperangel" />
+    <Page pageClass="about-page">
+      <SEO thumbnail={props.data.portrait} title="About Alex" />
+      <section className="row mobile grid-break-screen-width">
+        <div className="col-12">
+          <Image image={props.data.portrait.childImageSharp.fluid} imgId="paperangel" isFullScreenWidth />
         </div>
-        <div className="col-5 mobile-col-12  about-page__header-title">
-          <h3 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h3>
+      </section>
+      <section className="row mobile">
+        <div className="col-12">
+          <h5 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h5>
+        </div>
+      </section>
+      <article className="row">
+        <div className="col-6 tablet-and-desktop">
+          <Image image={props.data.portrait.childImageSharp.fluid} fillContainer imgId="paperangel" />
+        </div>
+        <section className="col-5 mobile-col-12  about-page__header-title stack__children--6">
+          <div>
+            <div className="desktop">
+              <h3 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h3>
+            </div>
+            <div className="tablet">
+              <h5 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h5>
+            </div>
+          </div>
           <Button variant="green" iconLeft="fal fa-arrow-down" hasBorder href={Resume}>Download Resume</Button>
-        </div>
-      </div>
-      <div className="row row--large-spacing">
-        <div className="col-8 col-offset-2 mobile-col-12 mobile-col-offset-0 serif">
+        </section>
+      </article>
+      <article className="row row--large-spacing">
+        <section className="col-8 col-offset-2 tablet-col-12 tablet-col-offset-0 mobile-col-12 mobile-col-offset-0 serif">
           <p>Working in a Computational Biology lab at Brown University, I wondered why all our laboratory software was
             so hard to use. It didn’t seem like it needed to be that way – and I wanted to make it better. Before I
             knew it, I was neck deep in the design world – taking classes at RISD and launching apps with friends.
@@ -39,8 +56,9 @@ const AboutPage = (props) => {
             team and discipline establishing – among other things – <Link to="/work/chemical-synthesis">a product development process</Link> grounded in user
             research, <Link to="/work/amino">a design system</Link> called Amino, and a <Link to="/work/transcriptic-photography">strong brand identity</Link>.
           </p>
-        </div>
-      </div>
+        </section>
+      </article>
+>
     </Page>
   );
 }

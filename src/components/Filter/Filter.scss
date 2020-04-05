@@ -7,7 +7,7 @@ $padding: $spacing-03;
   flex-direction: row;
   align-items: center;
   padding-bottom: $spacing-04;
-  border-bottom: 1px solid color(light, gray);
+  width: min-content;
 
   &__checkbox-input {
     position: absolute;
@@ -89,6 +89,10 @@ $padding: $spacing-03;
       visibility: visible;
       transform: translateY(-#{$spacing-03});
     }
+  }
+
+  &__categories {
+    width: max-content;
   }
 
   &__backsplash {

@@ -1,0 +1,167 @@
+---
+date: "2015-05-20"
+title: "Umi"
+subtitle: "Smart Home Tracking"
+previewImage: "preview.jpg"
+excerpt: "Umi helps you take control of your energy usage. It gives you the information and controls you need to change bad habits, and make new, better ones. Our smart light switch and electrical outlet track and display your energy usage, and relay it to the Umi mobile application, giving you 24/7 control."
+categories: [school, ui-ux, code]
+images:
+  - ecosystem.png
+  - screens-01.png
+  - screens-02.png
+  - screens-03.png
+  - screens-04.png
+  - screens-05.png
+  - plate_1.jpg
+  - plate_2.jpg
+  - plate_3.jpg
+  - plate_4.jpg
+  - gang-diagram.png
+  - force.png
+  - screen.png
+  - breakout.png
+  - outlet-sketch.png
+  - hub-sketch.png
+videos:
+  - video-demo.mp4
+---
+
+#### Project Definition
+Umi is the final result of a team project for an Industrial Design Renewable Energy studio course at <TextTip content="Rhode Island School of Design">RISD</TextTip>.  Over the course of 2 months, our group of five developed hardware, software and product prototypes for this product line. My focus was on the development of the software and hardware prototypes.
+
+The code for these prototypes is available on GitHub:
+<ButtonGroup orientation="vertical">
+  <Button
+    iconLeft="fab fa-github"
+    iconRight="fal fa-long-arrow-right"
+    animateRight
+    href="https://github.com/ahadik/umi"
+    hasBorder
+  >UI Code</Button>
+  <Button
+    iconLeft="fab fa-github"
+    iconRight="fal fa-long-arrow-right"
+    animateRight
+    href="https://github.com/ahadik/umi_hardware"
+    hasBorder
+  >Hardware Code</Button>
+</ButtonGroup>
+
+#### The Problem
+People do not understand their home energy usage due to unclear and inaccessible information about energy use in the home.
+
+> How can we help consumers reduce their energy usage?
+
+#### The Goal
+Create a product that increases consumer awareness of energy use in the home in order to decrease waste and cut costs.
+
+#### The Umi Ecosystem
+<Image name="ecosystem" />
+
+The Umi ecosystem consists of four products. The Umi light switch and outlet act as data sources and displays, monitoring your energy usage and giving visual feedback of your usage patterns. These devices feed data to the Umi hub. Finally, a mobile app offers a detailed view into your home energy usage.
+
+##### App
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Video name="video-demo" />
+  <div>
+
+  The Umi App is the command center of the Umi Ecosystem. Data from all Umi Switches and Umi Outlets is accessible, allowing you to dive into your data and see where your home might be using more energy than you'd like.
+
+  Even better, the Umi App gives you full control over all switches and outlets, so you can make sure you don't leave the lights on when you're out of the house.
+
+  </div>
+</MdxLayout>
+<Gallery>
+  <Image name="screens-01" />
+  <Image name="screens-02" />
+  <Image name="screens-03" />
+  <Image name="screens-04" />
+  <Image name="screens-05" />
+</Gallery>
+
+##### Light Switch
+The light switch is the universal touch-point in the home for controlling energy usage. Umi makes use of this touch-point to communicate a wide range of information based on room-specific energy usage. When a user turns on the lights in a room with their Umi Switch, they instantaneously see the total energy usage of that room, from lights to appliances. Umi Switch draws its data from the power drawn through the switch itself, as well as wireless updates from the Umi Hub, giving it access to energy consumption of all appliances in a room.
+
+<Gallery itemsPerRow={2}>
+  <Image name="plate_1" />
+  <Image name="plate_2" />
+  <Image name="plate_3" />
+  <Image name="plate_4" />
+</Gallery>
+
+###### Industrial Design
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Image name="gang-diagram" />
+  <div>
+
+  The Umi Switch is touch activated with its contoured surface used to indicate the position of the switch. In a small form, the Umi Switch can replace a one, two or three gang plate.
+
+  The top half of Umi Switch contains a screen for displaying usage data, and the bottom half contains the force-sensitive switches.
+
+  </div>
+</MdxLayout>
+
+###### Touch Sensitivity
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Image name="force" />
+  <div>
+
+  The Umi Switch makes use of force sensitive resistors (FSR) to activate lights. FSRs provide a cheap activation mechanism that allows for on/off indication as well as dimming.
+
+  Embedded beneath the shell of the Umi Switch, the FSR allows you to find a switch in the dark, and activate it only when intended.
+
+  </div>
+</MdxLayout>
+
+###### E-Ink Display
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Image name="screen" />
+  <div>
+
+  Umi Switch makes use of an eInk Paper Display to relay energy usage information to users. eInk Displays offer a multitude of benefits, namely power saving and aesthetic.
+
+  eInk Displays draw no power unless they are refreshing content. In addition, by emitting no light, the Umi Switch blends into your room's decor just as a normal switch would.
+
+  </div>
+</MdxLayout>
+
+###### E-Ink Display
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Image name="breakout" />
+  <div>
+
+  Installation of Umi Switch is easy. Your Switch comes in two parts, the power module, and the outer shell.
+
+  Remove your existing light switch and wire the power module to the three exposed wires, following the included diagrams. Then snap the outer shell over the power module to attach the screen and switches.
+
+  </div>
+</MdxLayout>
+
+##### Outlet
+To accompany the Umi Switch, the Umi Outlet offers new capabilities to help reduce energy usage, as well as the same energy tracking technology as the Umi Switch. Install the Umi Outlet to monitor the power of appliances plugged into it. Usage data is relayed wirelessly back to the Umi Hub.
+
+###### 120 AC/12V DC Control
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Image name="outlet-sketch" />
+  <div>
+
+  The Umi Outlet is unique, offering standard 120V AC outlets as well as 12V DC USB outlets for charging everyday gadgets.
+
+  The two AC outlets can be turned on and off with simple pressure sensitive switches, so you can always access them easily, be it with hands or feet.
+
+  All power that passes through the Umi Outlet is tracked and relayed wirelessly back to the Umi Hub where it can be viewed on the room's Umi Switch, or on the Umi App.
+
+  </div>
+</MdxLayout>
+
+##### Hub
+<MdxLayout layout="5:7" verticalCenter padBottom>
+  <Image name="hub-sketch" />
+  <div>
+
+  The Umi Hub is the centerpiece of the Umi Ecosystem, tying the Umi Switch, Outlet, and App together.
+
+  From the internet connected Hub, tracked data is pushed to  your home's Umi Switches, as well as Umi's servers, where it can be viewed and analyzed through the Umi website, or mobile app.
+
+  </div>
+</MdxLayout>

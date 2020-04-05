@@ -27,7 +27,21 @@ const parseLayout = (layout) => {
   return values.map(num => num * multiplier);
 };
 
-const MdxLayout = ({children, layout, tabletLayout, fullWidth, maxWidth, showBorderTop, showBorderBottom, className, padTop, padBottom, padBoth, ...props}) => {
+const MdxLayout = ({
+  children,
+  layout,
+  tabletLayout,
+  fullWidth,
+  maxWidth,
+  showBorderTop,
+  showBorderBottom,
+  className,
+  padTop,
+  padBottom,
+  padBoth,
+  verticalCenter,
+  ...props
+}) => {
   let defaultLayout;
   if (!layout) {
     // create a default layout that best fits all the children in to a single row.
@@ -44,30 +58,24 @@ const MdxLayout = ({children, layout, tabletLayout, fullWidth, maxWidth, showBor
 
   const classes = {
     'grid-break-8-to-12': fullWidth,
-    'grid-break-screen-width': maxWidth,
     'mdx-layout--border-top': showBorderTop,
     'mdx-layout--border-bottom': showBorderBottom,
-    'mdx-layout--margin-top': padTop || padBoth,
-    'mdx-layout--margin-bottom': padBottom || padBoth
+    'mdx-layout--pad-top': padTop || padBoth,
+    'mdx-layout--pad-bottom': padBottom || padBoth,
+    'mdx-layout--screen-width': maxWidth,
+    'row': !maxWidth // if this layout is set to be full screen width, then the row will be rendered on a child.
   };
 
   if (className) {
     classes[className] = true;
   }
 
-  return (
-    <div
-      className={
-        classnames(
-          'mdx-layout',
-          'row',
-          classes
-        )
-      }
-      {...props}
-    >
-      {React.Children.map(children, (child, index) => {
-        const classNameObject = {};
+  const renderChildren = () => {
+    return (
+      React.Children.map(children, (child, index) => {
+        const classNameObject = {
+          'mdx-layout__child--vertical-center': verticalCenter
+        };
         if (parsedTabletLayout) {
           classNameObject[`tablet-col-${parsedTabletLayout[index]}`] = !!parsedTabletLayout;
         }
@@ -84,7 +92,30 @@ const MdxLayout = ({children, layout, tabletLayout, fullWidth, maxWidth, showBor
             {child}
           </div>
         );
-      })}
+      })
+    )
+  };
+
+  return (
+    <div
+      className={
+        classnames(
+          'mdx-layout',
+          classes
+        )
+      }
+      {...props}
+    >
+      <Choose>
+        <When condition={maxWidth}>
+          <div className="row">
+            {renderChildren()}
+          </div>
+        </When>
+        <Otherwise>
+          {renderChildren()}
+        </Otherwise>
+      </Choose>
     </div>
   );
 };

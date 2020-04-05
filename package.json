@@ -68,7 +68,8 @@
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "draft": "node ./scripts/create-post.js",
-    "deploy": "gatsby clean && gatsby build && node ./scripts/deploy.js"
+    "deploy:clean": "gatsby clean && gatsby build && node ./scripts/deploy.js",
+    "deploy": "gatsby build && node ./scripts/deploy.js"
   },
   "repository": {
     "type": "git",

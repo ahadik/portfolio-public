@@ -58,7 +58,7 @@ Finally, the existing interface lacked clean aesthetics and made it difficult fo
 ##### Stakeholders
 Working from the initial framing of this project, I identified the following stakeholder groups for which my solution would need to work:
 
-<MdxLayout layout="1:1:1" fullWidth showBorderBottom>
+<MdxLayout layout="1:1:1" fullWidth showBorderBottom showBorderTop>
   <ItemBlurb
     image={<Image name="scientist-human" disablePreview imgStyle={{ objectFit: 'contain' }} />}
     imageSize={{ width: 180, height: 180 }}
@@ -109,26 +109,26 @@ With our job-to-be-done in place, I began a round of extensive 1:1 interviews wi
 ##### User Needs
 From these pain points, I narrowed the scope of the project down to four core *user needs*:
 
-<MdxLayout fullWidth layout="1:1:1:1" showBorderTop showBorderBottom>
-<div className="center-text">
+<MdxLayout layout="6:6:6:6" showBorderTop showBorderBottom>
+<div style={{ marginTop: '0.5rem', marginBottom: '0.5rem'}}>
 
   ###### <i className="fa fa-check"></i> Determine Success
   Biologists need to understand if an experiment was even modestly successful so that they can determine if a dataset is worth analyzing further.
 
 </div>
-<div className="center-text">
+<div style={{ marginTop: '0.5rem', marginBottom: '0.5rem'}}>
 
   ###### <i className="fa fa-search"></i> Explore Data
   Biologists need to be able to sort, search and filter their data on the fly so that they can compare datasets and gain a deeper understanding of the results.
 
 </div>
-<div className="center-text">
+<div style={{ marginTop: '0.5rem', marginBottom: '0.5rem'}}>
 
   ###### <i className="fa fa-microscope"></i> Specific Views
   Biologists need to view datasets in layouts and visualizations specific to the type of experiment that was run.
 
 </div>
-<div className="center-text">
+<div style={{ marginTop: '0.5rem', marginBottom: '0.5rem'}}>
 
   ###### <i className="fa fa-code"></i> Quick Implementation
   Software Engineers need to quickly create new Dataset views without duplicating existing code, or introducing visual regressions.

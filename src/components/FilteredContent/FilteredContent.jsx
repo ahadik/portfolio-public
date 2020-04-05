@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import Filter from '~components/Filter';
 
+import './FilteredContent.scss';
+
 class FilteredContent extends React.Component {
   static isValidCategory(category, allCategories) {
     return !!allCategories.find((categoryEntry) => {
@@ -96,7 +98,7 @@ class FilteredContent extends React.Component {
     return (
       <>
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 filtered-content__filter-bar">
             <Filter
               allOptions={this.allCategories}
               options={categories}
@@ -113,11 +115,11 @@ class FilteredContent extends React.Component {
             />
           </div>
         </div>
-        <div className="row">
+        <article className="row">
           {
             this.getPostsForFilter().map(this.props.renderer)
           }
-        </div>
+        </article>
       </>
     );
   }

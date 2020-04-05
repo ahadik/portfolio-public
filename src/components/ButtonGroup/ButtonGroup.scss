@@ -1,0 +1,12 @@
+.button-group {
+  display: flex;
+  align-items: flex-start;
+  
+  &--horizontal {
+    flex-direction: row;
+  }
+
+  &--vertical { 
+    flex-direction: column;
+  }
+}

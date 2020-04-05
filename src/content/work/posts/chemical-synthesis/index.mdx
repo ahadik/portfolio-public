@@ -38,6 +38,17 @@ images:
   - mid-fi-5.jpg
   - mid-fi-6.jpg
   - mid-fi-7.jpg
+  - user-flow.png
+  - flow-0.jpg
+  - flow-1.jpg
+  - flow-2.jpg
+  - flow-3.jpg
+  - flow-4.jpg
+  - flow-5.jpg
+  - flow-6.jpg
+  - flow-7.jpg
+  - flow-8.jpg
+  - flow-9.jpg
   - walkthrough-1.jpg
   - walkthrough-2.jpg
   - walkthrough-3.jpg
@@ -340,13 +351,15 @@ The user testing following my second low-fidelity round exposed some flaws but v
 ###### Mid-Fidelity Prototyping
 Luckily, with the <Link to="/work/amino">Amino Design System's</Link> <Link to="/work/amino/design-ops">Sketch Library</Link>, creating prototypes in Sketch is a breeze. I was able to quickly re-create my low-fidelity sketches, address some of the previous oversights, increase the data fidelity, and flesh out the basic layout.
 
-<div className="stack__children--6" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-  <Image name="mid-fi-1" hasShadow />
-  <Image name="mid-fi-2" hasShadow />
-  <Image name="mid-fi-3" hasShadow />
-  <Image name="mid-fi-4" hasShadow />
-  <Image name="mid-fi-5" hasShadow />
-</div>
+<MdxLayout fullWidth>
+  <Gallery>
+    <Image name="mid-fi-1" />
+    <Image name="mid-fi-2" />
+    <Image name="mid-fi-3" />
+    <Image name="mid-fi-4" />
+    <Image name="mid-fi-5" />
+  </Gallery>
+</MdxLayout>
 
 This set of mocks allowed me to explore concepts that are difficult to demonstrate in sketches, such as drag and drop interactions, and the use of color. I presented these mocks to executive stakeholders where they were very well received. I also did in-depth critique sessions with Medicinal and Analytical Chemists to understand where I needed to further refine my solution.
 
@@ -356,12 +369,99 @@ This set of mocks allowed me to explore concepts that are difficult to demonstra
 
 </Note>
 
-My final drafts focused on detailed refinement, such as introducing the concept of an inspector sidebar and horizontal progress tracking. By this point, my solution had been validated by users and I was simply tweaking it.
+These drafts focused on detailed refinement, such as introducing the concept of an inspector sidebar and horizontal progress tracking. By this point, my solution had been validated by users and I was tweaking and optimizing it.
 
-<div className="stack__children--6" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-  <Image name="mid-fi-7" hasShadow />
-  <Image name="mid-fi-6" hasShadow />
-</div>
+###### Proposed Flow
+By now, I had built out and verified an extensive user flow.
+
+<Image name="user-flow" hasShadow caption="Interactive prototype map from Sketch." />
+
+The visual design for the mocks making up this flow was only partially refined. I was focusing on the user flow and information hierarchy/layout. The simplified form of this flow was as follows:
+
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-0" caption="Reaction Dashboard" hasShadow />
+  <div>
+
+  In the Strateos webapp, A scientist enters the chemical synthesis dashboard, where they can see all of their ongoing and past syntheses. The need for a dashboard like this was made very apparent in our user research sessions.
+
+  > I'm pretty easily distracted so I often work on a few things at once. <cite>Existing user of automated chemical synthesis</cite>
+
+  This dashboard is intended to call attention to tasks that need the scientist's attention, and to show the status of on-going syntheses. Syntheses that succeeded or failed are called out so that a chemist can quickly understand the state of their work.
+
+  From this dashboard, a chemist can enter the Synthesis Configuration Flow — from which they launch new syntheses.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-1" caption="Reaction Definition" hasShadow />
+  <div>
+
+  Upon entering the Syntheses Configuration Flow, the chemist is prompted for some basic information about their synthesis such as an <TextTip content="My research showed that chemists would choose to figure out the details of their experiments in their company maintained Electronic Lab Notebook. They would then use that information to send their synthesis to automation.">identification number from their Electronic Lab Notebook</TextTip>. They also select the type of reaction they wish to perform. Since our automated system will only support a limited number of reactions at first, this prevents them from wasting time configuring an incompatible reaction.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-2" caption="Destination Configuration" hasShadow />
+  <div>
+
+  Next, the scientist sets up what the intended destinations are for the final product. By doing this upfront, it allows the system to know how much final product the chemist wants to make. By knowing this value up-front, the system can suggest more intelligent default values through the rest of the configuration.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-3" caption="Reaction Setup" hasShadow />
+  <div>
+
+  With the amount of final product configured, the chemist can now begin defining their reaction. Since we know the type of synthesis the chemist is setting up (an Amide Coupling in this case), we can prompt them to provide the specific reactants needed — an Amine and a Carboxylic Acid. For the most part, all chemical syntheses consist of two reactants, and some supporting reagents such as a catalyst or solvent.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-4" caption="Compound Explorer" hasShadow />
+  <div>
+
+  When defining a reaction variable, the Chemist is prompted with a Compound Explorer modal. Here, they can draw the compound they wish to use as their variable. This structure is searched for in the facility inventory and through vendors so that the chemist can see where their reactant will be sourced from, and how long it will take to arrive.
+
+  > If it takes me two weeks to get an answer through automation because of sourcing, and 2 days through manual work because I have the materials on hand, I'll do it manually. <cite>Medicinal Chemist</cite>
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-6" caption="Reaction Parameters" hasShadow />
+  <div>
+
+  After defining the structure of the reactants and the final product, the chemist is ready to define the reaction parameters. To do so, they open the Reaction Inspector. Here, they can define additional details such as the solvent and catalyst, as well as the incubation time and temperature.
+
+  > Trust in the reaction assembly is critical. Right now, [for the ] pre-charge instruction, I give a detailed account of how I want that to be assembled. <cite>User of automated chemical synthesis</cite>
+
+  My user research showed me that in order to get users to trust the automation, we needed to give them control over certain details. This put them at ease that poor defaults would not be used.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-7" caption="Materials Sourcing" hasShadow />
+  <div>
+
+  After configuring the details one or more reactions, the chemist continues on to materials sourcing. Here, they are informed of all the materials that are needed for this reaction. Those that will be ordered on the chemist's behalf are shown at the bottom.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-8" caption="Materials Sourcing" hasShadow />
+  <div>
+
+  For the materials that the chemist must ship in, a modal walks them through the steps of setting up the shipment. The sooner they send in the shipment, the sooner the automation can begin to run.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop showBorderBottom tabletLayout="12:12">
+  <Image name="flow-9" caption="Materials Sourcing" hasShadow />
+  <div>
+
+  Finally, the chemist can review what they have setup to be run on automation. Information such as estimated time until completion and downstream destinations are re-iterated — to set clear expectations.
+
+  </div>
+</MdxLayout>
 
 ###### Final Prototyping
 After seven iterations, my prototype was thoroughly validated. I felt I had a solution that had stood up to extensive user testing and had received buy-in from stakeholders. Core concepts in the solution could be traced directly back to the solutions proposed during the Design Sprint meaning that all stakeholders saw their own ideas in this proposal.

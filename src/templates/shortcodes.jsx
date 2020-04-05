@@ -2,6 +2,7 @@ import React from 'react';
 
 import Note from '~components/Note';
 import Image from '~components/MdxImage';
+import Video from '~components/MdxVideo';
 import Link from "~components/Link";
 import MdxLayout from '~components/MdxLayout';
 import TextTip from '~components/TextTip';
@@ -12,12 +13,16 @@ import Gallery from '~components/Gallery';
 import Button from '~components/Button';
 import Citation from '~components/Citation';
 import YouTube from '~components/YouTube';
+import ButtonGroup from '~components/ButtonGroup';
 
-const generateShortcodes = (postImages) => {
+const generateShortcodes = (postMedia) => {
   return {
     Link,
     Image: function(props) {
-      return <Image imgs={postImages} {...props} />
+      return <Image imgs={postMedia.images} {...props} />
+    },
+    Video: function(props) {
+      return <Video vids={postMedia.videos} {...props} />
     },
     MdxLayout,
     TextTip,
@@ -26,9 +31,10 @@ const generateShortcodes = (postImages) => {
     ItemBlurb,
     Note,
     Gallery: function(props) {
-      return <Gallery {...props} imgs={postImages} />;
+      return <Gallery {...props} imgs={postMedia.images} />;
     },
     Button,
+    ButtonGroup,
     YouTube,
     cite: Citation
   };
