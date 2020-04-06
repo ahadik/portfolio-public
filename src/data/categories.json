@@ -1,6 +1,11 @@
 {
   "categories": [
     {
+      "name": "Transcriptic",
+      "id": "transcriptic",
+      "icon": "fal fa-microscope"
+    },
+    {
       "name": "UI/UX",
       "id": "ui-ux",
       "icon": "fal fa-pen-nib"
@@ -11,14 +16,14 @@
       "icon": "fal fa-code"
     },
     {
-      "name": "Hardware",
-      "id": "hardware",
-      "icon": "fal fa-microchip"
-    },
-    {
       "name": "Design Ops",
       "id": "design-ops",
       "icon": "fal fa-cogs"
+    },
+    {
+      "name": "Hardware",
+      "id": "hardware",
+      "icon": "fal fa-microchip"
     },
     {
       "name": "Carpentry",
@@ -31,24 +36,19 @@
       "icon": "fal fa-camera-retro"
     },
     {
-      "name": "Transcriptic",
-      "id": "transcriptic",
-      "icon": "fal fa-microscope"
-    },
-    {
       "name": "Personal Project",
       "id": "personal",
       "icon": "fal fa-user-astronaut"
     },
     {
-      "name": "School Project",
-      "id": "school",
-      "icon": "fal fa-university"
-    },
-    {
       "name": "Entrepreneurship",
       "id": "entrepreneurship",
       "icon": "fal fa-coffee-pot"
+    },
+    {
+      "name": "School Project",
+      "id": "school",
+      "icon": "fal fa-university"
     }
   ]
 }

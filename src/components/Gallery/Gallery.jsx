@@ -84,7 +84,8 @@ class Gallery extends React.Component {
           {React.Children.map(children, (child) => {
             if((child.props.mdxType === 'Image') && child.props.name) {
               const image = imgs[child.props.name];
-              return (
+
+              const standardItem = (
                 <div
                   className="gallery__item"
                   onClick={!tabletStack && (() => this.flipPreview(image))}
@@ -96,6 +97,46 @@ class Gallery extends React.Component {
                   {React.cloneElement(child, { disablePreview: true })}
                 </div>
               );
+
+              if (!itemsPerRow || typeof itemsPerRow === 'number') {
+                return standardItem;
+              }
+              
+              if(itemsPerRow.tablet && itemsPerRow.desktop) {
+                return (
+                  <>
+                    <div
+                      className="gallery__item mobile"
+                      onClick={!tabletStack && (() => this.flipPreview(image))}
+                    >
+                      {React.cloneElement(child, { disablePreview: true })}
+                    </div>
+                    <div
+                      className="gallery__item tablet"
+                      onClick={!tabletStack && (() => this.flipPreview(image))}
+                      style={{
+                        flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
+                        flexBasis: itemsPerRow.tablet && `calc(${100 / itemsPerRow.tablet}% - 16px)`
+                      }}
+                    >
+                      {React.cloneElement(child, { disablePreview: true })}
+                    </div>
+                    <div
+                      className="gallery__item desktop"
+                      onClick={!tabletStack && (() => this.flipPreview(image))}
+                      style={{
+                        flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
+                        flexBasis: itemsPerRow.desktop && `calc(${100 / itemsPerRow.desktop}% - 16px)`
+                      }}
+                    >
+                      {React.cloneElement(child, { disablePreview: true })}
+                    </div>
+                  </>
+                )
+              }
+
+              return standardItem;
+              
             }
           })}
         </div>
@@ -109,7 +150,13 @@ class Gallery extends React.Component {
 
 Gallery.propTypes = {
   caption: PropTypes.string,
-  itemsPerRow: PropTypes.number,
+  itemsPerRow: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      desktop: PropTypes.number,
+      tablet: PropTypes.number
+    })
+  ]),
   tabletStack: PropTypes.bool
 }
 

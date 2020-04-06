@@ -1,8 +1,6 @@
 $strip-height: 6rem;
 
 .gallery {
-  margin-left: -$spacing-02;
-  margin-right: -$spacing-02;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -12,7 +10,7 @@ $strip-height: 6rem;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    width: 100%;
+    width: calc(100% + #{$spacing-03 * 2});
     margin-left: -$spacing-03;
     margin-right: -$spacing-03;
 

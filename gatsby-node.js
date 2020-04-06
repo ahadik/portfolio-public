@@ -28,10 +28,23 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     const instanceType = getNode(node.parent).sourceInstanceName;
     const slug = createFilePath({ node, getNode, basePath: `pages` });
 
+    const getSlug = (instanceType, slug) => {
+      switch (instanceType) {
+        case 'products':
+          return `/work${slug}`;
+        case 'caseStudies':
+          return `/work${slug}`;
+        case 'writing':
+          return `/writing${slug}`;
+        case 'pages':
+          return slug;
+      }
+    }
+
     createNodeField({
       node,
       name: 'slug',
-      value: (instanceType === 'pages') ? slug : `/${instanceType}${slug}`
+      value: getSlug(instanceType, slug)
     });
 
     
@@ -40,8 +53,10 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 const templateByInstanceName = (node) => {
   switch (node.parent.sourceInstanceName) {
-    case 'work':
+    case 'caseStudies':
       return './src/templates/written/template.jsx';
+    case 'products':
+      return './src/templates/product/template.jsx';
     case 'writing':
       return './src/templates/written/template.jsx';
     case 'pages':

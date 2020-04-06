@@ -1,0 +1,77 @@
+---
+date: "2013-05-01"
+title: "Autonomous Toy Car"
+previewImage: "car-kevin.jpg"
+excerpt: "For a final project in a Computational Cognitive Science Course, I convinced my friends to equip a toy car so that it could navigate autonomously."
+categories: [code, hardware, school]
+images:
+  - arduino.jpg
+  - boxed-car.jpg
+  - car-rear.jpg
+  - car-side.jpg
+  - car-toys.jpg
+  - car-course.jpg
+  - circuit-board.jpg
+  - matlab.jpg
+  - proto-board.jpg
+  - 3d-graph.png
+  - controller.jpg
+---
+
+import writeUp from '~static/car-writeup.pdf';
+
+###### TL;DR
+Here's a video that walks through the process of completing this project.
+
+<VideoEmbed source="vimeo" id="79056799" />
+
+#### Project Definition
+During this Computational Cognitive Science course, we had thoroughly reviewed neural networks and other AI/ML techniques. As a final project, we were asked to implement a demonstration of what we had learned. Simply implementing some algorithms to make the equivalent of a <Link href="https://www.youtube.com/watch?v=ACmydtFDTGs">Not Hotdog App</Link> seemed boring. Instead, I wondered if we might be able to attach a camera to a toy car and train a neural network to navigate a simple road course.
+
+I convinced two friends to join me, and after a quick Amazon purchase, we were on our way.
+
+<Image name="boxed-car" />
+
+#### Design
+###### Data Collection
+To collect images wirelessly from the car, we attached an iPhone to it and used an app to stream pictures over wifi to a laptop.
+<Gallery caption="At first, electrical tape and twist-ties got the job done.">
+  <Image name="car-toys" />
+  <Image name="car-side" />
+</Gallery>
+
+It was a crude setup, but it worked and removed some of the more difficult networking challenges we would have otherwise had to deal with.
+
+###### Car Control
+From here, we used MATLAB to load the image into a program from which we would control the car. To control the car, we broke open its remote control to gain access to the electrical components.
+
+<Gallery caption="An initial breadboard prototype of our hacked radio controller.">
+  <Image name="arduino" />
+  <Image name="controller" />
+</Gallery>
+
+Using some transistors, we overrode the controller's physical buttons, allowing an input from an Arduino to command the car to move forward to the left, right, or straight-on.
+
+Using a library that allowed MATLAB to send commands to an Arduino, we wrote a small MATLAB script that could command the car, via an Arduino, based on manual inputs from a human, or from an algorithmic decision.
+
+###### Training
+Our first challenge was to create a corpus of training data. Putting our MATLAB program into a training mode, the car's camera would feed us a single image, and we would respond with a left, right, or straight command, which would be saved and associated with that image.
+
+<Gallery caption="We constructed our road courses from printer paper laid on the ground.">
+  <Image name="car-course" />
+  <Image name="matlab" />
+</Gallery>
+
+After running the car through several courses and building up a training corpus, we were ready to train a neural network.
+
+###### Testing
+Next, we needed to test how well our neural network matched commands to new data. We saw an opportunity to reduce our test error by cropping input images to remove unnecessary information. Trying permutations cropping the top and bottom of our training images, we identified that removing six rows of pixels from the top and bottom was optimal.
+
+<Image name="3d-graph" caption="Test error across two parameters — removing pixel rows from the top, and bottom of the image." />
+
+###### Running
+With our neural network fully trained, we were able to run the car autonomously. Given a variety of course layouts, it was able to successfully navigate on its own.
+
+As a final asset, alongside the video shared at the top of this page, we produced a detailed PDF writeup of this project.
+
+<Button iconLeft="fal fa-long-arrow-down" href={writeUp} hasBorder>Download Writeup</Button>

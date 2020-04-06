@@ -11,14 +11,14 @@ const slug = args[0];
 if (slug === '--help') {
   return console.log(
     `
-      Create new posts by passing a slug:
+      Create new posts by passing a path:
       
-      ./create-posts.js work/new-post
+      ./create-posts.js work/posts/new-post
     `
   );
 }
 
-const [category, ...postPath] = slug.split('/');
+const [category, type, ...postPath] = slug.split('/');
 
 const subDirPath = postPath.slice(0, -1);
 
@@ -55,7 +55,7 @@ const createDirs = (startingDir, subDirs, postName) => {
 }
 
 createDirs(
-  path.resolve(__dirname, `../src/content/${category}/posts`),
+  path.resolve(__dirname, `../src/content/${category}/${type}`),
   subDirPath,
   postName
 );

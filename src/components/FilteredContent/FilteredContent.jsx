@@ -1,5 +1,4 @@
 import React from 'react';
-import { useStaticQuery, StaticQuery, graphql } from "gatsby"
 import _ from 'lodash';
 
 import Filter from '~components/Filter';

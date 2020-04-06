@@ -12,7 +12,7 @@ import ItemBlurb from '~components/ItemBlurb';
 import Gallery from '~components/Gallery';
 import Button from '~components/Button';
 import Citation from '~components/Citation';
-import YouTube from '~components/YouTube';
+import VideoEmbed from '~components/VideoEmbed';
 import ButtonGroup from '~components/ButtonGroup';
 
 const generateShortcodes = (postMedia) => {
@@ -35,7 +35,7 @@ const generateShortcodes = (postMedia) => {
     },
     Button,
     ButtonGroup,
-    YouTube,
+    VideoEmbed,
     cite: Citation
   };
 }
