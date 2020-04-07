@@ -30,9 +30,17 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { children, caption, itemsPerRow, imgs, tabletStack } = this.props;
+    const { children, caption, itemsPerRow, imgs, style } = this.props;
     return (
-      <div className={classnames('gallery', { 'gallery--wrapping': !!itemsPerRow || tabletStack, 'gallery--tablet-wrap': tabletStack })}>
+      <div
+        style={style}
+        className={classnames(
+          'gallery',
+          {
+            'gallery--wrapping': !!itemsPerRow
+          }
+        )}
+      >
         <div className="tablet-and-desktop">
           <If condition={this.state.activePreview}>
             <Lightbox onClose={this.closePreview}>
@@ -88,7 +96,7 @@ class Gallery extends React.Component {
               const standardItem = (
                 <div
                   className="gallery__item"
-                  onClick={!tabletStack && (() => this.flipPreview(image))}
+                  onClick={() => this.flipPreview(image)}
                   style={{
                     flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
                     flexBasis: itemsPerRow && `calc(${100 / itemsPerRow}% - 16px)`
@@ -107,26 +115,26 @@ class Gallery extends React.Component {
                   <>
                     <div
                       className="gallery__item mobile"
-                      onClick={!tabletStack && (() => this.flipPreview(image))}
+                      onClick={() => this.flipPreview(image)}
                     >
                       {React.cloneElement(child, { disablePreview: true })}
                     </div>
                     <div
                       className="gallery__item tablet"
-                      onClick={!tabletStack && (() => this.flipPreview(image))}
+                      onClick={() => this.flipPreview(image)}
                       style={{
                         flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
-                        flexBasis: itemsPerRow.tablet && `calc(${100 / itemsPerRow.tablet}% - 16px)`
+                        flexBasis: (itemsPerRow.tablet && (itemsPerRow.tablet !== 'all')) && `calc(${100 / itemsPerRow.tablet}% - 16px)`
                       }}
                     >
                       {React.cloneElement(child, { disablePreview: true })}
                     </div>
                     <div
                       className="gallery__item desktop"
-                      onClick={!tabletStack && (() => this.flipPreview(image))}
+                      onClick={() => this.flipPreview(image)}
                       style={{
                         flexGrow: image.aspectRatio || image.fluid.aspectRatio || 1,
-                        flexBasis: itemsPerRow.desktop && `calc(${100 / itemsPerRow.desktop}% - 16px)`
+                        flexBasis: (itemsPerRow.desktop && (itemsPerRow.desktop !== 'all')) && `calc(${100 / itemsPerRow.desktop}% - 16px)`
                       }}
                     >
                       {React.cloneElement(child, { disablePreview: true })}
@@ -153,11 +161,17 @@ Gallery.propTypes = {
   itemsPerRow: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
-      desktop: PropTypes.number,
-      tablet: PropTypes.number
+      desktop: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.oneOf(['all'])
+      ]),
+      tablet: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.oneOf(['all'])
+      ])
     })
   ]),
-  tabletStack: PropTypes.bool
+  style: PropTypes.instanceOf(Object)
 }
 
 export default Gallery;

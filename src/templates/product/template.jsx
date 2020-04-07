@@ -9,11 +9,10 @@ import Image from "~components/Image";
 
 import MasterTemplate from '../MasterTemplate';
 
-import './style.scss';
+import './product-template.scss';
 
 export default ({ data }) => {
   if (data) {
-
     return (
       <MasterTemplate
         data={data}
@@ -49,7 +48,7 @@ export default ({ data }) => {
                   <div className="product-content__details stack__children--4">
                     <Categories categoryIds={categories} categories={allCategories} />
                     <If condition={excerpt}>
-                      <p className="secondary">{excerpt}</p>
+                      <p>{excerpt}</p>
                     </If>
                     <If condition={features}>
                       <ul>
@@ -80,7 +79,7 @@ export default ({ data }) => {
                 <div className="row">
                   <div className="col-12">
                     <If condition={excerpt}>
-                      <p className="secondary">{excerpt}</p>
+                      <p>{excerpt}</p>
                     </If>
                     <If condition={features}>
                       <ul>
@@ -115,6 +114,7 @@ export default ({ data }) => {
       />
     );
   }
+  return null;
 }
 
 export const query = graphql`

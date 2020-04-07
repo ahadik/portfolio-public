@@ -1,6 +1,8 @@
 .button-group {
   display: flex;
   align-items: flex-start;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   
   &--horizontal {
     flex-direction: row;

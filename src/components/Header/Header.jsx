@@ -4,6 +4,7 @@ import React from "react"
 import classnames from 'classnames';
 
 import MobileMenuToggle from './MobileMenuToggle';
+import Logo from './Logo';
 
 import './Header.scss';
 
@@ -63,11 +64,7 @@ class Header extends React.Component {
       <header className={classnames('header', {'header--visible': this.props.visible})}>
         <div className="header__content">
           <div className="header__left-content">
-            <h4 className="header__title serif">
-              <Link to="/">
-                {this.props.siteTitle}
-              </Link>
-            </h4>
+            <Logo title={this.props.siteTitle} />
           </div>
           <div className="header__right-content">
             <div className="header__desktop-nav tablet-and-desktop">

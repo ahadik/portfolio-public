@@ -117,18 +117,19 @@ class HomePage extends React.Component {
                     {
                       img: this.props.data.imageOne.childImageSharp.fluid,
                       caption: 'Automation scheduling dashboard for Strateos.',
-                      to: '/work?filter=ui-ux',
+                      to: '/work?filter=transcriptic',
                       id: 'dashboard'
                     },
                     {
                       img: this.props.data.imageTwo.childImageSharp.fluid,
                       caption: 'Operator Workcell Dashboard for Strateos robotic workcell.',
-                      to: '/work?filter=code',
+                      to: '/work?filter=transcriptic',
                       id: 'workcell'
                     },
                     {
                       img: this.props.data.imageThree.childImageSharp.fluid,
                       caption: 'Wooden stereo monitors.',
+                      to: '/work/speakers',
                       id: 'monitors'
                     },
                     {

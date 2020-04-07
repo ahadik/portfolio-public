@@ -40,6 +40,7 @@ const MdxLayout = ({
   padBottom,
   padBoth,
   verticalCenter,
+  isMedia,
   ...props
 }) => {
   let defaultLayout;
@@ -63,6 +64,7 @@ const MdxLayout = ({
     'mdx-layout--pad-top': padTop || padBoth,
     'mdx-layout--pad-bottom': padBottom || padBoth,
     'mdx-layout--screen-width': maxWidth,
+    'mdx-layout--media': isMedia,
     'row': !maxWidth // if this layout is set to be full screen width, then the row will be rendered on a child.
   };
 
@@ -131,6 +133,7 @@ MdxLayout.propTypes = {
   padTop: PropTypes.bool,
   padBottom: PropTypes.bool,
   padBoth: PropTypes.bool,
+  isMedia: PropTypes.bool,
   className: PropTypes.string
 };
 

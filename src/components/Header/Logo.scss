@@ -1,0 +1,61 @@
+.logo {
+  padding: $spacing-03 $spacing-05;
+  overflow: hidden;
+  position: relative;
+  font-size: 1.4rem;
+  z-index: 1;
+
+  &--landing #{&}:after {
+    transform: translateX(-100%);
+    animation-name: backgroundWipeIn;
+    animation-duration: 500ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  &--landing #{&}:before {
+    transition: none;
+  }
+
+  &--landing #{&}:hover:before {
+    transform: translateX(-100%);
+  }
+  
+  &:before,
+  &:after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
+  }
+
+  &:before {
+    z-index: -9;
+    background-color: color(medium, green);
+    transition: transform 300ms;
+    transform: translateX(-100%);
+  }
+
+  &:hover:before {
+    transform: translateX(0);
+  }
+
+  &:after {
+    z-index: -10;
+    background-color: color(medium, gold);
+  }
+}
+
+@keyframes backgroundWipeIn {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

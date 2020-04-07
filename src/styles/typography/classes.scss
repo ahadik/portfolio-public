@@ -141,171 +141,6 @@ h6 {
   margin-bottom: 0;
 }
 
-h1 + h2,
-h1 + p,
-h1 + .mdx-layout,
-h1 + .gallery,
-h1 + .image,
-h1 + ol,
-h1 + ul {
-  margin-top: #{$fontMultiplier}rem
-}
-
-h2 + h3,
-h2 + p,
-h2 + .mdx-layout,
-h2 + .gallery,
-h2 + .image,
-h2 + ol,
-h2 + ul {
-  margin-top: #{pow($fontMultiplier, -2)}rem
-}
-
-h3 + h4,
-h3 + h5,
-h3 + h6,
-h3 + p,
-h3 + .mdx-layout,
-h3 + .gallery,
-h3 + .image,
-h3 + ol,
-h3 + ul {
-  margin-top: #{pow($fontMultiplier, -3)}rem
-}
-
-h4 + h5,
-h4 + p,
-h4 + .mdx-layout,
-h4 + .gallery,
-h4 + .image,
-h4 + ol,
-h4 + ul {
-  margin-top: #{pow($fontMultiplier, -4)}rem
-}
-
-h5 + h6,
-h5 + p,
-h5 + .mdx-layout,
-h5 + .gallery,
-h5 + .image,
-h5 + ol,
-h5 + ul {
-  margin-top: #{pow($fontMultiplier, -5)}rem
-}
-
-h6 + p,
-h6 + .mdx-layout,
-h6 + .gallery,
-h6 + .image,
-h6 + ol,
-h6 + ul {
-  margin-top: #{pow($fontMultiplier, -8)}rem
-}
-
-p + h1 {
-  margin-top: #{pow($fontMultiplier, 4)}rem
-}
-
-ul + h2,
-ol + h2,
-p + h2,
-.mdx-layout + h2,
-.image + h2,
-.gatsby-highlight + h2,
-.youtube + h2,
-.gallery + h2,
-.note + h2,
-.button + h2,
-ul + h3,
-ol + h3,
-p + h3,
-.mdx-layout + h3,
-.image + h3,
-.gatsby-highlight + h3,
-.youtube + h3,
-.gallery + h3,
-.note + h3,
-.button + h3,
-ul + h4,
-ol + h4,
-p + h4,
-.mdx-layout + h4,
-.image + h4,
-.gatsby-highlight + h4,
-.youtube + h4,
-.gallery + h4,
-.note + h4,
-.button + h4,
-ul + h5,
-ol + h5,
-p + h5,
-.mdx-layout + h5,
-.image + h5,
-.gatsby-highlight + h5,
-.youtube + h5,
-.gallery + h5,
-.note + h5,
-.button + h5,
-ul + h6,
-ol + h6,
-p + h6,
-.mdx-layout + h6,
-.image + h6,
-.gatsby-highlight + h6,
-.youtube + h6,
-.button + h6,
-.note + h6,
-.gallery + h6 {
-  margin-top: #{pow($fontMultiplier, 3)}rem
-}
-
-p + p,
-p + ol,
-p + ul,
-ol + p,
-ul + p,
-p + .gallery,
-p + .image,
-p + .button,
-p + .gatsby-highlight,
-p + .youtube,
-p + .note,
-p + .mdx-layout {
-  margin-top: 1rem;
-}
-
-$blockClasses: (button, gallery, mdx-layout, image, gatsby-highlight);
-$textTags: (p, ol, ul);
-
-@each $block in $blockClasses {
-  @each $tag in $textTags {
-    .#{$block} + #{$tag} {
-      margin-top: 1rem;
-    }
-  }
-}
-
-blockquote + h1,
-.gallery + h1,
-.mdx-layout + h1,
-.image + h1 {
-  margin-top: #{pow($fontMultiplier, 6)}rem;
-}
-
-blockquote + h2,
-.gallery + h2,
-.mdx-layout + h2,
-.image + h2 {
-  margin-top: #{pow($fontMultiplier, 5)}rem;
-}
-
-blockquote + h3,
-.gallery + h3,
-.mdx-layout + h3,
-.image + h3 {
-  margin-top: #{pow($fontMultiplier, 4)}rem;
-}
-
 ol {
   margin-left: #{pow($fontMultiplier, 4)}rem;
 }
@@ -338,6 +173,10 @@ li {
   }
 }
 
+.clear-list-style {
+  @include clear-list-style;
+}
+
 h1, h2, h3, h4, h5, h6, p, li {
   > code {
     background: color(light, gray) !important;
@@ -353,9 +192,55 @@ h1, h2, h3, h4, h5, h6, p, li {
   }
 }
 
-.clear-list-style {
-  @include clear-list-style;
+
+@mixin combinatoricSpacing($outer, $inner, $spacing, $mirror: false) {
+  @each $outerElement in $outer {
+    @each $innerElement in $inner {
+      #{$outerElement} + #{$innerElement} {
+        margin-top: $spacing;
+      }
+
+      @if ($mirror) {
+        #{$innerElement} + #{$outerElement} {
+          margin-top: $spacing;
+        }
+      }
+    }
+  }
 }
+
+$headerTags: (h1, h2, h3, h4, h5, h6);
+$bodyTextTags: (p, ol, ul);
+$textTags: join($headerTags, $bodyTextTags);
+$textBlockTags: ('.button', '.mdx-layout:not(.mdx-layout--media)', '.gatsby-highlight', '.note', blockquote);
+
+// Media Spacing
+$mediaClasses: ('.gallery', '.mdx-layout--media', '.image', '.video');
+
+@include combinatoricSpacing($textTags, $mediaClasses, #{pow($fontMultiplier, 9)}rem, true);
+
+// Content Block Spacing
+@include combinatoricSpacing($textTags, $textBlockTags, #{pow($fontMultiplier, 5)}rem, true);
+
+// Text Spacing
+@include combinatoricSpacing((h1), $textTags, #{$fontMultiplier}rem);
+
+@include combinatoricSpacing((h2), join((h2, h3, h4, h5, h6), $bodyTextTags), #{pow($fontMultiplier, -2)}rem, false);
+
+@include combinatoricSpacing((h3), join((h3, h4, h5, h6), $bodyTextTags), #{pow($fontMultiplier, -3)}rem);
+
+@include combinatoricSpacing((h4), join((h4, h5, h6), $bodyTextTags), #{pow($fontMultiplier, -4)}rem);
+
+@include combinatoricSpacing((h5), join((h5, h6), $bodyTextTags), #{pow($fontMultiplier, -5)}rem);
+
+@include combinatoricSpacing((h6), join((h6), $bodyTextTags), #{pow($fontMultiplier, -8)}rem);
+
+@include combinatoricSpacing($bodyTextTags, (h1), #{pow($fontMultiplier, 4)}rem);
+
+@include combinatoricSpacing($bodyTextTags, (h2, h3, h4, h5, h6), #{pow($fontMultiplier, 3)}rem);
+
+@include combinatoricSpacing($bodyTextTags, $bodyTextTags, #{$fontMultiplier}rem);
+
 
 @include typography(desktop);
 

@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ description, lang, meta, title, thumbnail }) {
+function SEO({ description, lang, meta, title, thumbnail, article }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -19,51 +19,46 @@ function SEO({ description, lang, meta, title, thumbnail }) {
             title
             description
             author
+            siteUrl
           }
         }
       }
     `
   );
 
-  const imageSrc = thumbnail && thumbnail.childImageSharp.fluid.src;
-
-  let origin;
-  if (typeof window !== "undefined") {
-    origin = window.location.origin;
+  const seo = {
+    title: title || site.siteMetadata.title,
+    description: description || site.siteMetadata.description,
+    image: `${site.siteMetadata.siteUrl}${thumbnail && thumbnail.childImageSharp.fluid.src}`
   }
-  let image;
-  if (origin && imageSrc) {
-    image = origin + imageSrc;
-  }
-  const metaDescription = description || site.siteMetadata.description
 
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
-      title={title}
+      title={seo.title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: seo.metaDescription,
         },
         {
           property: `og:title`,
-          content: title,
+          content: seo.title,
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          content: seo.description,
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: article ? 'article' : 'website',
         },
         {
           property: `og:image`,
-          content: image
+          content: seo.image
         },
         {
           name: `twitter:card`,
@@ -75,15 +70,15 @@ function SEO({ description, lang, meta, title, thumbnail }) {
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: seo.title,
         },
         {
           name: `twitter:description`,
-          content: metaDescription,
+          content: seo.description,
         },
         {
           name: `twitter:image`,
-          content: image
+          content: seo.image
         }
       ].concat(meta)}
     />

@@ -61,6 +61,8 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "build:staging": "TARGET=staging gatsby build",
+    "build:production": "TARGET=production gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
@@ -68,8 +70,8 @@
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "draft": "node ./scripts/create-post.js",
-    "deploy:clean": "gatsby clean && gatsby build && node ./scripts/deploy.js",
-    "deploy": "gatsby build && node ./scripts/deploy.js"
+    "deploy:staging": "yarn build:staging && node ./scripts/deploy.js",
+    "deploy:production": "yarn build:production && node ./scripts/deploy.js"
   },
   "repository": {
     "type": "git",

@@ -279,6 +279,7 @@ ul {
 ol {
   margin-right: 0;
   margin-top: 0;
+  margin-bottom: 0;
   padding-bottom: 0;
   padding-left: 0;
   padding-right: 0;
@@ -364,6 +365,7 @@ blockquote {
   margin-left: 1rem;
   margin-right: 0;
   margin-top: 0;
+  margin-bottom: 0;
   padding-bottom: 0;
   padding-left: 1em;
   padding-right: 0;
@@ -434,7 +436,6 @@ ul li {
 li > ol {
   margin-left: 1.45rem;
   margin-bottom: calc(1.45rem / 2);
-  margin-top: calc(1.45rem / 2);
 }
 li > ul {
   margin-left: 1.45rem;

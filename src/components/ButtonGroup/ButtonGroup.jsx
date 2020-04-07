@@ -8,7 +8,7 @@ const ButtonGroup = ({ children, orientation }) => {
     <div
       className={classnames(
         'button-group',
-        'stack__children--4',
+        'stack__children--6',
         {
           'button-group--vertical': orientation == 'vertical',
           'button-group--horizontal': orientation == 'horizontal'

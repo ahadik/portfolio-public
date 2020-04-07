@@ -1,8 +1,20 @@
+const siteUrl = ((target) => {
+  switch(process.env.TARGET) {
+    case 'staging':
+      return 'http://staging.alexhadik.com';
+    case 'production':
+      return 'https://www.alexhadik.com';
+    default:
+      return 'localhost:9000';
+  }
+})(process.env.TARGET);
+
 module.exports = {
   siteMetadata: {
     title: `Alex Hadik`,
     description: `The portfolio of Alex Hadik.`,
     author: `@ahadik`,
+    siteUrl: siteUrl
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
