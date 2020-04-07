@@ -218,9 +218,11 @@ $textBlockTags: ('.button', '.mdx-layout:not(.mdx-layout--media)', '.gatsby-high
 $mediaClasses: ('.gallery', '.mdx-layout--media', '.image', '.video');
 
 @include combinatoricSpacing($textTags, $mediaClasses, #{pow($fontMultiplier, 9)}rem, true);
+@include combinatoricSpacing($mediaClasses, $mediaClasses, #{pow($fontMultiplier, 9)}rem);
 
 // Content Block Spacing
 @include combinatoricSpacing($textTags, $textBlockTags, #{pow($fontMultiplier, 5)}rem, true);
+@include combinatoricSpacing($textBlockTags, $textBlockTags, #{pow($fontMultiplier, 5)}rem);
 
 // Text Spacing
 @include combinatoricSpacing((h1), $textTags, #{$fontMultiplier}rem);
