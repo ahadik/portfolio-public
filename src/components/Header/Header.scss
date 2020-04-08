@@ -25,6 +25,11 @@
     padding: 0 $spacing-08;
     box-sizing: content-box;
     flex-grow: 1;
+
+    @include mobile {
+      padding: 0 $spacing-06;
+      align-items: center;
+    }
   }
 
   &__title {

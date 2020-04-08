@@ -6,17 +6,38 @@
 const path = require('path');
 const { createFilePath } = require('gatsby-source-filesystem');
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
         "~components": path.resolve(__dirname, "src/components"),
+        "~services": path.resolve(__dirname, "src/services"),
         "~images": path.resolve(__dirname, "src/images"),
         "~templates": path.resolve(__dirname, "src/templates"),
         "~static": path.resolve(__dirname, "static")
       }
     }
   });
+
+  if (stage === "build-html") {
+    /*
+     * During the build step, `auth0-js` will break because it relies on
+     * browser-specific APIs. Fortunately, we don’t need it during the build.
+     * Using Webpack’s null loader, we’re able to effectively ignore `auth0-js`
+     * during the build. (See `src/utils/auth.js` to see how we prevent this
+     * from breaking the app.)
+     */
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /auth0-js/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
+  }
 };
 
 
@@ -34,6 +55,8 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
           return `/work${slug}`;
         case 'caseStudies':
           return `/work${slug}`;
+        case 'restrictedCaseStudies':
+          return `/work/restricted${slug}`;
         case 'writing':
           return `/writing${slug}`;
         case 'pages':
@@ -47,6 +70,11 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       value: getSlug(instanceType, slug)
     });
 
+    createNodeField({
+      node,
+      name: 'isRestricted',
+      value: instanceType === 'restrictedCaseStudies'
+    })
     
   }
 }
@@ -55,6 +83,8 @@ const templateByInstanceName = (node) => {
   switch (node.parent.sourceInstanceName) {
     case 'caseStudies':
       return './src/templates/written/template.jsx';
+    case 'restrictedCaseStudies':
+      return './src/templates/written/template-restricted.jsx';
     case 'products':
       return './src/templates/product/template.jsx';
     case 'writing':
@@ -90,9 +120,23 @@ exports.createPages = async ({ graphql, actions }) => {
     createPage({
       path: node.fields.slug,
       component: path.resolve(templateByInstanceName(node)),
+      matchPath: node.fields.slug.match(/^\/work\/restricted/) && "/work/restricted/*",
       context: {
         slug: node.fields.slug
       }
     })
   });
+}
+
+// Implement the Gatsby API “onCreatePage”. This is
+// called after every page is created.
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/work\/restricted/)) {
+    page.matchPath = "/work/restricted/*"
+    // Update the page.
+    createPage(page)
+  }
 }

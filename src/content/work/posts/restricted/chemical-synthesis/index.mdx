@@ -1,0 +1,493 @@
+---
+date: "2018-12-30"
+title: "Automated Chemical Synthesis"
+previewImage: "cover-photo.jpg"
+excerpt: "In 2018, Transcriptic began a partnership with Eli Lilly to build out an 11,000 square foot robotic laboratory for automated medicinal chemistry and biology experimentation. This would be Transcriptic's second facility. The Transcriptic platform already supported automated biology, but we had never set foot in the medicinal chemistry space. I led a 6 month long project to develop the user experience vision for managing chemistry experiments in this lab. In this case study, I'll detail my process, and the outcomes."
+images:
+  - facility.jpg
+  - demo.png
+  - assay-cards.png
+  - research-notes.png
+  - contextual-inquiry.jpg
+  - design-sprint.jpg
+  - sprint-process.jpg
+  - final-assets.jpg
+  - expert-human.png
+  - explorer-human.png
+  - skeptic-human.png
+  - final-journey-map.png
+  - sketches-1.jpg
+  - sketches-2.jpg
+  - sketches-3.jpg
+  - sketches-4.jpg
+  - sketches-5.jpg
+  - sketches-6.jpg
+  - sketches-7.jpg
+  - sketches-8.jpg
+  - sketches-9.jpg
+  - sketches-10.jpg
+  - sketches-11.jpg
+  - sketches-12.jpg
+  - sketches-13.jpg
+  - sketches-14.jpg
+  - sketches-15.jpg
+  - mid-fi-1.jpg
+  - mid-fi-2.jpg
+  - mid-fi-3.jpg
+  - mid-fi-4.jpg
+  - mid-fi-5.jpg
+  - mid-fi-6.jpg
+  - mid-fi-7.jpg
+  - user-flow.png
+  - flow-0.jpg
+  - flow-1.jpg
+  - flow-2.jpg
+  - flow-3.jpg
+  - flow-4.jpg
+  - flow-5.jpg
+  - flow-6.jpg
+  - flow-7.jpg
+  - flow-8.jpg
+  - flow-9.jpg
+  - walkthrough-1.jpg
+  - walkthrough-2.jpg
+  - walkthrough-3.jpg
+  - walkthrough-4.jpg
+  - walkthrough-5.jpg
+  - walkthrough-6.jpg
+  - walkthrough-7.jpg
+categories: [ui-ux, transcriptic]
+---
+
+import walkthroughPres from '~static/chemical-synthesis-walkthrough.pdf';
+import acceptanceTests from '~static/chemical-synthesis-acceptance-tests.pdf';
+
+#### Origins
+In a nutshell, the goal of this partnership was for Transcriptic to take on the development and operation of a robotic facility Eli Lilly had built out in San Diego, California. This facility already contained the machinery and infrastructure to synthesize new pharmaceutical compounds and test their effectiveness against a wide variety of diseases. However, it did not yet have a software backbone to manage the operation of the facility. That's where Transcriptic came in.
+
+Over the course of several years, we would deploy our software stack on-premise to bring the facility to life. Then, as the operators of the facility, we would sell excess capacity not used by the Eli Lilly team to other pharmaceutical companies. It was a win-win proposal — but the amount of work required to succeed was staggering.
+
+<MdxLayout fullWidth>
+  <Image name="facility" caption="The L2S2 facility in San Diego, California." disablePreview />
+</MdxLayout>
+
+This partnership was by far the largest contract Transcriptic had ever taken on. It would require our small organization to learn to collaborate with Eli Lilly — one of the world's largest pharmaceutical companies. It would require us to continue the development of a massive facility which had already been built, but for which little software existed. It would require us to coordinate and integrate with a maze of existing vendors, suppliers and software systems. *It was a contract that would make or break Transcriptic.* In every way, the future of the company depended on the success of this project.
+
+#### Design Lift
+The contract for this partnership detailed a series of milestones to be met over the course of several years. The entire company, from lab operation to hardware engineering would need to focus on this project if we were to meet these goals. One of the largest deliverables in the first milestone called for a large design effort.
+
+Prior to this project, the Transcriptic platform supported a variety of <TextTip content={<span><b>Assay:</b> An investigative procedure in laboratory medicine, pharmacology, environmental biology and molecular biology for qualitatively assessing or quantitatively measuring the presence, amount, or functional activity of a target entity.</span>}>biology assays</TextTip>.
+
+<Image name="assay-cards" caption="The Transcriptic marketing site detailing the capability of our platform." />
+
+However, our platform had no support for chemical synthesis: the creation of new compounds through chemical reactions. If we could automate chemical synthesis, then we could automate the entire exploration phase of drug discovery — where scientists search through thousands of chemicals to find one with a desired effect on the body. This capability would be revolutionary in the industry. The executive team called upon me to envision what a software interface for this kind of automation might be like.
+
+<MdxLayout fullWidth>
+  <Image name="demo" caption="Preview of the final high-fidelity design." hasShadow disablePreview />
+</MdxLayout>
+
+#### Project Definition
+###### Deliverable
+The concrete ask from Transcriptic's executive team was to develop a proposal for a software interface that allowed scientists to:
+
+- remotely submit chemical syntheses to the robotic facility
+- track the progress of syntheses in real time
+- review the results of a synthesis after it completed
+
+###### Constraints
+The final proposal needed to feasibly integrate into Transcriptic's existing architecture, and leverage only existing technology and software — blue-sky thinking would need to be tempered.
+
+As for our resources, I was the only designer at Transcriptic at the time, so I would need to drive this project independently.
+
+###### Stakeholders
+Due to the high profile and pressing nature of this project, the list of stakeholders was broad. It consisted of:
+
+1. **Lilly Medicinal Chemists:** These individuals would be the first users of the Transcriptic Automated Chemistry product.
+2. **Lilly Automation Team:** This team originally built out the San Diego facility, so their knowledge of its capabilities would be instrumental to creating a viable solution.
+3. **Lilly Executive Team:** The Lilly organization had a lot at stake in seeing this facility come to life. Our success was of utmost importance to them.
+4. **Transcriptic Engineering Team:** As the team that would be responsible for implementing this solution, their input would be critical to ensuring my solution was scoped and reasonable.
+5. **Transcriptic Product Team:** This would be an entirely new product area for Transcriptic. The Product Team was focused on ensuring that the solution supported the medium and long-term product vision of Transcriptic.
+6. **Transcriptic Executive Team:** Completing this project and meeting the first milestone was crucial to Transcriptic's financial success. Furthermore, this team wanted to ensure that our work with our Lilly counterparts was productive and showed Transcriptic in a good light.
+
+###### Timeline
+For a project of this size, my timeline was quite short. I kicked off the project in September, and would need to have a final proposal signed off by the executive team by the end of the year.
+
+###### Process
+This would be a long project, so I defined a process and timeline to keep myself on track.
+
+1. **User Research:** Develop my understanding of the medicinal chemistry domain through in-depth interviews with potential users and subject matter experts.
+2. **Design Sprint:** Lead a 1 week <Link href="https://www.gv.com/sprint/">Design Sprint</Link> to bring together all stakeholders, executives and subject matter experts to co-create an initial prototype.
+3. **Synthesis:** Drawing together all material from user research and the Design Sprint, synthesize findings into personas, journey maps, requirements jobs-to-be-done and user acceptance tests.
+4. **Solutioning:** Drawing on the synthesized research material, iterate on UI mockups, performing user testing after every iteration.
+5. **Final Proposal:** Develop a high fidelity final proposal and thoroughly annotate in a report that will be signed off on by the executive team of Eli Lilly and Transcriptic.
+
+#### User Research
+##### Interviews
+I conducted in-depth interviews with approximately 20 anticipated users of the Transcriptic chemistry platform — all from various pharmaceutical companies. I conducted my interviews on-site at campuses in San Francisco, San Diego, Cambridge, and Indianapolis. The roles of these users included Quantitative Biologists, Assay Development Specialists, Medicinal Chemists, Computational Chemists, Materials Management personnel, and thought leaders in the realm of Automated Synthesis. Overall I consulted about 10 biologists, 12 chemists, and 3 executives.
+
+##### Contextual Inquiries
+In addition to user interviews, I conducted contextual inquiries across three sites. This allowed me to directly observe our user's working environment and responsibilities.
+
+<MdxLayout layout="2:1">
+  <div>
+
+###### Materials Management
+To better understand the logistics behind chemical synthesis I shadowed a Materials Management team. Here, I gained an understanding of how they coordinate the hand-off of materials from chemists to biologists — a crucial part of the drug discovery workflow. I also shadowed them through the process of submitting an inventory job to some automation, and then dispatching the inventory to downstream destinations.
+
+</div>
+<Image name="contextual-inquiry" caption="Serious design research in a serious laboratory." />
+</MdxLayout>
+
+###### Automated Chemistry Lab
+To learn about the chemistry automation industry, I visited an existing automated lab in Indianapolis. Here, I observed the process of submitting a chemical synthesis to automation, and learned which parts of this process users find most difficult. I also observed the process of receiving and executing the synthesis requests. I was able to uncover many pain points and challenges from this inquiry — which deeply informed my design work going forward.
+
+###### Medicinal Chemistry Laboratories
+Finally, I wanted to understand the context from which chemists will be using the Transcriptic software, so I visited several Medicinal Chemistry laboratories in San Diego. Shadowing Medicinal Chemists, I learned the layouts of laboratories, and the groups within which Chemists work. This was invaluable information, as I knew collaboration between Chemists is frequent.
+
+##### Synthesis
+My interviews and shadowing sessions lasted about 1 and 2 hours each and I recorded and transcribed them. I then reviewed and annotated each transcription to break out common themes such as concerns, pain points, ambitions and core requirements. These syntheses were invaluable later on as I began to prototype solutions.
+
+<MdxLayout fullWidth>
+  <Image name="research-notes" caption="Synthesized notes from user interviews with Medicinal Chemists." disablePreview hasShadow />
+</MdxLayout>
+
+##### Design Sprint
+After completing and synthesizing my user research, I had a good sense of the general direction I needed to take the project. But before diving into solutions, I wanted to bring all the project stakeholders together to share information, and co-create. I also wanted to pro-actively create buy-in for my final proposal by involving stakeholders directly in the design process.
+
+<Image name="design-sprint" caption="The Design Sprint Book lays out a clear game plan for running your own sprint." />
+
+To achieve this, I planned a week long Design Sprint — drawing extensively on the methodology laid out in <Link href="https://www.thesprintbook.com/">Jake Knapp's book</Link>. The general schedule for a Design Sprint looks something like this:
+
+<Image name="sprint-process" />
+
+Over the course of five days, we would tackle each of these categories.
+
+###### Goals
+As I prepared for this workshop, I had four goals:
+
+1. Align all stakeholders on the needs and requirements of this software product.
+2. Bring together subject-matter-experts that might not otherwise collaborate to share ideas.
+3. Involve all stakeholders in the creation of an initial prototype.
+4. Create stakeholder buy-in for the final solution I was to develop.
+
+From this set of goals, I crafted the invite list and refined the day-by-day schedule. In the end, we had about a dozen participants spanning the full spectrum of stakeholders defined at the start of this project — from Eli Lilly executives to Transcriptic software engineers.
+
+If you'd like to read more about the full Design Sprint and how I facilitated this workshop, I've prepared a brief overview. It walks through the workshop day by day and details the activities involved and the outcomes.
+
+<Button animateRight iconLeft="fal fa-book" iconRight="fal fa-long-arrow-right" hasBorder to="/work/chemical-synthesis/design-sprint">Read the Design Sprint Overview</Button>
+
+###### Outcome
+With many paper prototypes generated and critiqued, we were out of time for the week. The material generated from this session would be my starting material for building out higher-fidelity solutions.
+
+<Image name="final-assets" />
+
+Overall, this week long workshop was a resounding success. The participants from across Lilly and Transcriptic were highly engaged, questioning pre-supposed beliefs and arriving at a strong shared consensus of what a Automated Chemical Synthesis interface might look like. Having directly contributed to the material that would inform my work going forward, this diverse set of stakeholders could know that their input was heard, and their ideas documented.
+
+> We should have done this years ago. <cite>Workshop participant from Eli Lilly</cite>
+
+#### Final Synthesis
+The Design Sprint produced many more insights and findings that could be rolled into our overall design research findings. First and foremost, I identified user personas to inform my design work.
+
+<MdxLayout layout="1:4:1" tabletLayout="1:5" fullWidth showBorderTop style={{ marginTop: '2rem' }}>
+  <Image name="expert-human" disablePreview imgStyle={{ objectFit: 'contain' }} />
+  <div>
+
+  ##### The Expert
+  This Chemist has a deep understanding of automated synthesis. They likely have past experience using automation, and are ready to start using the new Strateos facility immediately. They simply want to know what the platform’s capabilities are so they can begin to plan their use of it.
+
+  > “I’ve been in this field for 16 years. In this industry every molecule is a lottery ticket, and nothing more. So the more shots on goal you have, the better your odds.”
+
+  ###### Success Criteria
+
+  1. **Easy management​** of many concurrent syntheses.
+  2. **Fast library submission.**​ The Expert will want to quickly build up submissions of a dozen or more compounds.
+  3. **Feedback​** that demonstrates the effectiveness of their usage. If they are able to understand how automated synthesis has improved their work and throughput, they will be more likely to use it.
+
+
+  ###### Pain Points
+
+  1. **The synthesis submission process is complex and difficult.​** The Expert would like to configure their own syntheses, but finds it impossible to remember how.
+  2. **Many instructions must be explained in free text.​** They fear the reaction will not be set up correctly without written instructions. This makes submission a manual, tiresome process and reinforces distrust of the platform.
+  3. **The Expert feels responsible for failed syntheses.​** They want to know how successful a synthesis was and stop it early if it failed.
+
+
+  </div>
+</MdxLayout>
+<MdxLayout layout="1:4:1" tabletLayout="1:5" fullWidth style={{ marginTop: '2rem' }}>
+  <Image name="explorer-human" disablePreview imgStyle={{ objectFit: 'contain' }} />
+  <div>
+
+  ##### The Explorer
+  This Chemist has a basic understanding of automated synthesis but likely has not used it before. They are excited and curious about the new capabilities it offers. However, they still need some training and outreach to get them to use it. If left to their own devices, they will not try automated synthesis on their own.
+
+  > “The most important thing is to generate a go/no-go decision quickly. If there's a single shop that can do the reactions, purify them, submit them, and test them under one roof, that'd be extremely valuable.”
+
+  ###### Success Criteria
+
+  1. **Immediate benefits.**​ The Explorer must immediately see time-savings and other benefits to justify their use of automated synthesis.
+  2. **Approachable learning curve.**​ If using automated synthesis demands extensive up-front training, they will not take the time to learn it.
+  3. **Detailed monitoring.**​ The Explorer will treat automated synthesis as a replication of their existing manual processes. To trust the results, they will need to see that what the automation did mirrors what they would have done.
+
+
+  ###### Pain Points
+
+  1. **Automated Synthesis is a complex and daunting tool.**​ They realize it may offer benefits, but they are unsure at what cost.
+  2. **The Explorer lacks access to automated synthesis.** For Explorers that lack geographic proximity, the delay of shipping times drastically reduces the value of automated synthesis.
+  3. **The Explorer is pressed for time,**​ and can’t take the risk of wasting time on a failed automated synthesis - or even a successful automated synthesis that takes longer than manual execution.
+
+
+  </div>
+</MdxLayout>
+<MdxLayout layout="1:4:1" tabletLayout="1:5" fullWidth showBorderBottom style={{ marginTop: '2rem' }}>
+  <Image name="skeptic-human" disablePreview imgStyle={{ objectFit: 'contain' }} />
+  <div>
+
+  ##### The Skeptic
+  This Chemist doubts the value of automated synthesis. They believe  it limits them from doing advanced science and provides few new benefits. They would rather work do the work manually and have confidence it will succeed. These users often come around to automation after seeing the benefits. They might be considered ​late adopters.
+
+  > "The investment of time to learn how to use automated synthesis has not been worth it. The most important thing to me for automation is to make it easy to submit an experiment so that I don’t have to do much work. ​I’m using it so I can save time and do other things.​”
+
+  To bring these users into the fold, a few key points must be demonstrated.
+
+  1. The Skeptic will not regularly use automated synthesis.​ As a result, the software must map to their existing mental model of chemical synthesis, and be easy to learn anew each session.
+  2. The Skeptic will use automated synthesis only when they know that it will work.​ They must have confidence ins the system.
+  3. The Skeptic must understand that using the platform provides benefit over doing it themselves.​ The time savings alone are not enough - there must be benefits beyond.
+
+
+  </div>
+</MdxLayout>
+
+#### User Journey
+During the Design Sprint, we arrived at a journey map that spanned from initial registration of compounds, to final review of data generated during synthesis. This span can be broken down into three sections, each of which can be thought of as a discrete user session.
+
+<MdxLayout fullWidth>
+  <Image name="final-journey-map" disablePreview />
+</MdxLayout>
+
+#### Jobs To Be Done and Acceptance Tests
+With the scope of this project understood, I decided it was time to set expectations with stakeholders. To do so, I developed Jobs To Be Done and Acceptance Tests, and asked for approval of them from stakeholders. This allowed me to clearly define what my solutions would solve for and prevent scope creep during my design and review phases.
+
+##### Jobs To Be Done
+A Job To Be Done (JTBD) strips away user personas and focuses only on context and motivation. A JTBD follows the format of:
+
+*​When I​ **[some starting state]**, ​I want to​ **[some desired outcome]**, ​so that **[some motivating force]**.*
+
+I defined the following JTBDs to define the scope of my work.
+
+###### Proposed Jobs To Be Done
+> When I have a chemical intermediate, I want to test various derivatizations for a given spot on the molecule in bio-assays, so that I can learn how effectively each form of the molecule interacts with a target.
+
+> When I have a starting scaffold, I want to attempt to couple the scaffold with the members of a compound library, so that I can synthesize a broad range of structural diversity for testing in a bio-assay.
+
+> When I want to synthesize a molecule that requires a multi-step synthesis, I want to quickly create the various intermediates, so that they can be used in the creation of my final compound of interest.
+
+> When I know that a synthesis requires specific conditions or setup, I want to document that knowledge, so that the synthesis has a better chance of success.
+
+> When I have access to a compound that is otherwise difficult or expensive to procure commercially, I want to use that compound in my syntheses, so that they are completed faster, and for less money.
+
+> When I am planning a synthetic route, I want to know if the final compound has been made before, and how it was made, so that I can learn from that past work and avoid repeating mistakes.
+
+> When I am working on a complex multi-step synthesis myself, I want to outsource the synthesis of the intermediates, so that I can focus on the difficult chemistry.
+
+> When I am planning out my work, I want to know when I will receive data from bio-assays, so that I can validate, or invalidate, my chemical hypotheses.
+
+> When I am exploring difficult, less defined chemistries, I want to leverage the full power of the tools at my disposal, so that I can focus my effort on developing hypotheses.
+
+> When I have several syntheses underway, I want to understand when I will receive data back from their associated bio-assays, so that I can quickly validate, or invalidate my hypotheses.
+
+> When I receive data back from a bio-assay, or from a failed synthesis, I want to understand precisely how the synthesis was executed, so that I can rule out the execution of the synthesis itself as a source of the influence on the data.
+
+##### Acceptance Tests
+Finally, building on the Jobs To Be Done, I proposed Design Acceptance Tests. These tests would be used to evaluate my proposed design. If each scenario could be addressed using the design, then the solution can be considered feature complete.
+
+###### Proposed Design Acceptance Tests
+I defined quite a number of acceptance tests for this project. Instead of repeating them all here, I've prepared a PDF of them.
+
+<Button iconLeft="fal fa-download" variant="green" hasBorder href={acceptanceTests}>Acceptance Tests</Button>
+
+#### Solutioning
+Finally after weeks of research and planning, it was time to dive into prototyping. I would draw on the additional synthesis and scoping done since the Design Sprint to build on the prototypes developed during the Design Sprint. Over the course of eight iterations, I developed a full flow of the proposed user experience.
+
+##### Process
+
+###### Rapid Iteration
+To begin, I started with rudimentary sketches to quickly iterate on basic concepts. Shown here is a small sampling of these first iterations.
+
+<MdxLayout fullWidth>
+  <Gallery>
+    <Image name="sketches-1" />
+    <Image name="sketches-2" />
+    <Image name="sketches-3" />
+    <Image name="sketches-4" />
+  </Gallery>
+</MdxLayout>
+
+I matches these concepts against the Acceptance Tests to ensure they addressed the identified requirements. I also validated them with a number medicinal chemists to ensure the ideas and concepts were sound.
+
+###### Low-Fidelity Sketching
+These preliminary sketches served as the source material for a second round of prototyping which detailed a proposed solution in full, screen by screen. These sketches were meant to enumerate the various ways a user might use the platform, such as defining syntheses manually, or uploading a list of SMILES strings.
+
+<MdxLayout fullWidth>
+  <Gallery caption="Iteration 1: Quality of sketches at least partially attributable to sketching while on bumpy airplane...">
+    <Image name="sketches-5" />
+    <Image name="sketches-6" />
+    <Image name="sketches-7" />
+    <Image name="sketches-8" />
+    <Image name="sketches-9" />
+  </Gallery>
+</MdxLayout>
+
+I went through two rounds of low-fidelity flows, conducting extensive user testing after each. I was able to tease out valuable lessons from these user sessions and substantially improve my solutions between iterations.
+
+<MdxLayout fullWidth>
+  <Gallery caption="Iteration 2: Quality can only be attributed to my poor drawing skills...">
+    <Image name="sketches-10" />
+    <Image name="sketches-11" />
+    <Image name="sketches-12" />
+    <Image name="sketches-13" />
+    <Image name="sketches-14" />
+    <Image name="sketches-15" />
+  </Gallery>
+</MdxLayout>
+
+The user testing following my second low-fidelity round exposed some flaws but validated my approach overall.
+
+###### Mid-Fidelity Prototyping
+Luckily, with the <Link to="/work/amino">Amino Design System's</Link> <Link to="/work/amino/design-ops">Sketch Library</Link>, creating prototypes in Sketch is a breeze. I was able to quickly re-create my low-fidelity sketches, address some of the previous oversights, increase the data fidelity, and flesh out the basic layout.
+
+<MdxLayout fullWidth>
+  <Gallery>
+    <Image name="mid-fi-1" />
+    <Image name="mid-fi-2" />
+    <Image name="mid-fi-3" />
+    <Image name="mid-fi-4" />
+    <Image name="mid-fi-5" />
+  </Gallery>
+</MdxLayout>
+
+This set of mocks allowed me to explore concepts that are difficult to demonstrate in sketches, such as drag and drop interactions, and the use of color. I presented these mocks to executive stakeholders where they were very well received. I also did in-depth critique sessions with Medicinal and Analytical Chemists to understand where I needed to further refine my solution.
+
+<Note>
+
+  As short aside — during the executive stakeholder presentation I first began to realized I needed to use real chemical data in my mocks. This prompted me to create the <Link href="https://www.github.com/ahadik/chemfill">ChemFill Sketch plugin</Link>. You can <Link to="/work/chemfill">read the ChemFill case study here.</Link>
+
+</Note>
+
+These drafts focused on detailed refinement, such as introducing the concept of an inspector sidebar and horizontal progress tracking. By this point, my solution had been validated by users and I was tweaking and optimizing it.
+
+###### Proposed Flow
+By now, I had built out and verified an extensive user flow.
+
+<Image name="user-flow" hasShadow caption="Interactive prototype map from Sketch." />
+
+The visual design for the mocks making up this flow was only partially refined. I was focusing on the user flow and information hierarchy/layout. The simplified form of this flow was as follows:
+
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-0" caption="Reaction Dashboard" hasShadow />
+  <div>
+
+  In the Strateos webapp, A scientist enters the chemical synthesis dashboard, where they can see all of their ongoing and past syntheses. The need for a dashboard like this was made very apparent in our user research sessions.
+
+  > I'm pretty easily distracted so I often work on a few things at once. <cite>Existing user of automated chemical synthesis</cite>
+
+  This dashboard is intended to call attention to tasks that need the scientist's attention, and to show the status of on-going syntheses. Syntheses that succeeded or failed are called out so that a chemist can quickly understand the state of their work.
+
+  From this dashboard, a chemist can enter the Synthesis Configuration Flow — from which they launch new syntheses.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-1" caption="Reaction Definition" hasShadow />
+  <div>
+
+  Upon entering the Syntheses Configuration Flow, the chemist is prompted for some basic information about their synthesis such as an <TextTip content="My research showed that chemists would choose to figure out the details of their experiments in their company maintained Electronic Lab Notebook. They would then use that information to send their synthesis to automation.">identification number from their Electronic Lab Notebook</TextTip>. They also select the type of reaction they wish to perform. Since our automated system will only support a limited number of reactions at first, this prevents them from wasting time configuring an incompatible reaction.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-2" caption="Destination Configuration" hasShadow />
+  <div>
+
+  Next, the scientist sets up what the intended destinations are for the final product. By doing this upfront, it allows the system to know how much final product the chemist wants to make. By knowing this value up-front, the system can suggest more intelligent default values through the rest of the configuration.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-3" caption="Reaction Setup" hasShadow />
+  <div>
+
+  With the amount of final product configured, the chemist can now begin defining their reaction. Since we know the type of synthesis the chemist is setting up (an Amide Coupling in this case), we can prompt them to provide the specific reactants needed — an Amine and a Carboxylic Acid. For the most part, all chemical syntheses consist of two reactants, and some supporting reagents such as a catalyst or solvent.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-4" caption="Compound Explorer" hasShadow />
+  <div>
+
+  When defining a reaction variable, the Chemist is prompted with a Compound Explorer modal. Here, they can draw the compound they wish to use as their variable. This structure is searched for in the facility inventory and through vendors so that the chemist can see where their reactant will be sourced from, and how long it will take to arrive.
+
+  > If it takes me two weeks to get an answer through automation because of sourcing, and 2 days through manual work because I have the materials on hand, I'll do it manually. <cite>Medicinal Chemist</cite>
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-6" caption="Reaction Parameters" hasShadow />
+  <div>
+
+  After defining the structure of the reactants and the final product, the chemist is ready to define the reaction parameters. To do so, they open the Reaction Inspector. Here, they can define additional details such as the solvent and catalyst, as well as the incubation time and temperature.
+
+  > Trust in the reaction assembly is critical. Right now, [for the ] pre-charge instruction, I give a detailed account of how I want that to be assembled. <cite>User of automated chemical synthesis</cite>
+
+  My user research showed me that in order to get users to trust the automation, we needed to give them control over certain details. This put them at ease that poor defaults would not be used.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-7" caption="Materials Sourcing" hasShadow />
+  <div>
+
+  After configuring the details one or more reactions, the chemist continues on to materials sourcing. Here, they are informed of all the materials that are needed for this reaction. Those that will be ordered on the chemist's behalf are shown at the bottom.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop tabletLayout="12:12">
+  <Image name="flow-8" caption="Materials Sourcing" hasShadow />
+  <div>
+
+  For the materials that the chemist must ship in, a modal walks them through the steps of setting up the shipment. The sooner they send in the shipment, the sooner the automation can begin to run.
+
+  </div>
+</MdxLayout>
+<MdxLayout fullWidth showBorderTop showBorderBottom tabletLayout="12:12">
+  <Image name="flow-9" caption="Materials Sourcing" hasShadow />
+  <div>
+
+  Finally, the chemist can review what they have setup to be run on automation. Information such as estimated time until completion and downstream destinations are re-iterated — to set clear expectations.
+
+  </div>
+</MdxLayout>
+
+###### Final Prototyping
+After seven iterations, my prototype was thoroughly validated. I felt I had a solution that had stood up to extensive user testing and had received buy-in from stakeholders. Core concepts in the solution could be traced directly back to the solutions proposed during the Design Sprint meaning that all stakeholders saw their own ideas in this proposal.
+
+My final task was to document and annotate the solution so that it could be presented to the entire company. I produced the following assets to demonstrate the proposed functionality, and provide evidence behind my decisions. I've selected a sampling of slides from my final presentation to show here, but you can <Link href={walkthroughPres}>download the full presentation here if you like</Link>.
+
+<MdxLayout fullWidth>
+  <div className="stack__children--6">
+    <Image name="walkthrough-1" disablePreview />
+    <Image name="walkthrough-2" disablePreview />
+    <Image name="walkthrough-3" disablePreview />
+    <Image name="walkthrough-4" disablePreview />
+    <Image name="walkthrough-5" disablePreview />
+    <Image name="walkthrough-6" disablePreview />
+    <Image name="walkthrough-7" disablePreview />
+  </div>
+</MdxLayout>
+
+#### Final Results
+This effort was by far the largest, highest-profile project I've ever taken on. It required detailed planning and it drew on every piece of my background — from my education in Computational Biology, to my experience facilitating workshops at IBM Design, to my skills as a UI/UX designer. I would never have been able to tackle such a technically complex project without this diverse set of experiences.
+
+Overall, the project was also a resounding success. The Lilly team praised it and all stakeholders were happy to sign off as a successful answer to this this first milestone.
+
+###### Going Forward
+Since this project, I have been working with our engineering team to slowly roll it out to our customers. This proposal painted a fairly long-term view so I have worked closely with our engineering team to develop mid-term solutions that slowly walk our product towards this north star.

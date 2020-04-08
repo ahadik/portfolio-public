@@ -34,7 +34,7 @@ export default ({ data }) => {
           return (
             <article className="product-content">
               <section className="desktop row product-content__header">
-                <div className="col-6">
+                <div className="col-6 product-content__featured-image">
                   <If condition={featuredImgFluid}>
                     <Image fillContainer image={featuredImgFluid} imgId="featured_image" />
                   </If>

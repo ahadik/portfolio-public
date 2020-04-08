@@ -1,7 +1,7 @@
 $variants: (black, blue, green, white);
 
 .button {
-  @include sans-serif;
+  @include monospace;
 
   font-weight: $normalWeight;
   font-size: 1rem;

@@ -30,14 +30,14 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { children, caption, itemsPerRow, imgs, style } = this.props;
+    const { children, caption, itemsPerRow, allowWrap, imgs, style } = this.props;
     return (
       <div
         style={style}
         className={classnames(
           'gallery',
           {
-            'gallery--wrapping': !!itemsPerRow
+            'gallery--wrapping': !!itemsPerRow || allowWrap
           }
         )}
       >
@@ -171,7 +171,8 @@ Gallery.propTypes = {
       ])
     })
   ]),
-  style: PropTypes.instanceOf(Object)
+  style: PropTypes.instanceOf(Object),
+  allowWrap: PropTypes.bool
 }
 
 export default Gallery;

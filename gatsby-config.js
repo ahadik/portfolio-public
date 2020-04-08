@@ -1,13 +1,11 @@
-const siteUrl = ((target) => {
-  switch(process.env.TARGET) {
-    case 'staging':
-      return 'http://staging.alexhadik.com';
-    case 'production':
-      return 'https://www.alexhadik.com';
-    default:
-      return 'localhost:9000';
-  }
-})(process.env.TARGET);
+const activeEnv = process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development";
+
+require("dotenv").config({
+  path: `.env.${activeEnv}`,
+})
+
+const siteUrl = process.env.SITE_URL;
+
 
 module.exports = {
   siteMetadata: {
@@ -27,12 +25,24 @@ module.exports = {
         // https://www.npmjs.com/package/micromatch#matching-features
       },
     },
+    // {
+    //   resolve: `gatsby-plugin-create-client-paths`,
+    //   options: { prefixes: [`/work/restricted/*`] },
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `caseStudies`,
         path: `${__dirname}/src/content/work/posts/`,
+        ignore: [`${__dirname}/src/content/work/posts/restricted/**`]
       },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `restrictedCaseStudies`,
+        path: `${__dirname}/src/content/work/posts/restricted/`
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,

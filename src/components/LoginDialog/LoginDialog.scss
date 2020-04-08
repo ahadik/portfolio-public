@@ -1,0 +1,87 @@
+$startHeight: 20px;
+$transition-duration: 0.8s;
+
+.login-dialog {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 200;
+
+  &__screen {
+    background-color: color(dark, blue);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: $spacing-08;
+    box-sizing: border-box;
+  }
+
+  &__content {
+    @include monospace;
+
+    max-width: 600px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-40px);
+    animation-fill-mode: forwards;
+    animation-duration: $transition-duration;
+    animation-name: buildIn;
+    animation-timing-function: ease-in-out;
+  }
+
+  &__input-box {
+    height: pxToRem(50px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: $spacing-02 $spacing-05;
+    box-sizing: border-box;
+    border: 1px solid $white;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  &__input {
+    color: $white;
+    background-color: transparent;
+    border: none;
+    flex-grow: 1;
+
+    &::placeholder {
+      color: color(light, black);
+    }
+
+    &:focus {
+      outline-width: 0;
+    }
+  }
+
+  &__submit {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__status-message {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@keyframes buildIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

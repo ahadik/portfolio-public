@@ -57,14 +57,15 @@ class WorkPage extends React.Component {
               return (
                 <div
                   className="col-4 tablet-col-6 mobile-col-12 work-page__article-card"
-                  style={{ marginTop: '2rem' }}
                   key={node.id}
                 >
                   <ArticleCard
                     title={node.frontmatter.title}
                     date={node.frontmatter.date}
                     image={node.frontmatter.previewImage}
-                    categories={node.frontmatter.categories.map((catId) => { return getCategoryFromId(catId, this.allCategories).name })}
+                    categories={node.frontmatter.categories.map((catId) => {
+                      return getCategoryFromId(catId, this.allCategories).name
+                    })}
                     link={node.fields.slug}
                   />
                 </div>
@@ -98,7 +99,7 @@ export const  query = graphql`
       }
     }
     allMdx(
-      filter: { fields: { slug: { glob: "/work/*" } } }
+      filter: { fields: { slug: { glob: "/{work,work/restricted}/*" } } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       totalCount
@@ -107,7 +108,8 @@ export const  query = graphql`
           id
           excerpt
           fields {
-            slug
+            slug,
+            isRestricted
           }
           fileAbsolutePath
           frontmatter {

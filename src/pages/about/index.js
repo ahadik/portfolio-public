@@ -58,7 +58,6 @@ const AboutPage = (props) => {
           </p>
         </section>
       </article>
->
     </Page>
   );
 }

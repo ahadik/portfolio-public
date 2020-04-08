@@ -1,20 +1,33 @@
 import React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import './Link.scss';
 
-const Link = ({ to, href, children, id, ...props }) => {
+const Link = ({ to, href, children, invert, id, ...props }) => {
   return (
     <Choose>
       <When condition={to}>
-        <GatsbyLink className="link" to={to} {...props}>{children}</GatsbyLink>
+        <GatsbyLink
+          className={classnames('link', { 'link--invert': invert })}
+          to={to}
+          {...props}
+        >{children}</GatsbyLink>
       </When>
       <When condition={href}>
-        <a className="link" href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+        <a
+          className={classnames('link', { 'link--invert': invert })}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >{children}</a>
       </When>
       <When condition={id}>
-      <a className="link link--id" href={id}>{children}</a>
+        <a
+          className={classnames('link', 'link--id', { 'link--invert': invert })}
+          href={id}
+        >{children}</a>
       </When>
     </Choose>
   );
