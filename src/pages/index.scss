@@ -1,3 +1,5 @@
+$xOffset: -40px;
+
 .landing-page {
   &__name {
     margin-top: 0.5rem;
@@ -26,10 +28,11 @@
     overflow: hidden;
 
     @include mq(tablet, desktop) {
-      max-width: 0;
+      opacity: 0;
+      transform: translateX($xOffset);
       animation-duration: 1s;
       animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(1,.01,.81,1);
+      animation-timing-function: ease-in-out;
     }
 
     @include mobile {
@@ -66,7 +69,7 @@
   &__overlay--title {
     top: 30px;
     @include mq(tablet, desktop) {
-      animation-name: wipeInTitle;
+      animation-name: wipeIn;
       animation-delay: 0s;
     }
 
@@ -90,8 +93,8 @@
     bottom: 7rem;
 
     @include mq(tablet, desktop) {
-      animation-name: wipeInSubtitle;
-      animation-delay: 0.5s;
+      animation-name: wipeIn;
+      animation-delay: 0.25s;
     }
 
     @include mobile {
@@ -112,22 +115,14 @@
   }
 }
 
-@keyframes wipeInTitle {
+@keyframes wipeIn {
   from {
-    max-width: 0;
+    transform: translateX($xOffset);
+    opacity: 0;
   }
 
   to {
-    max-width: 30rem;
-  }
-}
-
-@keyframes wipeInSubtitle {
-  from {
-    max-width: 0;
-  }
-
-  to {
-    max-width: 40rem;
+    transform: translateX(0);
+    opacity: 1;
   }
 }

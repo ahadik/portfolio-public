@@ -18,7 +18,7 @@ class LoginDialog extends React.Component {
       password: '',
       checkingLogin: false,
       position: undefined,
-      didError: false
+      errorMessage: ''
     }
 
     this.submitLogin = this.submitLogin.bind(this);
@@ -35,7 +35,7 @@ class LoginDialog extends React.Component {
 
   onFailure(error) {
     console.error(error.message, error.code);
-    this.setState({ didError: true, password: '', checkingLogin: false });
+    this.setState({ errorMessage: error.message, password: '', checkingLogin: false });
   }
 
   submitLogin() {
@@ -97,9 +97,9 @@ class LoginDialog extends React.Component {
               </Choose>
             </form>
             <p className="caption invert login-dialog__status-message">
-              {this.state.didError && 'Incorrect password.'}
+              {this.state.errorMessage}
             </p>
-            <Button variant="white" iconLeft="fal fa-arrow-left" to="/work">Back to Work</Button>
+            <Button variant="white" iconLeft="fal fa-arrow-left" to="/work">Return to Work</Button>
           </div>
         </div>
       </div>

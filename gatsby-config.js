@@ -25,10 +25,10 @@ module.exports = {
         // https://www.npmjs.com/package/micromatch#matching-features
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-create-client-paths`,
-    //   options: { prefixes: [`/work/restricted/*`] },
-    // },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/work/restricted/*`] },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

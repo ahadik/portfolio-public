@@ -69,12 +69,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'slug',
       value: getSlug(instanceType, slug)
     });
-
-    createNodeField({
-      node,
-      name: 'isRestricted',
-      value: instanceType === 'restrictedCaseStudies'
-    })
     
   }
 }
@@ -83,8 +77,6 @@ const templateByInstanceName = (node) => {
   switch (node.parent.sourceInstanceName) {
     case 'caseStudies':
       return './src/templates/written/template.jsx';
-    case 'restrictedCaseStudies':
-      return './src/templates/written/template-restricted.jsx';
     case 'products':
       return './src/templates/product/template.jsx';
     case 'writing':
@@ -117,26 +109,15 @@ exports.createPages = async ({ graphql, actions }) => {
   `);
 
   result.data.allMdx.edges.forEach(({ node }) => {
-    createPage({
-      path: node.fields.slug,
-      component: path.resolve(templateByInstanceName(node)),
-      matchPath: node.fields.slug.match(/^\/work\/restricted/) && "/work/restricted/*",
-      context: {
-        slug: node.fields.slug
-      }
-    })
+    if (!node.fields.slug.match(/^\/work\/restricted/)) {
+      createPage({
+        path: node.fields.slug,
+        component: path.resolve(templateByInstanceName(node)),
+        matchPath: node.fields.slug.match(/^\/work\/restricted/) && "/work/restricted/*",
+        context: {
+          slug: node.fields.slug
+        }
+      })
+    }
   });
-}
-
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
-exports.onCreatePage = async ({ page, actions }) => {
-  const { createPage } = actions
-  // page.matchPath is a special key that's used for matching pages
-  // only on the client.
-  if (page.path.match(/^\/work\/restricted/)) {
-    page.matchPath = "/work/restricted/*"
-    // Update the page.
-    createPage(page)
-  }
 }

@@ -108,8 +108,7 @@ export const  query = graphql`
           id
           excerpt
           fields {
-            slug,
-            isRestricted
+            slug
           }
           fileAbsolutePath
           frontmatter {

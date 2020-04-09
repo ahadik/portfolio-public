@@ -13,20 +13,31 @@ var firebaseConfig = {
   projectId: process.env.FIREBASE_PROJECT_ID
 };
 
-console.log(firebase);
-
 if (isBrowser()) {
   app.initializeApp(firebaseConfig);
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log('HELLO', user);
       currentUser = user;
     } else {
       currentUser = {};
     }
   });
 }
+
+export const setAuthStateObservers = (isAuthedObserver, isUnAuthedObserver) => {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      if (isAuthedObserver) {
+        isAuthedObserver(user);
+      }
+    } else {
+      if (isUnAuthedObserver) {
+        isUnAuthedObserver();
+      }
+    }
+  });
+};
 
 export const handleLogin = (password, onSuccess, onFailure) => {
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -45,7 +56,6 @@ export const handleLogin = (password, onSuccess, onFailure) => {
 }
 
 export const isAuthenticated = () => {
-  console.log('authenticated: ', !!currentUser.uid);
   return !!currentUser.uid;
 };
 
