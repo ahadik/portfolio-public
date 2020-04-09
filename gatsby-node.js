@@ -79,6 +79,8 @@ const templateByInstanceName = (node) => {
       return './src/templates/written/template.jsx';
     case 'products':
       return './src/templates/product/template.jsx';
+    case 'adventures':
+      return './src/templates/adventure/template.jsx';
     case 'writing':
       return './src/templates/written/template.jsx';
     case 'pages':

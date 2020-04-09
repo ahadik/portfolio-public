@@ -49,6 +49,21 @@
       "name": "School Project",
       "id": "school",
       "icon": "fal fa-university"
+    },
+    {
+      "name": "Skiing",
+      "id": "skiing",
+      "icon": "fal fa-skiing-nordic"
+    },
+    {
+      "name": "Mountaineering",
+      "id": "mountaineering",
+      "icon": "fal fa-mountain"
+    },
+    {
+      "name": "Backpacking",
+      "id": "backpacking",
+      "icon": "fal fa-hiking"
     }
   ]
 }
