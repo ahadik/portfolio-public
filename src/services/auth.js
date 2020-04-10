@@ -42,7 +42,7 @@ export const setAuthStateObservers = (isAuthedObserver, isUnAuthedObserver) => {
 export const handleLogin = (password, onSuccess, onFailure) => {
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
   .then(function() {
-    return firebase.auth().signInWithEmailAndPassword('alex@alexhadik.com', password);
+    return firebase.auth().signInWithEmailAndPassword(process.env.FIREBASE_USER_EMAIL, password);
   })
   .then((userInfo) => {
     onSuccess(userInfo);

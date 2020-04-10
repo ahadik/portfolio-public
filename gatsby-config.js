@@ -10,7 +10,7 @@ const siteUrl = process.env.SITE_URL;
 module.exports = {
   siteMetadata: {
     title: `Alex Hadik`,
-    description: `The portfolio of Alex Hadik.`,
+    description: `Alex is a designer and software engineer who lives in San Francisco and works at Transcriptic.`,
     author: `@ahadik`,
     siteUrl: siteUrl
   },
