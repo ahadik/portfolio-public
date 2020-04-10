@@ -1,0 +1,12 @@
+.stat {
+  @include monospace;
+
+  &__header {
+    font-weight: $boldWeight;
+    white-space: nowrap;
+  }
+
+  &__value {
+    margin-top: .15rem;
+  }
+}

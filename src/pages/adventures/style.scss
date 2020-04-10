@@ -1,0 +1,7 @@
+.adventures-page {
+  &__article-banner {
+    & + & {
+      margin-top: $spacing-06;
+    }
+  }
+}

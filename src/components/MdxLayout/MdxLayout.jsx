@@ -32,7 +32,7 @@ const MdxLayout = ({
   layout,
   tabletLayout,
   fullWidth,
-  maxWidth,
+  screenWidth,
   showBorderTop,
   showBorderBottom,
   className,
@@ -63,9 +63,9 @@ const MdxLayout = ({
     'mdx-layout--border-bottom': showBorderBottom,
     'mdx-layout--pad-top': padTop || padBoth,
     'mdx-layout--pad-bottom': padBottom || padBoth,
-    'mdx-layout--screen-width': maxWidth,
+    'mdx-layout--screen-width': screenWidth,
     'mdx-layout--media': isMedia,
-    'row': !maxWidth // if this layout is set to be full screen width, then the row will be rendered on a child.
+    'row': !screenWidth // if this layout is set to be full screen width, then the row will be rendered on a child.
   };
 
   if (className) {
@@ -109,7 +109,7 @@ const MdxLayout = ({
       {...props}
     >
       <Choose>
-        <When condition={maxWidth}>
+        <When condition={screenWidth}>
           <div className="row">
             {renderChildren()}
           </div>
@@ -127,7 +127,7 @@ MdxLayout.propTypes = {
   layout: PropTypes.string,
   tabletLayout: PropTypes.string,
   fullWidth: PropTypes.bool,
-  maxWidth: PropTypes.bool,
+  screenWidth: PropTypes.bool,
   showBorderTop: PropTypes.bool,
   showBorderBottom: PropTypes.bool,
   padTop: PropTypes.bool,
@@ -137,4 +137,8 @@ MdxLayout.propTypes = {
   className: PropTypes.string
 };
 
-export default MdxLayout;
+const MdxMedia = (props) => {
+  return <MdxLayout isMedia {...props} />;
+}
+
+export { MdxMedia, MdxLayout };

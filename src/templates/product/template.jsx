@@ -118,11 +118,11 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($slug: String!) {
+  query($id: String!, $featureImageWidth: Int = 1300) {
     allCategoriesJson {
       ...Categories
     }
-    mdx(fields: { slug: { eq: $slug } }) {
+    mdx(id: { eq: $id }) {
       ...ContentMDX
     }
   }

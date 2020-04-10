@@ -53,7 +53,7 @@
     {
       "name": "Skiing",
       "id": "skiing",
-      "icon": "fal fa-skiing-nordic"
+      "icon": "fal fa-skiing"
     },
     {
       "name": "Mountaineering",
@@ -64,6 +64,11 @@
       "name": "Backpacking",
       "id": "backpacking",
       "icon": "fal fa-hiking"
+    },
+    {
+      "name": "Travel",
+      "id": "travel",
+      "icon": "fal fa-plane"
     }
   ]
 }

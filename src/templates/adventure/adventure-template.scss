@@ -1,0 +1,27 @@
+.adventure-content {
+
+  &__header {
+    margin-bottom: 1rem;
+  }
+
+  &__details {
+    margin-top: 1rem
+  }
+
+  &__categories {
+    margin-top: 1rem;
+  }
+
+  &__stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &__featured-image {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-height: 80vh;
+    overflow-y: hidden;
+  }
+}

@@ -24,9 +24,9 @@ const VideoEmbed = ({ id, source, proportion }) => {
             src={`https://player.vimeo.com/video/${id}`}
             width="100%"
             height="100%"
-            frameborder="0"
+            frameBorder="0"
             allow="autoplay; fullscreen"
-            allowfullscreen
+            allowFullScreen
           ></iframe>
         </When>
       </Choose>
@@ -39,7 +39,7 @@ VideoEmbed.defaultProps = {
 }
 
 VideoEmbed.propTypes = {
-  src: PropTypes.string,
+  id: PropTypes.string,
   source: PropTypes.oneOf(['vimeo', 'youtube']),
   proportion: PropTypes.number
 }

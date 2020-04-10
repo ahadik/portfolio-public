@@ -5,7 +5,7 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: transparentize($color: color(dark, black), $amount: 0.1);
+  background-color: transparentize($color: black, $amount: 0.1);
   z-index: 2000;
   left: 0;
   top: 0;

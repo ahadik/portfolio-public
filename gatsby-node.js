@@ -57,6 +57,8 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
           return `/work${slug}`;
         case 'restrictedCaseStudies':
           return `/work/restricted${slug}`;
+        case 'adventures':
+          return `/adventures${slug}`;
         case 'writing':
           return `/writing${slug}`;
         case 'pages':
@@ -64,10 +66,23 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       }
     }
 
+    const getWidth = (instanceType) => {
+      switch (instanceType) {
+        case 'adventures':
+          return 2000;
+      }
+    }
+
     createNodeField({
       node,
       name: 'slug',
       value: getSlug(instanceType, slug)
+    });
+
+    createNodeField({
+      node,
+      name: 'featureImageWidth',
+      value: getWidth(instanceType) || 1300
     });
     
   }
@@ -96,13 +111,15 @@ exports.createPages = async ({ graphql, actions }) => {
       allMdx {
         edges {
           node {
+            id
             parent {
               ... on File {
                 sourceInstanceName
               }
             }
             fields {
-              slug
+              slug,
+              featureImageWidth
             }
           }
         }
@@ -117,7 +134,9 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve(templateByInstanceName(node)),
         matchPath: node.fields.slug.match(/^\/work\/restricted/) && "/work/restricted/*",
         context: {
-          slug: node.fields.slug
+          id: node.id,
+          slug: node.fields.slug,
+          featureImageWidth: node.fields.featureImageWidth
         }
       })
     }

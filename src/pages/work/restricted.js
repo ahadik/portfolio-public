@@ -1,5 +1,6 @@
 import React from 'react';
-import { Router } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
+import { graphql } from 'gatsby';
 
 import WrittenTemplate from '~templates/written/template';
 
@@ -16,9 +17,11 @@ const Restricted = ({ data }) => {
                 path={node.fields.slug}
                 key={node.id}
                 component={() => <WrittenTemplate data={{ mdx: node, allCategoriesJson: data.allCategoriesJson }} /> }
-              />);
+              />
+            );
         }
       })}
+      <Redirect from="/work/restricted" to="/work" default noThrow />
     </Router>
   );
 }
@@ -26,7 +29,7 @@ const Restricted = ({ data }) => {
 export default Restricted;
 
 export const  query = graphql`
-  query {
+  query($featureImageWidth: Int = 1300) {
     allCategoriesJson {
       ...Categories
     }

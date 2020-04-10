@@ -52,17 +52,19 @@ export default ({ data }) => {
                   </div>
                 </If>
               </section>
-              <section className="page-content__body serif col-8 col-offset-2 mobile-col-12 tablet-col-12">
-                <Choose>
-                  <When condition={post}>
-                    <MDXProvider components={shortcodes}>
-                      <MDXRenderer images={postMedia}>{post.body}</MDXRenderer>
-                    </MDXProvider>
-                  </When>
-                  <Otherwise>
-                    <div dangerouslySetInnerHTML={{  __html: post.html }} />
-                  </Otherwise>
-                </Choose>
+              <section className="page-content__body row">
+                <div className="col-8 col-offset-2 mobile-col-12 tablet-col-12">
+                  <Choose>
+                    <When condition={post}>
+                      <MDXProvider components={shortcodes}>
+                        <MDXRenderer images={postMedia}>{post.body}</MDXRenderer>
+                      </MDXProvider>
+                    </When>
+                    <Otherwise>
+                      <div dangerouslySetInnerHTML={{  __html: post.html }} />
+                    </Otherwise>
+                  </Choose>
+                </div>
               </section>
             </article>
           );
@@ -74,11 +76,11 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($slug: String!) {
+  query($id: String!, $featureImageWidth: Int = 1300) {
     allCategoriesJson {
       ...Categories
     }
-    mdx(fields: { slug: { eq: $slug } }) {
+    mdx(id: { eq: $id }) {
       ...ContentMDX
     }
   }

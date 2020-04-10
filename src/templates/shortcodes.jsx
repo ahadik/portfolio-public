@@ -4,7 +4,7 @@ import Note from '~components/Note';
 import Image from '~components/MdxImage';
 import Video from '~components/MdxVideo';
 import Link from "~components/Link";
-import MdxLayout from '~components/MdxLayout';
+import { MdxLayout, MdxMedia } from '~components/MdxLayout';
 import TextTip from '~components/TextTip';
 import ToolTip from '~components/ToolTip';
 import ArrowFlow from '~components/ArrowFlow';
@@ -25,6 +25,7 @@ const generateShortcodes = (postMedia) => {
       return <Video vids={postMedia.videos} {...props} />
     },
     MdxLayout,
+    MdxMedia,
     TextTip,
     ToolTip,
     ArrowFlow,

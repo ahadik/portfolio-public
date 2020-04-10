@@ -135,6 +135,7 @@ class HomePage extends React.Component {
                     {
                       img: this.props.data.imageFour.childImageSharp.fluid,
                       caption: 'Liquid courage before sumitting Mount Shasta.',
+                      to: '/adventures/shasta',
                       id: 'shasta'
                     },
                     {

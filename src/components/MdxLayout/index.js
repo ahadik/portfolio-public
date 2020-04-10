@@ -1,3 +1,3 @@
-import MdxLayout from './MdxLayout';
+import { MdxLayout, MdxMedia } from './MdxLayout';
 
-export default MdxLayout;
+export { MdxMedia, MdxLayout };

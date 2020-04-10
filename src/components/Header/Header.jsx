@@ -8,12 +8,39 @@ import Logo from './Logo';
 
 import './Header.scss';
 
+const HeaderLinks = [
+  {
+    name: 'Work',
+    to: '/work'
+  },
+  {
+    name: 'Adventures',
+    to: '/adventures'
+  },
+  {
+    name: 'Writing',
+    to: '/writing'
+  },
+  {
+    name: 'About',
+    to: '/about'
+  }
+]
+
 const HeaderPageTitle = () => {
   return (
     <div className="header-page-title">
-      <Link to="/work" className="header-page-title__item monospace" activeClassName="header-page-title__item--active" partiallyActive>Work</Link>
-      <Link to="/writing" className="header-page-title__item monospace" activeClassName="header-page-title__item--active" partiallyActive>Writing</Link>
-      <Link to="/about" className="header-page-title__item monospace" activeClassName="header-page-title__item--active" partiallyActive>About</Link>
+      {HeaderLinks.map((link) => {
+        return (
+          <Link
+            key={link.to}
+            to={link.to}
+            className="header-page-title__item monospace"
+            activeClassName="header-page-title__item--active"
+            partiallyActive
+          >{link.name}</Link>
+        )
+      })}
     </div>
   );
 }
@@ -29,9 +56,13 @@ const HeaderMenu = ({ orientation }) => {
         }
       )
     }>
-      <li className="header-menu__item"><Link to="/work" activeClassName="header-menu__link--active" partiallyActive>Work</Link></li>
-      <li className="header-menu__item"><Link to="/writing" activeClassName="header-menu__link--active" partiallyActive>Writing</Link></li>
-      <li className="header-menu__item"><Link to="/about" activeClassName="header-menu__link--active" partiallyActive>About</Link></li>
+      {HeaderLinks.map((link) => {
+        return (
+          <li className="header-menu__item" key={link.to}>
+            <Link to={link.to} activeClassName="header-menu__link--active" partiallyActive>{link.name}</Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }

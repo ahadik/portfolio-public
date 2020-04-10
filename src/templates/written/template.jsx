@@ -61,23 +61,27 @@ export default ({ data }) => {
                   </div>
                 </If>
               </section>
-              <If condition={categories.includes('transcriptic')}>
-                <div className="col-8 col-offset-2 mobile-col-12 tablet-col-12 stack__item--8">
-                  <p className="serif">👋 This project is from my time at Transcriptic. Before you get going, you might check out this quick <Link to="/transcriptic">primer on Transcriptic and Strateos</Link>.</p>
+              <section className="row">
+                <If condition={categories.includes('transcriptic')}>
+                  <div className="col-8 col-offset-2 mobile-col-12 tablet-col-12 stack__item--8">
+                    <p className="serif">👋 This project is from my time at Transcriptic. Before you get going, you might check out this quick <Link to="/transcriptic">primer on Transcriptic and Strateos</Link>.</p>
+                  </div>
+                </If>
+              </section>
+              <section className="row written-content__body">
+                <div className="col-8 col-offset-2 mobile-col-12 tablet-col-12">
+                  <Choose>
+                    <When condition={post}>
+                      <MDXProvider components={shortcodes}>
+                        <MDXRenderer media={postMedia}>{post.body}</MDXRenderer>
+                      </MDXProvider>
+                    </When>
+                    <Otherwise>
+                      <div dangerouslySetInnerHTML={{  __html: post.html }} />
+                    </Otherwise>
+                  </Choose>
                 </div>
-              </If>
-              <div className="written-content__body serif col-8 col-offset-2 mobile-col-12 tablet-col-12">
-                <Choose>
-                  <When condition={post}>
-                    <MDXProvider components={shortcodes}>
-                      <MDXRenderer media={postMedia}>{post.body}</MDXRenderer>
-                    </MDXProvider>
-                  </When>
-                  <Otherwise>
-                    <div dangerouslySetInnerHTML={{  __html: post.html }} />
-                  </Otherwise>
-                </Choose>
-              </div>
+              </section>
             </article>
           );
         }}
@@ -88,11 +92,11 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($slug: String!) {
+  query($id: String!, $featureImageWidth: Int = 1300) {
     allCategoriesJson {
       ...Categories
     }
-    mdx(fields: { slug: { eq: $slug } }) {
+    mdx(id: { eq: $id }) {
       ...ContentMDX
     }
   }

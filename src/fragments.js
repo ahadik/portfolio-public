@@ -23,10 +23,13 @@ export const contentMdxQuery = graphql`
       date(formatString: "MMMM DD, YYYY")
       excerpt
       categories
+      distance
+      elevation
+      maxElevation
       features
       featuredImage {
         childImageSharp {
-          fluid(maxWidth: 1300) {
+          fluid(maxWidth: $featureImageWidth) {
             ...GatsbyImageSharpFluid
             presentationWidth
           }
@@ -34,7 +37,7 @@ export const contentMdxQuery = graphql`
       }
       previewImage {
         childImageSharp {
-          fluid(maxWidth: 1300) {
+          fluid(maxWidth: $featureImageWidth) {
             ...GatsbyImageSharpFluid
             presentationWidth
           }

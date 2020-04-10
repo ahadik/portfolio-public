@@ -1,0 +1,66 @@
+.article-banner {
+  height: pxToRem(400px);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  &__link {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+  }
+
+  &__info {
+    z-index: 1;
+    padding: $spacing-06;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  &__details {
+    flex-grow: 0;
+  }
+
+  &__stats {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    flex-grow: 1;
+    flex-basis: 50%;
+  }
+
+  &__title,
+  &__date {
+    margin-bottom: 0;
+  }
+
+  &__background {
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $white;
+
+    &:after {
+      display: block;
+      content: ' ';
+      position: absolute;
+      bottom: 0;
+      height: 60%;
+      width: 100%;
+      background-image: linear-gradient(transparentize(color(dark, black), 1), transparentize(color(dark, black), .2));
+    }
+  }
+}

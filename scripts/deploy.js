@@ -4,10 +4,24 @@
  */
 
 const s3 = require('s3');
-const awsConfig = require('./aws-config');
 const path = require('path');
 
 const DIRECTORY = '../public';
+
+let [,, ...args] = process.argv;
+
+const environment = args[0];
+
+let awsConfig;
+
+if ( environment === '--staging') {
+  awsConfig = require('./aws-config.staging');
+} else if (environment === '--production') {
+  awsConfig = require('./aws-config.production');
+} else {
+  console.error("No environment flag set! Must pass either --staging or --production.");
+  return;
+}
 
 const client = s3.createClient({
   s3Options: {

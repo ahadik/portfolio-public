@@ -10,8 +10,12 @@
   }
 
   .inline__children--#{$increment} {
-    & > * + * {
-      margin-left: $value !important;
+    margin-left: (-$value / 2);
+    margin-right: (-$value / 2);
+
+    & > * {
+      margin-left: ($value / 2) !important;
+      margin-right: ($value / 2) !important;
     }
   }
 
