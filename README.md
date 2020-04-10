@@ -123,7 +123,7 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 
 I deploy this site to S3, so I use the `scripts/deploy.js` script (accessible as a Yarn script with `yarn deploy` and `yarn deploy:<ENV>` — look in `package.json` for more info) to upload my site after it's been built.
 
-1. **Copy config files:** `/scripts/aws-config.js`. `aws-config.ENV.js.example` is checked into source control and will have been cloned locally. Copy it for each environment: `cp aws-config.ENV.js.example aws-config.staging.js` for a staging environment for example. This new file is ignored in `.gitignore` by default if you follow these naming conventions.
+1. **Copy config files:** `aws-config.ENV.js.example` is checked into source control and will have been cloned locally. Copy it for each environment: `cp aws-config.ENV.js.example aws-config.staging.js` for a staging environment for example. This new file is ignored in `.gitignore` by default if you follow these naming conventions.
 2. **Configure each `aws-config` file:** You'll need to create the appropriate S3 buckets, an AWS access ID and secret, and fill in the corresponding info in your newly created `aws-config` files.
 1. **Build the site for production**: `yarn build:<ENV>` where `ENV` is either (`local`, `staging`, or `production`). This will ensure the right URLs are used in the final build.
 2. **Deploy your built site:** `node scripts/deploy.js --<ENV>`
