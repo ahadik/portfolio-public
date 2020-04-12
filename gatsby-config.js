@@ -2,7 +2,7 @@ const activeEnv = process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "deve
 
 require("dotenv").config({
   path: `.env.${activeEnv}`,
-})
+});
 
 const siteUrl = process.env.SITE_URL;
 
@@ -11,11 +11,137 @@ module.exports = {
   siteMetadata: {
     title: `Alex Hadik`,
     description: `Alex is a designer and software engineer who lives in San Francisco and works at Transcriptic.`,
-    author: `@ahadik`,
-    siteUrl: siteUrl
+    author: { name: 'Alex Hadik', email: 'alex@alexhadik.com'},
+    email: 'alex@alexhadik.com',
+    siteUrl: siteUrl,
+    socialLinks: {
+      linkedin: 'https://www.linkedin.com/in/alexhadik',
+      instagram: 'https://www.instagram.com/alexhadik',
+      github: 'https://github.com/ahadik',
+      email: 'mailto:alex@alexhadik.com',
+      vimeo: 'https://vimeo.com/user850540'
+    },
+    keywords: ['designer', 'engineer', 'ux', 'front-end', 'photography', 'life science', 'biology', 'robotics', 'automation']
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        exclude: [`/work/restricted`]
+      }
+    },
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        // graphQL query to get siteMetadata
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                author {
+                  name
+                  email
+                }
+              }
+            }
+          }
+        `,
+        feeds: [
+          // an array of feeds, I just have one below
+          {
+            serialize: ({ query: { site, allMdx } }) => {
+              const { siteMetadata : { siteUrl } } = site;
+              return allMdx.edges.map(edge => {
+                const { 
+                  node: { 
+                    frontmatter: {
+                      title, 
+                      date,
+                      author: { name, email }, 
+                      previewImage,
+                      featuredAlt
+                    },
+                    excerpt, 
+                    fields: {
+                      slug
+                    }
+                  } 
+                } = edge;
+                return Object.assign({}, edge.node.frontmatter, {
+                  title,
+                  description: excerpt,
+                  date,
+                  url: siteUrl + slug,
+                  guid: siteUrl + slug,
+                  author: `${email} ( ${name} )`,
+                  image: {
+                    url: previewImage.publicURL,
+                    title: featuredAlt,
+                    link: siteUrl + slug
+                  }
+                })
+              })
+            },
+            // query to get blog post data
+            query: `
+              {
+                allMdx(
+                  filter: { fields: { slug: { glob: "/writing/*" } } }
+                  sort: { order: DESC, fields: [frontmatter___date] },
+                ) {
+                  edges {
+                    node {
+                      excerpt
+                      fields {
+                        slug
+                      }
+                      frontmatter {
+                        date
+                        title
+                        previewImage {
+                          publicURL
+                        }
+                        featuredAlt
+                        author {
+                          name
+                          email
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: `Alex Hadik | RSS Feed`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: siteUrl,
+        resolveEnv: () => process.env.GATSBY_ACTIVE_ENV,
+        env: {
+          local: {
+            policy: [{ userAgent: '*', disallow: ['/'] }]
+          },
+          staging: {
+            policy: [{ userAgent: '*', disallow: ['/'] }]
+          },
+          production: {
+            policy: [{ userAgent: '*', allow: '/' }]
+          }
+        },
+        sitemap: `${siteUrl}/sitemap.xml`,
+        policy: [{ userAgent: '*', allow: '/' }]
+      }
+    },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {

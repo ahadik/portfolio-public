@@ -29,8 +29,13 @@ date: "${moment().format("YYYY-MM-DD")}"
 title: "${postName.charAt(0).toUpperCase() + postName.slice(1)}"
 featuredImage: ""
 previewImage: ""
+featuredAlt: ""
 excerpt: ""
+author:
+  name: "Alex Hadik"
+  email: "alex@alexhadik.com"
 categories: []
+keywords: []
 ---`;
 
 const createDirs = (startingDir, subDirs, postName) => {

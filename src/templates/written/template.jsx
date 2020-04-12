@@ -11,11 +11,12 @@ import MasterTemplate from '../MasterTemplate';
 
 import './written-template.scss';
 
-export default ({ data }) => {
+export default ({ data, location }) => {
   if (data) {
     return (
       <MasterTemplate
         data={data}
+        location={location}
         render={(
           {
             post,
