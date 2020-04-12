@@ -5,7 +5,7 @@ import SEO from "~components/seo";
 
 import generateShortcodes from '~templates/shortcodes';
 
-const MasterTemplate = ({data, render}) => {
+const MasterTemplate = ({data, render, location}) => {
   const post = data.mdx;
 
   if (post) {
@@ -48,6 +48,11 @@ const MasterTemplate = ({data, render}) => {
           title={remainingFrontmatter.title}
           description={remainingFrontmatter.excerpt}
           thumbnail={featuredImage || previewImage}
+          keywords={remainingFrontmatter.keywords}
+          author={remainingFrontmatter.author}
+          datePublished={remainingFrontmatter.date}
+          location={location}
+          isArticle
         />
         {render({
           post,

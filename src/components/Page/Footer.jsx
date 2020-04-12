@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer__content">
         <div>
           <p className="monospace secondary caption">
-            <i className="fal fa-copyright" /> {new Date().getFullYear()} – Alex Hadik<span className="tablet-and-desktop"> – <a className="secondary" href="https://github.com/ahadik/portfolio" target="_blank" rel="noopener noreferrer">View this site's sourcecode on GitHub</a></span>
+            <i className="fal fa-copyright" /> {new Date().getFullYear()} – Alex Hadik<span className="tablet-and-desktop"> – <a className="secondary" href="https://github.com/ahadik/portfolio-public" target="_blank" rel="noopener noreferrer">View this site's sourcecode on GitHub</a></span>
           </p>
         </div>
         <div>
