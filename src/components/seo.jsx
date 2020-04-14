@@ -61,7 +61,7 @@ function SEO({ description, lang, meta, title, thumbnail, author, isArticle, dat
         meta={[
           {
             name: `description`,
-            content: seo.metaDescription,
+            content: seo.description,
           },
           {
             name: "keywords",
