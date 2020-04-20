@@ -9,13 +9,15 @@ const MasterTemplate = ({data, render, location}) => {
   const post = data.mdx;
 
   if (post) {
-    let featuredImgFluid = post.frontmatter.featuredImage && post.frontmatter.featuredImage.childImageSharp.fluid;
+
+    const { featuredImage, previewImage, images, videos, ...remainingFrontmatter } = post.frontmatter;
+
+    let featuredImgFluid = featuredImage && featuredImage.childImageSharp.fluid;
     // If for some reason a featured image can't be found, use the previewImage as backup.
     if (!featuredImgFluid) {
       featuredImgFluid = post.frontmatter.previewImage && post.frontmatter.previewImage.childImageSharp.fluid;
     }
-
-    const { featuredImage, previewImage, images, videos, ...remainingFrontmatter } = post.frontmatter;
+    
     const allCategories = data.allCategoriesJson.nodes[0].categories;
     const postMedia = {images: {}, videos: {}};
 

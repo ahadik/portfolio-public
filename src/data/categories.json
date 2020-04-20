@@ -56,6 +56,11 @@
       "icon": "fal fa-skiing"
     },
     {
+      "name": "SCUBA Diving",
+      "id": "scuba",
+      "icon": "fal fa-fish"
+    },
+    {
       "name": "Mountaineering",
       "id": "mountaineering",
       "icon": "fal fa-mountain"

@@ -7,6 +7,7 @@ import _ from 'lodash';
 import { default as CoreImage } from "~components/Image";
 import Categories from "~components/Categories";
 import Stat from "~components/Stat";
+import VideoEmbed from "~components/VideoEmbed";
 
 import { unitToString } from "~services/units";
 
@@ -33,6 +34,7 @@ export default ({ data }) => {
             excerpt,
             featuredImgFluid,
             postMedia,
+            featuredVimeo,
             shortcodes
           }
         ) => {
@@ -69,12 +71,21 @@ export default ({ data }) => {
                     </div>
                   </div>
                 </div>
-                <If condition={featuredImgFluid}>
-                  <div className="grid-break-screen-width">
-                    <div className="adventure-content__featured-image">
-                      <CoreImage image={featuredImgFluid} imgStyle={{ maxHeight: '80vh' }} imgId="featured_image" disablePreview />
-                    </div>
-                  </div>
+                <If condition={featuredImgFluid || featuredVimeo}>
+                  <Choose>
+                    <When condition={featuredVimeo}>
+                      <div className="adventure-content__featured-image">
+                        <VideoEmbed source="vimeo" id={featuredVimeo} />
+                      </div>
+                    </When>
+                    <Otherwise>
+                      <div className="grid-break-screen-width">
+                        <div className="adventure-content__featured-image">
+                          <CoreImage image={featuredImgFluid} imgStyle={{ maxHeight: '80vh' }} imgId="featured_image" disablePreview />
+                        </div>
+                      </div>
+                    </Otherwise>
+                  </Choose>
                 </If>
               </section>
               <section className="row adventure-content__body">
