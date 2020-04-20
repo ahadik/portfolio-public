@@ -1,0 +1,88 @@
+---
+date: "2016-05-26"
+title: "Migrating GitHub Repositories with GitMover"
+previewImage: "feature-image.jpg"
+featuredAlt: "The React repository on the GitHub website."
+excerpt: "GitHub Enterprise has been a godsend to developers working at companies that need to keep code on their own servers. GitHub was a distant dream at IBM before GitHub Enterprise, and now many of our teams use it. In fact, GitHub is so popular as a project management tool, many teams have done away with Jira and the like in favor of GitHub issues and ZenHub."
+author:
+  name: "Alex Hadik"
+  email: "alex@alexhadik.com"
+categories: [code]
+keywords: [github, open source, python]
+---
+
+I'm certainly onboard with this transition towards modern tooling at IBM, however with this adoption of "walled-garden" GitHubs has come a deterioration of the open-source ethos so central to the "original" GitHub. Many teams at IBM are maintaining organizations and repositories on IBM's GitHub Enterprise installation, and public GitHub.
+
+Why both? Internal projects are kept on GitHub Enterprise, and open-source initiatives, increasingly a focus of corporations, are kept on public GitHub.
+
+We keep seeing a problem with this. We are an organization so large (400,000 employees) that a project can easily start and grow in an open-source nature on GitHub Enterprise, with individuals from all over the company contributing. This is a fantastic example of how GitHub Enterprise is a great solution for large corporations. However, this also means that these projects can have tens or hundreds of issues with custom labels and associated milestones.
+
+So what happens when we decide one of these internal projects should be open-sourced in the true sense of the word, and set free on public GitHub? The repo can be cloned over to public GitHub pretty easily, but all of the project management assets are lost. This can take the wind out of the sails of a project pretty quickly if would-be contributors can't see what needs to be worked on.
+
+So in some senses, this is a plea to GitHub Enterprise users to be cautious of "internal" open sourcing. If a project has no reason to be hidden behind firewalls, lets keep it out in the open. It can be tempting to play it safe and just throw it on the Enterprise installation - but this has ramifications down the road.
+
+If a project does end up in that sticky situation being born on GitHub Enterprise - I present a tool to help with migration called GitMover. It's a simple Python script that takes Git repos on any type of GitHub installation, and copies issues, labels and milestones from one to the other. It's the perfect tool to help automate the open-sourcing of an internal project.
+
+<Button iconLeft="fab fa-github" href="https://github.com/ahadik/git_mover" hasBorder>GitMover on GitHub</Button>
+
+Of course, GitMover has other uses too:
+
+Migrating repositories (private or public) from public GitHub to GitHub Enterprise if your team worked in private repos and is now hitting the big leagues.
+
+Merging repositories. If you want to combine issues from multiple repositories into a single one, this tool does its best to handle name clashes where they matter. It'll even keep assignees on issues if that user if found on the source and destination repo.
+
+For the moment, the command line options of this tool are a bit complicated - they'll get better with time I promise! But here's the documentation you can get in the command line:
+
+
+```
+usage: git-mover.py [-h] [--destinationToken [DESTINATIONTOKEN]]
+                    [--destinationUserName [DESTINATIONUSERNAME]]
+                    [--sourceRoot [SOURCEROOT]]
+                    [--destinationRoot [DESTINATIONROOT]] [--milestones]
+                    [--labels] [--issues]
+                    user_name token source_repo destination_repo
+```
+
+So use this tool as you see fit and please let me how it works (or if it doesn't!). Hopefully it helps you use GitHub Enterprise to its best abilities - and open work up to the rest of the world as well.
+
+Some more detailed explanations if you feel the urge:
+
+```
+Migrate Milestones, Labels, and Issues between two GitHub repositories. To
+migrate a subset of elements (Milestones, Labels, Issues), use the element
+specific flags (--milestones, --lables, --issues). Providing no flags defaults
+to all element types being migrated.
+
+positional arguments:
+  user_name             Your GitHub (public or enterprise) username:
+                        name@email.com
+  token                 Your GitHub (public or enterprise) personal access
+                        token
+  source_repo           the team and repo to migrate from:
+                        <team_name>/<repo_name>
+  destination_repo      the team and repo to migrate to:
+                        <team_name>/<repo_name>
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --destinationToken [DESTINATIONTOKEN], -dt [DESTINATIONTOKEN]
+                        Your personal access token for the destination
+                        account, if you are migrating between GitHub
+                        installations
+  --destinationUserName [DESTINATIONUSERNAME], -dun [DESTINATIONUSERNAME]
+                        Username for destination account, if you are migrating
+                        between GitHub installations
+  --sourceRoot [SOURCEROOT], -sr [SOURCEROOT]
+                        The GitHub domain to migrate from. Defaults to
+                        https://www.github.com. For GitHub enterprise
+                        customers, enter the domain for your GitHub
+                        installation.
+  --destinationRoot [DESTINATIONROOT], -dr [DESTINATIONROOT]
+                        The GitHub domain to migrate to. Defaults to
+                        https://www.github.com. For GitHub enterprise
+                        customers, enter the domain for your GitHub
+                        installation.
+  --milestones, -m      Toggle on Milestone migration.
+  --labels, -l          Toggle on Label migration.
+  --issues, -i          Toggle on Issue migration.
+```
