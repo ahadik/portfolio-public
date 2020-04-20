@@ -43,6 +43,7 @@ export const contentMdxQuery = graphql`
           }
         }
       }
+      featuredVimeo
       videos {
         name,
         publicURL
