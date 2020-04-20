@@ -1,0 +1,112 @@
+---
+date: "2018-07-07"
+title: "Triggering a File Download from an XHR Post Request"
+previewImage: "blob.png"
+featuredImage: "blob-featured.png"
+featuredAlt: "Data blobs aren't as gross as they sound."
+excerpt: "If you need your webapp to offer a file download for an asset created on the fly, like say a PDF generated from content entered by a user, how do you do that? This was a puzzle I encountered not too long ago on a personal proejct. I dug around and found a pretty solid solution, which I'll detail in this post."
+author:
+  name: "Alex Hadik"
+  email: "alex@alexhadik.com"
+categories: [code]
+keywords: [xhr, POST, download, javascript, front-end]
+---
+
+<p className="monospace">Illustration credit: <Link href="http://mandilicai.com/">Mandi Cai</Link></p>
+
+The specific scenario in this personal project was that I needed to POST data from an HTML form to a server, and then trigger a download for the payload of the POST response. There might be a few reasons you would want to do this kind of trickery, but for me, I was generating a PDF on the server based on the contents of te POST request, and then returning that PDF to the client. The desired experience for the user is just a simple 'Download' button, so even though an asset is being dynamically generated, we want to give the illusion that they're just downloading.
+
+### The Request
+Step one is to set up the XHR request in Javascript. For some context, let's imagine a simple HTML form:
+
+```html
+  <form id="form">
+    <input type="text"/>
+    <button type="submit" form="form">Generate Report</button>
+  </form>
+```
+
+When this form is submitted, we're going to send the form data to the server, and expect a PDF back in return, generated dynamically, which is where the responseType comes in.
+
+```javascript
+let xhr = new XMLHttpRequest();
+//set the request type to post and the destination url to '/convert'
+xhr.open('POST', 'convert');
+//set the reponse type to blob since that's what we're expecting back
+xhr.responseType = 'blob';
+let formData = new FormData(this);
+xhr.send(formData);
+```
+
+#### What Is a Blob?
+> “A Blob object represents a file-like object of immutable, raw data. Blobs represent data that isn’t necessarily in a JavaScript-native format. The File interface is based on Blob, inheriting blob functionality and expanding it to support files on the user’s system.” <cite>[MDN Web Docs: Blob][1]</cite>
+
+[1]:https://developer.mozilla.org/en-US/docs/Web/API/Blob
+
+### The Response
+Great now that we've wired up the submission, let's take a bit of time to talk about what's happening on the server's side. I'm keeping this post backend agnostic, so I won't be discussing specific syntax. However, the basic mechanics are pretty simple. The server will accept the incoming POST request, and parse out the form data. It will then use that form data to generate some type of file, such as a PDF, represented in memory as Binary data. You'll pipe that binary data back to the user as the response to the POST request. Remember that on the client side, we've set the request to expect a Blob.
+
+With that in mind, it's time to focus on what to do for the response. For this, we'll make use of the request's onload function.
+
+```javascript
+xhr.onload = function(e) {
+  if (this.status == 200) {
+      // Create a new Blob object using the 
+      //response data of the onload object
+      var blob = new Blob([this.response], {type: 'image/pdf'});
+      //Create a link element, hide it, direct 
+      //it towards the blob, and then 'click' it programatically
+      let a = document.createElement("a");
+      a.style = "display: none";
+      document.body.appendChild(a);
+      //Create a DOMString representing the blob 
+      //and point the link element towards it
+      let url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = 'myFile.pdf';
+      //programatically click the link to trigger the download
+      a.click();
+      //release the reference to the file by revoking the Object URL
+      window.URL.revokeObjectURL(url);
+  }else{
+      //deal with your error state here
+  }
+};
+```
+
+### All Together Now
+Finally, let's combine all of this together into a single event listener that is fired with the form is submitted.
+
+```javascript
+document.querySelector('#form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  let xhr = new XMLHttpRequest();
+  //set the request type to post and the destination url to '/convert'
+  xhr.open('POST', 'convert');
+  //set the reponse type to blob since that's what we're expecting back
+  xhr.responseType = 'blob';
+  let formData = new FormData(this);
+  xhr.send(formData); 
+
+  xhr.onload = function(e) {
+      if (this.status == 200) {
+          // Create a new Blob object using the response data of the onload object
+          var blob = new Blob([this.response], {type: 'image/pdf'});
+          //Create a link element, hide it, direct it towards the blob, and then 'click' it programatically
+          let a = document.createElement("a");
+          a.style = "display: none";
+          document.body.appendChild(a);
+          //Create a DOMString representing the blob and point the link element towards it
+          let url = window.URL.createObjectURL(blob);
+          a.href = url;
+          a.download = 'myFile.pdf';
+          //programatically click the link to trigger the download
+          a.click();
+          //release the reference to the file by revoking the Object URL
+          window.URL.revokeObjectURL(url);
+      }else{
+          //deal with your error state here
+      }
+  };
+});
+```

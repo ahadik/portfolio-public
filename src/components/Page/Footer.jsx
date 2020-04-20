@@ -13,6 +13,9 @@ const Footer = () => {
         </div>
         <div>
           <p className="secondary inline__children--6">
+            <a className="secondary" href="mailto:alex@alexhadik.com" target="_blank" rel="noopener noreferrer">
+              <i className="far fa-paper-plane" />
+            </a>
             <a className="secondary" href="https://github.com/ahadik" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-github" />
             </a>
