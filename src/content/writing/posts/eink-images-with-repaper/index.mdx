@@ -1,0 +1,197 @@
+---
+date: "2014-10-30"
+title: "How to Display Custom Images on a E-Ink Screen with Arduino"
+featuredImage: "featured.jpg"
+previewImage: "preview.jpg"
+featuredAlt: "An E-Ink display with a kitty cat."
+excerpt: "I recently got the RePaper E-Ink display to use with an Arduino Uno. The Arduino Uno isn't powerful enough to do more complex things like dynamically write content to the screen (such as text or shapes). What it can do very well is show images loaded into memory. However, I couldn't find any good resources for how to load custom images onto the Arduino — so I wrote on myself!"
+author:
+  name: "Alex Hadik"
+  email: "alex@alexhadik.com"
+categories: [code, hardware]
+keywords: [eink, repaper, arduino, display]
+images:
+  - demo-1.jpg
+  - demo-2.jpg
+  - display.jpeg
+  - screen-demo.png
+---
+
+<MdxLayout verticalCenter>
+
+I purchased my display from [Adafruit][0]. The Adafruit tutorials do a great job of describing how to get up and going with the code provided by [RePaper][1]. Right out of the box you can get an image of a cute cat, as well as some other preloaded images, to show on the screen. However there's really no info provided on how to go farther with an Uno. This tutorial will walk through the steps of how to load your own custom images onto your Arduino and display them on your E-Ink display. Let's get started!
+
+<Image name="display" />
+</MdxLayout>
+
+#### What You'll Need
+
+1. An Arduino Uno
+1. The RePaper E-Ink display available from Adafruit
+1. The Arduino IDE and demo code available from [repaper.org][1] installed as an Arduino library.
+
+
+You can check that these are properly installed by going to File > Sketchbook in the Arduino IDE and checking that `epaper` exists as an option.
+
+#### What To Do
+
+##### Wire Up Your Display
+
+Follow the instructions provided on Adafruit for connecting the RePaper display to your Arduino. Once it's plugged in, you should be able to upload the `demo.ino` sketch and get two images to alternate back and forth; some text, and a cat.
+
+##### Prepare your content
+
+Now that we've got our cat going, let's prepare some custom images to display. First of all, you'll need to note what size screen you have. There are three options: 1.44", 2" and 2.7". You can see the size of the screen you have by measuring it diagonally or just looking at your order. These screens have the following dimensions.
+
+* 1.44": 96x128 pixels
+* 2": 96x200 pixels
+* 1.44": 176x264 pixels
+
+<MdxLayout>
+
+In a digital illustration program like Adobe Illustrator, create your images in grayscale with the same dimensions as your screen. Save them in JPG format and make sure that they are oriented so that the height is the smaller dimension - that is your image is oriented so it's longer than it is wide. Save as many images as you like, just be aware that the Arduino Uno has 32 KB flash memory.
+
+<Image name="screen-demo" />
+</MdxLayout>
+
+##### Convert your content
+
+You can't just store a JPG image on your Arduino. It has to be converted to an XBM file which stores the values of each pixel as a hexadecimal value in a C array. This is the format that RePaper uses to store images in the Arduino memory. There are two ways of doing this:
+
+###### GIMP
+
+GIMP is a common image editing tool that can open and save pretty much any image format, including XBM. You can download it from [http://www.gimp.org/](http://www.gimp.org/) and is available for OS X and Linux. You can open your exported JPG images and then save them as .XBM files using the Export option.
+
+Make sure you **don't** check the X10 check box!
+
+###### Web Conversion
+
+There's a convenient [web app][2] that can also handle the file conversion.
+
+Just upload your image and you can download the XBM version of it.
+
+##### Store your content
+
+Once you've got your images converted, you'll need to save them to the images library directory.
+
+When you install the Arduino IDE, it creates an Arduino directory, which is where libraries are installed. On OS X it's traditionally in your Documents folder. You can find where it is by going to your Preferences in the Arduino IDE and looking at the `Sketchbook location` section.
+
+Navigate to this directory and then to `libraries > Images`. This is where the images for RePaper code is stored. You'll see some file names that make sense like `cat_1_44.xbm`. This, naturally, is the cat image for the 1.44" RePaper display.
+
+Just save your newly made XBM images into this directory with the same naming convention (`myimage_x_y.xbm`) inserting the proper size for the screen you have inplace of `x` and `y`.
+
+You'll want to open your image files in a text editor like Sublime or Atom and check that the first lines have the following format:
+
+```c
+#define myimage_2_0_width 200
+#define myimage_2_0_height 96
+static unsigned char myimage_2_0_bits[] = {
+  ...
+}
+```
+ 
+That is, the `#define` and `char` array declaration are named the same as your file and have the proper width, height, and screen size set. Open some of the images that exist in the `Images` directory for reference if you like.
+
+#### Update the code
+
+With your images stored, it's time to update the Arduino code! We're going to start with the code supplied by RePaper as a base.
+
+In Arduino, go to `File > Sketchbook > demo`. Select `Save As` so you can edit and save your changes.
+
+This demo code, if you upload it, will make your RePaper display flash two images in sequence. We're going to swap their two images for three of our own images. For the sake of this demo, we're going to call these images `image1`, `image2` and `image3`.
+
+1. Change the screen size for your screen on line 45: `144, 200, 270`.
+1. The next section has the header `// select two images from:  text_image text-hello cat aphrodite venus saturn`. We're better than this, because we've added our oown images! So change the code to read:
+  ```c
+  #define IMAGE_1  image1
+  #define IMAGE_2  image2
+  #define IMAGE_3 image3
+  ```
+    
+  * Here, `image1, image2, etc` are the images you saved in the `Images` directory with the `_x_y.xbm` chopped off.
+1. Find the section headed with the comment `// calculate the include name and variable names`. It should have four lines that read:
+  ```c
+  #define IMAGE_1_FILE MAKE_JOIN(IMAGE_1,FILE_SUFFIX)
+  #define IMAGE_1_BITS MAKE_NAME(IMAGE_1,NAME_SUFFIX)
+  #define IMAGE_2_FILE MAKE_JOIN(IMAGE_2,FILE_SUFFIX)
+  #define IMAGE_2_BITS MAKE_NAME(IMAGE_2,NAME_SUFFIX)
+  ```
+1. Add another section for our third image
+  ```c
+  #define IMAGE_3_FILE MAKE_JOIN(IMAGE_3,FILE_SUFFIX)
+  #define IMAGE_3_BITS MAKE_NAME(IMAGE_3,NAME_SUFFIX)
+  ```
+1. The next section is headed with the comment `//images`. It should have two sections that look like
+  ```c
+  PROGMEM const
+  #define unsigned
+  #define char uint8_t
+  #include IMAGE_1_FILE
+  #undef char
+  #undef unsigned
+  ```
+1. Add a third section like so:
+  ```c
+  PROGMEM const
+  #define unsigned
+  #define char uint8_t
+  #include IMAGE_3_FILE
+  #undef char
+  #undef unsigned
+  ```
+1. Finally, we need to change the code that cycles the image through in order. It's the large switch statement in the main loop of the program. To start with it has 4 cases that clear the screen and then transition from `clear -> text_image`, `text_image -> cat` and `cat -> text_image`. Change that to resemble
+  ```c
+  switch(state) {
+    default:
+    case 0:         // clear the screen
+      EPD.clear();
+      state = 1;
+      delay_counts = 5;  // reduce delay so first image come up quickly
+      break;
+
+      case 1:
+        EPD.image(IMAGE_1_BITS);
+        ++state;
+        break;
+
+      case 2:
+        EPD.image(IMAGE_1_BITS, IMAGE_2_BITS);
+        ++state;
+        break;
+
+      case 3:
+        EPD.image(IMAGE_2_BITS, IMAGE_3_BITS);
+        ++state;
+        break;
+      
+      case 4:
+        EPD.image(IMAGE_3_BITS, IMAGE_1_BITS);
+        state = 2;
+        break;
+    }
+    ```
+1. You're done! Upload your code to your Arduino and watch your images cycle by!
+
+<Gallery>
+  <Image name="demo-1" />
+  <Image name="demo-2" />
+</Gallery>
+
+#### Troubleshooting
+
+Some common issues that I came across were:
+
+1. The size of XBM digits. If you open your XBM in a text exit, the bunch of hexadecimal numbers you see should have the form `0x00` not `0x0000`. If you see 4 numbers/letters, you exported your image as X10. Go back into where you did your image conversion and make sure you turn that off.
+1. Image orientation. If your images are showing up weird on your screen, make sure they're the right size, and that when you open them on your computer, they're wider than they are tall.
+1. The headers of your XBM files. Double check that your image files have the following format (example from the image files and names I used):
+  ```c
+  #define costhour_2_0_width 200
+  #define costhour_2_0_height 96
+  static unsigned char costhour_2_0_bits[] = {...}
+  ```
+
+
+
+[0]: https://learn.adafruit.com/repaper-eink-development-board
+[1]: http://www.repaper.org
+[2]: http://www.online-utility.org/image_converter.jsp?outputType=XBM

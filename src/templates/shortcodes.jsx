@@ -18,6 +18,7 @@ import ButtonGroup from '~components/ButtonGroup';
 const generateShortcodes = (postMedia) => {
   return {
     Link,
+    a: Link,
     Image: function(props) {
       return <Image imgs={postMedia.images} {...props} />
     },

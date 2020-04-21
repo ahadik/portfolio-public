@@ -28,6 +28,9 @@ const postTemplate = `---
 date: "${moment().format("YYYY-MM-DD")}"
 title: "${postName.charAt(0).toUpperCase() + postName.slice(1)}"
 featuredImage: ""
+featuredAttribution:
+  name: ""
+  url: ""
 previewImage: ""
 featuredAlt: ""
 excerpt: ""

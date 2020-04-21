@@ -1,0 +1,100 @@
+---
+date: "2016-06-06"
+title: "Frequent Visitor"
+subtitle: "Resetting a Tree's Visited State"
+previewImage: "featured.jpg"
+featuredAlt: "One of the most common algorithmic data structures is a tree."
+excerpt: "If you've ever written an algorithm that involves traversing a tree or graph, you've dealt with the concept of marking a node as \"visited\". Often, this is act is taken care of of with a simple boolean flag in each node. This works great for single traversals of a tree; that is, you search a tree for something once, and then never look at the tree again. But what if you want to traverse the tree over and over again? Here I'll present a simple strategy for resetting the visited status to \"unvisited\" for all nodes in a tree in constant time."
+author:
+  name: "Alex Hadik"
+  email: "alex@alexhadik.com"
+categories: [code]
+keywords: [dijkstra, algorithm, tree, distance]
+---
+
+### Revisting Dijkstra's Algorithm
+
+Let's first revisit the use case for marking a node as visited. A good example is one of my favorite algorithms - <Link href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra's Algorithm</Link> for finding the shortest distance between two nodes in a graph. The the core principles of Dijkstra's Algorithm is as follows:
+
+1. Start from a "root" node and assign it a distance value of 0. Assign all other nodes a distance of ∞.
+2. Add the root node to a set of visited nodes.
+3. For each unvisited child of the current node, add the value of the current node and the weight of the edge to the child.
+4. Compare the sum of the current node and outgoing edge to the value of the edge's target.
+5. If the sum is less than the target's value, update the value of the target to the sum.
+6. After considering all children, travel to the child node, with the smallest value. The smallest child is now the "current" node.
+7. If the now current node is the desired destination, return. Otherwise, return to step 3.
+
+The challenge here is when we check if a node is unvisited. Let's consider a Python node class as follows:
+
+```python
+class Node():
+  def __init__(self, value):
+    self.value = value
+    self.children = []
+    self.visited = False
+```
+
+Each node contains a visited flag that indicates if it's been visited in a traversal. Our constructor instantiates a Node with the default visited value of False. This sets us up well for a first traversal. However, what happens if, after you traverse the tree once, you want to traverse it again? Perhaps you want to find the shortest path to a different node.
+
+There are a few simple ways to achieve this task.
+
+#### Visited Set
+One approach would be to keep a list of visited nodes. Whenever you want to mark a node as visited, you add a reference to the node to the Visited Set. To check if a node has been visited, see if it's in the Visited Set. When you're done searching, simply reset the Visited Set to an empty set.
+
+There are a few problems with this approach. The first is size. A Boolean takes one byte of memory, so if a graph has 100 nodes, you'll spend 100 bytes of memory storing the visited boolean for each node. However, on a 64 bit system, a memory address is 8 bytes. So keeping track of pointers to each visited node requires 8 times the amount of memory as just keeping a boolean flag in each node. So thanks to memory, this solution is sub-optimal.
+
+Furthermore, consider the time complexity of checking if a node is in the visited list. Each check is a linear runtime of O(n).
+
+#### Boolean Flag
+If we decide to stick with a boolean flag since it saves us memory, we have a problem with time complexity. Once we've traversed a graph, we must re-traverse it just to reset each node's visited flag to False. For an n node graph, the traversal time is now O(2n) where n is the number of nodes. This is still linear time, but if we're talking about 1,000,000 nodes instead of 100, twice the time takes, well, twice as long.
+
+So what to do? It seems we're either stuck between doubling our traversal time, or taking up 8 times more memory than necessary. A simple trick is to make use of what I'll naively call an Iteration Key.
+
+#### Iteration Key
+I came up with this concept (which I'm sure is not original) after studying encryption techniques. A common security measure for encoding many documents is to encode groups of documents with different keys, and then encode each of those keys with a master key. Every now and then its a good idea to change your keys, like changing your password. The problem is, we're faced with re-encoding all those documents, which can take a long time. But we actually don't have to! Instead, we can re-encode the document keys with a new master key, effectively changing the decryption path for every document.
+
+Using this approach on our graph, we can keep track of an iteration for the tree, and for each node. Here's an updated Node and Tree class:
+
+```python
+class Node():
+  def __init__(self, value):
+    self.value = value
+    self.children = []
+    self.iteration = 0
+
+  def isVisited(self, tree):
+    if (self.iteration < tree.iteration):
+      self.iteration = tree.iteration
+      return False
+    if (self.iteration > tree.iteration):
+      raise Exception("Node iteration higher than tree iteration")
+    return True
+        
+class Tree():
+  def __init__(self):
+    self.root = new Node(None)
+    self.iteration = 0
+```
+
+Now, when we want to traverse the graph, we increment the tree's iteration by 1. This immediately makes every node's iteration value less than the tree's iteration value. When we want to check if a node has been visited, we call its isVisited() method passing in a reference to the containing tree. isVisited() checks for three possible cases:
+
+1. The node's iteration value is less than the tree's.
+2. If a node's iteration value is greater than the tree's, we throw an error.
+3. The iteration value of the node and tree are equal.
+
+The first case returns False indicating the node is unvisited. We set the node's iteration value equal to the tree's to mark it as visited.
+
+The second case throws an error since no node should ever get ahead of the tree.
+
+The third case evaluates to True if the node has been visited. This final case is called when the node's iteration is implicitly equal to the tree's.
+
+After our traversal, we simply increment the tree's iteration value by 1 once again to reset each node to unvisited.
+
+#### Iteration Key Complexity
+So how does this method stack up against our alternatives? Let's look at time complexity first. With no need to re-traverse the tree to reset each node, this approach effectively reduces the complexity of resetting from O(n) to O(1).
+
+Now for memory complexity. Let's say we use a unsigned char for storing the node's iteration. This consumes 1 byte of memory, so no more than a boolean visited flag, and can count up to 255 iterations. Using just 2 bytes of memory to store an unsigned integer, we can track up to 65,535 iterations. We could go even higher, using a 4 byte integer which gives us 4,294,967,295 iterations at half the memory needed to store a list of visited nodes.
+
+Once we've maxed out whatever form of counter we're using, we do need to re-traverse the tree, resetting the iteration of nodes to 0. However, 1 out of 4 billion times is a lot better than re-traversal every time.
+
+So I lied, it's not constant time O(1), it's linear time O(n/4,294,967,295) which in my book, might as well be constant time.

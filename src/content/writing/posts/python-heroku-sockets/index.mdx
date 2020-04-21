@@ -1,0 +1,215 @@
+---
+date: "2015-01-29"
+title: "Using SocketIO with Python and Flask on Heroku"
+previewImage: "chilis.jpg"
+featuredAttribution:
+  name: "Ryan Quintal"
+  url: "https://unsplash.com/@ryanquintal?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+featuredAlt: ""
+excerpt: "Sometimes all you want to do is put together small web app with a Python based server. Flask is the go-to choice and it couldn't be easier to use. Launching your app on Heroku with Flask is a well documented process. But things kind of hit a wall when you want to use SocketIO for websockets. Every tutorial online is basically a chat-app with an overly complicated process of integrating Redis, and at the end of the day, doesn't lay out the basics of bare-bones websocket integration. Often times, I simply need a few event handlers - not the full schebang. This tutorial explains how to set up an extremely simple Flask webapp including basic SocketIO event handlers, and launch it to Heroku."
+author:
+  name: "Alex Hadik"
+  email: "alex@alexhadik.com"
+categories: [code]
+keywords: [python, flask, heroku, socketio]
+---
+
+### Set Up
+
+Let's get started with our dev environment. We'll log into Heroku, set up a virtual environment for Python and install a few dependencies.
+
+```
+$ heroku login
+  Enter your Heroku credentials.
+  Email: alex@example.com
+  Password:
+
+$ mkdir myapp
+$ cd myapp
+$ virtualenv venv
+$ source venv/bin/activate
+```
+
+Now we're working within our virtual environment and can install our dependencies with pip.
+
+`$ pip install gunicorn==0.16.1 Flask Flask-SocketIO`
+
+Here we're installing <Link href="http://gunicorn.org/">gunicorn</Link> to be our web server and <Link href="http://flask.pocoo.org/">Flask</Link> to be our web framework. We're also install <Link href="https://flask-socketio.readthedocs.org/en/latest/">Flask-SocketIO</Link> to be our SocketIO server that will handle incoming requests and send responses back out to clients. It's worth noting that we've requested a specific version of gunicorn due to an issue in gunicorn 0.17 specifically. Newer versions may resolve this issue.
+
+### Web Template
+
+We'll place the following code in this file. All this code does is let us type content into a text box, send it to our Python server via SocketIO, and wait for the server to echo it back over SocketIO, at which point we display the echoed content.
+
+```html
+<html>
+  <head>
+    <title>Heroku SocketIO</title>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+      socket.on('echo', function(data){
+        $('#response').html('<p>'+data.echo+'</p>');
+      });
+      
+      function send(){
+        socket.emit('send_message', {message : $('form textarea').val()});
+      }
+    </script>
+    <style>
+      div{
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: 400px;
+      }
+      textarea{
+        width: 100%;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input">
+      <form>
+        <textarea placeholder="Send a message to the server..."></textarea>
+        <button type="button" onclick="send(); return false;">Send</button>
+      </form>
+    </div>
+    <div id="response">
+    </div>
+  </body>
+</html>
+```
+
+The first two script tags load the jQuery and SocketIO libraries. The third script tag lays out our communication with the server via SocketIO. First, we set up a handler to listen for 'echo' events sent from the server. In response to this event, we display the event's content on the webpage.
+
+### Python Server
+The next step is to put together the Flask server in Python.
+
+```
+$ cd ..
+$ touch server.py
+```
+
+First, we'll import the dependencies we need.
+
+```python
+from flask import Flask, render_template
+from flask.ext.socketio import SocketIO
+import json
+```
+
+Next we need to set up the app through the Flask framework and create the SocketIO object.
+
+```python
+app = Flask(__name__)
+socketio = SocketIO(app)
+```
+
+For this app, we only need to route the root directory and render our index.html template when the root is requested. We do that with Flask's syntax:
+
+```python
+@app.route("/")
+def index():
+  return render_template('index.html',)
+```
+
+Now, it's time to handle the SocketIO events we expect to receive, as we laid out in our HTML template. Our webpage emits an event under the name send_message and receives events with the name echo. Since this app just echos text back to the client, all we need to do is set up a handler for send_message and in response, emit an event with the name echo:
+
+```python
+@socketio.on('send_message')
+def handle_source(json_data):
+  text = json_data['message'].encode('ascii', 'ignore')
+  socketio.emit('echo', {'echo': 'Server Says: '+text})
+```
+
+Finally, we just need to make sure the SocketIO server runs when the server.py script is run. So we add the following to the end of our script:
+
+```python
+if __name__ == "__main__":
+  socketio.run(app)
+```
+
+All together, our server code looks like:
+
+```python
+from flask import Flask, render_template
+from flask.ext.socketio import SocketIO
+import json
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+@app.route("/")
+def index():
+  return render_template('index.html',)
+
+@socketio.on('send_message')
+def handle_source(json_data):
+  text = json_data['message'].encode('ascii', 'ignore')
+  socketio.emit('echo', {'echo': 'Server Says: '+text})
+
+if __name__ == "__main__":
+  socketio.run(app)
+```
+
+### Running on Heroku
+With our server code and HTML template finished, all we need to do is push our work to Heroku. The first step is to tell Heroku what it needs to do when our dyno spins up. That's of course accomplished with a Procfile:
+
+`$ touch Procfile`
+
+And we'll place the following in that file:
+
+`web: gunicorn --worker-class socketio.sgunicorn.GeventSocketIOWorker --log-file=- server:app`
+
+So what does this do? Well it tells Heroku that here we have a web app, and it needs to spin up a gunicorn server for it to run. We'll need a worker for SocketIO which is what the --worker-class argument is doing. We also want to print any errors directly to std out for simplicity. Finally, we inform gunicorn that our script of interest is named server and our Flask app is called 'app'.
+
+Let's test our app by running it with foreman, which is installed as part of the Heroku Toolbelt:
+
+`$ foreman start`
+
+If everything has gone to plan, you'll see our web app spin up and we can visit it in a web browser to make sure everything works
+
+```
+12:23:31 web.1  | started with pid 83820
+12:23:34 web.1  | 2015-01-29 12:23:34 [83820] [INFO] Starting gunicorn 0.16.1
+12:23:34 web.1  | 2015-01-29 12:23:34 [83820] [INFO] Listening at: http://127.0.0.1:8000 (83820)
+12:23:34 web.1  | 2015-01-29 12:23:34 [83820] [INFO] Using worker: socketio.sgunicorn.GeventSocketIOWorker
+12:23:34 web.1  | 2015-01-29 12:23:34 [83821] [INFO] Booting worker with pid: 83821
+```
+
+With our app working, all that's left to do is create a Heroku app, commit to Git, and push to deploy:
+
+```
+$ git init
+$ git add .
+$ git commit -m "init"
+$ heroku create
+  Creating infinite-beach-1519... done, stack is cedar-14
+  https://infinite-beach-1519.herokuapp.com/ | https://git.heroku.com/infinite-beach-1519.git
+  Git remote heroku added
+  
+$ git push heroku master
+  Counting objects: 1453, done.
+  Delta compression using up to 8 threads.
+  Compressing objects: 100% (1382/1382), done.
+  Writing objects: 100% (1453/1453), 4.89 MiB | 3.04 MiB/s, done.
+  Total 1453 (delta 91), reused 0 (delta 0)
+  remote: Compressing source files... done.
+  remote: Building source:
+  remote: -----> Python app detected
+  remote: -----> Stack changed, re-installing runtime
+  remote: -----> Installing runtime (python-2.7.9)
+  remote: -----> Installing dependencies with pip
+  remote: -----> Discovering process types
+  remote:        Procfile declares types -> web
+  remote: -----> Compressing... done, 46.4MB
+  remote: -----> Launching... done, v3
+  remote:        https://infinite-beach-1519.herokuapp.com/ deployed to Heroku
+  remote: Verifying deploy... done.
+  To https://git.heroku.com/infinite-beach-1519.git
+   * [new branch]      master -> master
+```
+
+Everything launched just fine - now all we have to do is visit our app in a browser and enjoy the fruits of our labor. Good luck with Flask and SocketIO!
