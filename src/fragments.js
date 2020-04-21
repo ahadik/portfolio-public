@@ -44,6 +44,10 @@ export const contentMdxQuery = graphql`
         }
       }
       featuredVimeo
+      featuredAttribution {
+        name
+        url
+      }
       videos {
         name,
         publicURL

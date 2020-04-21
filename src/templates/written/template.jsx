@@ -28,7 +28,8 @@ export default ({ data, location }) => {
             excerpt,
             featuredImgFluid,
             postMedia,
-            shortcodes
+            shortcodes,
+            featuredAttribution
           }
         ) => {
           return (
@@ -60,6 +61,13 @@ export default ({ data, location }) => {
                       <CoreImage image={featuredImgFluid} imgId="featured_image" disablePreview />
                     </div>
                   </div>
+                  <If condition={featuredAttribution}>
+                    <div className="row">
+                      <div className="col-8 col-offset-2 mobile-col-12 tablet-col-12 stack__item--8">
+                        <p className="monospace">Photo by <Link href={featuredAttribution.url}>{featuredAttribution.name}</Link></p>
+                      </div>
+                    </div>
+                  </If>
                 </If>
               </section>
               <section className="row">

@@ -3,6 +3,9 @@ date: "2018-07-07"
 title: "Triggering a File Download from an XHR Post Request"
 previewImage: "blob.png"
 featuredImage: "blob-featured.png"
+featuredAttribution:
+  name: "Mandi Cai"
+  url: "http://mandilicai.com/"
 featuredAlt: "Data blobs aren't as gross as they sound."
 excerpt: "If you need your webapp to offer a file download for an asset created on the fly, like say a PDF generated from content entered by a user, how do you do that? This was a puzzle I encountered not too long ago on a personal proejct. I dug around and found a pretty solid solution, which I'll detail in this post."
 author:
@@ -11,8 +14,6 @@ author:
 categories: [code]
 keywords: [xhr, POST, download, javascript, front-end]
 ---
-
-<p className="monospace">Illustration credit: <Link href="http://mandilicai.com/">Mandi Cai</Link></p>
 
 The specific scenario in this personal project was that I needed to POST data from an HTML form to a server, and then trigger a download for the payload of the POST response. There might be a few reasons you would want to do this kind of trickery, but for me, I was generating a PDF on the server based on the contents of te POST request, and then returning that PDF to the client. The desired experience for the user is just a simple 'Download' button, so even though an asset is being dynamically generated, we want to give the illusion that they're just downloading.
 
