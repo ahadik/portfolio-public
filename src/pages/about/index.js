@@ -52,9 +52,7 @@ const AboutPage = (props) => {
             my UX and front-end engineering skills. I missed the life sciences though, and Transcriptic offered
             the perfect next step.
           </p>
-          <p><Link to="/transcriptic/role">I joined Transcriptic in 2016</Link> as their first and only designer. Since then, I've built our design
-            team and discipline establishing – among other things – <Link to="/work/chemical-synthesis">a product development process</Link> grounded in user
-            research, <Link to="/work/amino">a design system</Link> called Amino, and a <Link to="/work/transcriptic-photography">strong brand identity</Link>.
+          <p><Link to="/transcriptic/role">I joined Transcriptic in 2016</Link> as their first and only designer. Since then, I've built our design team and discipline establishing – among other things – <Link to="/work/restricted/chemical-synthesis">a product development process</Link> grounded in user research, <Link to="/work/amino">a design system</Link> called Amino, and a <Link to="/work/transcriptic-photography">strong brand identity</Link>.
           </p>
         </section>
       </article>
