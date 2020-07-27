@@ -8,7 +8,7 @@ let [,, ...args] = process.argv;
 
 const slug = args[0];
 
-if (slug === '--help') {
+if (slug === '--help' || slug === '-h') {
   return console.log(
     `
       Create new posts by passing a path:
