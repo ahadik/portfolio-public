@@ -10,7 +10,7 @@ const siteUrl = process.env.SITE_URL;
 module.exports = {
   siteMetadata: {
     title: `Alex Hadik`,
-    description: `Alex is a designer and software engineer who lives in San Francisco and works at Transcriptic.`,
+    description: `Alex is a designer and software engineer who lives in Cambridge and studies at the MIT Sloan School of Management.`,
     author: { name: 'Alex Hadik', email: 'alex@alexhadik.com'},
     email: 'alex@alexhadik.com',
     siteUrl: siteUrl,
@@ -21,7 +21,7 @@ module.exports = {
       email: 'mailto:alex@alexhadik.com',
       vimeo: 'https://vimeo.com/user850540'
     },
-    keywords: ['designer', 'engineer', 'ux', 'front-end', 'photography', 'life science', 'biology', 'robotics', 'automation']
+    keywords: ['designer', 'engineer', 'ux', 'front-end', 'photography', 'life science', 'biology', 'robotics', 'automation', 'MIT', 'MBA', 'Sloan', 'product']
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

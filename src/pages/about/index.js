@@ -22,7 +22,7 @@ const AboutPage = (props) => {
       </section>
       <section className="row mobile">
         <div className="col-12">
-          <h5 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h5>
+          <h5 className="serif bold">Alex is a designer and software engineer who lives in Cambridge and studies at <Link href="https://mitsloan.mit.edu/">MIT Sloan</Link>.</h5>
         </div>
       </section>
       <article className="row">
@@ -32,10 +32,10 @@ const AboutPage = (props) => {
         <section className="col-5 mobile-col-12  about-page__header-title stack__children--6">
           <div>
             <div className="desktop">
-              <h3 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h3>
+              <h3 className="serif bold">Alex is a designer and software engineer who lives in Cambridge and studies at <Link href="https://mitsloan.mit.edu/">MIT Sloan</Link>.</h3>
             </div>
             <div className="tablet">
-              <h5 className="serif bold">Alex is a designer and software engineer who lives in San Francisco and works at <Link to="/transcriptic">Transcriptic</Link>.</h5>
+              <h5 className="serif bold">Alex is a designer and software engineer who lives in Cambridge and studies at <Link href="https://mitsloan.mit.edu/">MIT Sloan</Link>.</h5>
             </div>
           </div>
           <Button variant="green" iconLeft="fal fa-arrow-down" hasBorder href={Resume}>Download Resume</Button>
@@ -52,8 +52,9 @@ const AboutPage = (props) => {
             my UX and front-end engineering skills. I missed the life sciences though, and Transcriptic offered
             the perfect next step.
           </p>
-          <p><Link to="/transcriptic/role">I joined Transcriptic in 2016</Link> as their first and only designer. Since then, I've built our design team and discipline establishing – among other things – <Link to="/work/restricted/chemical-synthesis">a product development process</Link> grounded in user research, <Link to="/work/amino">a design system</Link> called Amino, and a <Link to="/work/transcriptic-photography">strong brand identity</Link>.
+          <p><Link to="/transcriptic/role">I joined Transcriptic in 2016</Link> as their first and only designer. While there, I built the design team and discipline establishing – among other things – <Link to="/work/restricted/chemical-synthesis">a product development process</Link> grounded in user research, <Link to="/work/amino">a design system</Link> called Amino, and a <Link to="/work/transcriptic-photography">strong brand identity</Link>.
           </p>
+          <p>In August 2020, I decided to take a step away from the startup world, and started the MBA program at the MIT Sloan School of Management. At Sloan I'm excited to focus on product management and strategy. In 2022 I intend to return to world of biotech to continue building new tools for scientists.</p>
         </section>
       </article>
     </Page>
